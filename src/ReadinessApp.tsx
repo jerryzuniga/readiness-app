@@ -436,7 +436,7 @@ const ReadinessApp = () => {
                     <div>
                       <h3 className="font-semibold text-gray-800 mb-1">Save Your Results</h3>
                       <p className="text-gray-600 text-sm">
-                        Results are not saved automatically - use the Print to PDF button to save your assessment
+                        Results are not saved - use the Print to PDF button to save your assessment results
                       </p>
                     </div>
                   </div>

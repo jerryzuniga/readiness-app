@@ -434,9 +434,9 @@ const ReadinessApp = () => {
                       <span className="text-blue-600 font-bold">💾</span>
                     </div>
                     <div>
-                      <h3 className="font-semibold text-gray-800 mb-1">Save Your Results</h3>
+                      <h3 className="font-semibold text-gray-800 mb-1">Saving Your Results</h3>
                       <p className="text-gray-600 text-sm">
-                        Results are not saved - use the Print to PDF button to save your assessment results
+                        Your inputs are not saved - Use the Print to PDF button to save your assessment results
                       </p>
                     </div>
                   </div>

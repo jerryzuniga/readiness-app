@@ -732,7 +732,7 @@ const ReadinessApp = () => {
                       onClick={() => setCurrentView('assessment')}
                       className="px-6 py-3 bg-orange-500 text-white font-semibold rounded-lg hover:bg-orange-600 transition-colors"
                     >
-                      Continue Assessment
+                      Continue to Assessment
                     </button>
                   </div>
                 </div>
@@ -1045,7 +1045,7 @@ const ReadinessApp = () => {
                       onClick={() => setCurrentView('assessment')}
                       className="px-6 py-3 bg-orange-500 text-white font-semibold rounded-lg hover:bg-orange-600 transition-colors"
                     >
-                      Continue Assessment
+                      Continue to Assessment
                     </button>
                   </div>
                 </div>

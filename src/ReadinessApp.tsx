@@ -400,7 +400,7 @@ const ReadinessApp = () => {
                     <div>
                       <h3 className="font-semibold text-gray-800 mb-1">15 Questions Across 5 Key Factors</h3>
                       <p className="text-gray-600 text-sm">
-                        Capacity, Need, Approach, Leverage and Impact, and Sustainability
+                        Capacity, Need, Approach, Leverage andSustainability
                       </p>
                     </div>
                   </div>

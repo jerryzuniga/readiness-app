@@ -385,7 +385,7 @@ const ReadinessApp = () => {
                 Home Repair Program Readiness Assessment
               </h1>
               <p className="text-blue-100 text-lg">
-                Evaluate your organization capacity to launch a home repair program
+                Evaluate your organizational capacity to launch a home repair program
               </p>
             </div>
 

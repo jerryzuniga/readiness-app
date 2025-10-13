@@ -20,7 +20,7 @@ const ReadinessApp = () => {
           { 
             id: 'leadership', 
             title: 'Leadership and Board Commitment', 
-            question: 'How would you rate your organization leadership and board commitment?',
+            question: 'How would you rate your organization's leadership and board commitment?',
             levels: [
               { value: 0, label: 'Inactive', description: 'No awareness or discussion of home repairs among board or leadership.' },
               { value: 1, label: 'Aware', description: 'Some vague awareness, but no structured discussions or expressed interest.' },
@@ -33,7 +33,7 @@ const ReadinessApp = () => {
           { 
             id: 'staff', 
             title: 'Staff Commitment', 
-            question: 'How prepared is your staff to engage in training?',
+            question: 'How prepared is your staff to engage in home repair training?',
             levels: [
               { value: 0, label: 'Inactive', description: 'No staff assigned or identified. No clear strategy or timeline.' },
               { value: 1, label: 'Aware', description: 'General leadership support, but limited staff enthusiasm or participation expected.' },
@@ -78,7 +78,7 @@ const ReadinessApp = () => {
           { 
             id: 'organizational', 
             title: 'Capacity Building Need', 
-            question: 'How clearly identified is the need for capacity building?',
+            question: 'How clearly identified is the need for repairs capacity building?',
             levels: [
               { value: 0, label: 'Inactive', description: 'No connection between gaps and need for capacity building.' },
               { value: 1, label: 'Aware', description: 'Limited understanding of how internal gaps relate to capacity building.' },
@@ -110,7 +110,7 @@ const ReadinessApp = () => {
           { 
             id: 'goals', 
             title: 'Clarity of Goals', 
-            question: 'How clearly defined are your capacity-building goals?',
+            question: 'How clearly defined are your repairscapacity-building goals?',
             levels: [
               { value: 0, label: 'Inactive', description: 'No capacity-building goals identified.' },
               { value: 1, label: 'Aware', description: 'General ideas about needs, but goals unclear or unrealistic.' },
@@ -123,7 +123,7 @@ const ReadinessApp = () => {
           { 
             id: 'feasibility', 
             title: 'Feasibility', 
-            question: 'How realistic is your plan?',
+            question: 'How developed is your repairsplan?',
             levels: [
               { value: 0, label: 'Inactive', description: 'Expectations unclear or unrealistic. No internal plan.' },
               { value: 1, label: 'Aware', description: 'Vague plan exists with no clarity on participants or application.' },
@@ -515,7 +515,7 @@ const ReadinessApp = () => {
                   </div>
                   <div>
                     <h1 className="text-2xl font-bold">Home Repair Program Readiness Assessment</h1>
-                    <p className="text-blue-100 text-sm">Evaluate your organization readiness</p>
+                    <p className="text-blue-100 text-sm">Evaluate your organizational readiness</p>
                   </div>
                 </div>
                 <div className="bg-white/10 rounded-lg p-4">

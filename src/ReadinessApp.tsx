@@ -20,7 +20,7 @@ const ReadinessApp = () => {
           { 
             id: 'leadership', 
             title: 'Leadership and Board Commitment', 
-            question: 'How would you rate your organization's leadership and board commitment?',
+            question: 'How would you rate your organization leadership and board commitment?',
             levels: [
               { value: 0, label: 'Inactive', description: 'No awareness or discussion of home repairs among board or leadership.' },
               { value: 1, label: 'Aware', description: 'Some vague awareness, but no structured discussions or expressed interest.' },
@@ -33,7 +33,7 @@ const ReadinessApp = () => {
           { 
             id: 'staff', 
             title: 'Staff Commitment', 
-            question: 'How prepared is your staff to engage in home repair training?',
+            question: 'How prepared is your staff to engage in training?',
             levels: [
               { value: 0, label: 'Inactive', description: 'No staff assigned or identified. No clear strategy or timeline.' },
               { value: 1, label: 'Aware', description: 'General leadership support, but limited staff enthusiasm or participation expected.' },
@@ -78,7 +78,7 @@ const ReadinessApp = () => {
           { 
             id: 'organizational', 
             title: 'Capacity Building Need', 
-            question: 'How clearly identified is the need for repairs capacity building?',
+            question: 'How clearly identified is the need for capacity building?',
             levels: [
               { value: 0, label: 'Inactive', description: 'No connection between gaps and need for capacity building.' },
               { value: 1, label: 'Aware', description: 'Limited understanding of how internal gaps relate to capacity building.' },
@@ -110,7 +110,7 @@ const ReadinessApp = () => {
           { 
             id: 'goals', 
             title: 'Clarity of Goals', 
-            question: 'How clearly defined are your repairscapacity-building goals?',
+            question: 'How clearly defined are your capacity-building goals?',
             levels: [
               { value: 0, label: 'Inactive', description: 'No capacity-building goals identified.' },
               { value: 1, label: 'Aware', description: 'General ideas about needs, but goals unclear or unrealistic.' },
@@ -123,7 +123,7 @@ const ReadinessApp = () => {
           { 
             id: 'feasibility', 
             title: 'Feasibility', 
-            question: 'How developed is your repairs plan?',
+            question: 'How realistic is your plan?',
             levels: [
               { value: 0, label: 'Inactive', description: 'Expectations unclear or unrealistic. No internal plan.' },
               { value: 1, label: 'Aware', description: 'Vague plan exists with no clarity on participants or application.' },
@@ -385,7 +385,7 @@ const ReadinessApp = () => {
                 Home Repair Program Readiness Assessment
               </h1>
               <p className="text-blue-100 text-lg">
-                Evaluate your organizational capacity to launch a home repair program
+                Evaluate your organization capacity to launch a home repair program
               </p>
             </div>
 
@@ -400,7 +400,7 @@ const ReadinessApp = () => {
                     <div>
                       <h3 className="font-semibold text-gray-800 mb-1">15 Questions Across 5 Key Factors</h3>
                       <p className="text-gray-600 text-sm">
-                        Capacity, Need, Approach, Leverage and Sustainability
+                        Capacity, Need, Approach, Leverage and Impact, and Sustainability
                       </p>
                     </div>
                   </div>
@@ -434,9 +434,9 @@ const ReadinessApp = () => {
                       <span className="text-blue-600 font-bold">💾</span>
                     </div>
                     <div>
-                      <h3 className="font-semibold text-gray-800 mb-1">Saving Your Results</h3>
+                      <h3 className="font-semibold text-gray-800 mb-1">Save Your Results</h3>
                       <p className="text-gray-600 text-sm">
-                        Your inputs are not saved - Use the Print to PDF button to save your assessment results
+                        Results are not saved automatically - use the Print to PDF button to save your assessment
                       </p>
                     </div>
                   </div>
@@ -515,7 +515,7 @@ const ReadinessApp = () => {
                   </div>
                   <div>
                     <h1 className="text-2xl font-bold">Home Repair Program Readiness Assessment</h1>
-                    <p className="text-blue-100 text-sm">Evaluate your organizational readiness</p>
+                    <p className="text-blue-100 text-sm">Evaluate your organization readiness</p>
                   </div>
                 </div>
                 <div className="bg-white/10 rounded-lg p-4">
@@ -732,7 +732,7 @@ const ReadinessApp = () => {
                       onClick={() => setCurrentView('assessment')}
                       className="px-6 py-3 bg-orange-500 text-white font-semibold rounded-lg hover:bg-orange-600 transition-colors"
                     >
-                      Continue to Assessment
+                      Continue Assessment
                     </button>
                   </div>
                 </div>
@@ -1045,7 +1045,7 @@ const ReadinessApp = () => {
                       onClick={() => setCurrentView('assessment')}
                       className="px-6 py-3 bg-orange-500 text-white font-semibold rounded-lg hover:bg-orange-600 transition-colors"
                     >
-                      Continue to Assessment
+                      Continue Assessment
                     </button>
                   </div>
                 </div>

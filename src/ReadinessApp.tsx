@@ -9,7 +9,7 @@ const ReadinessApp = () => {
   const [comments, setComments] = useState({});
   const [showComments, setShowComments] = useState(false);
   const [currentView, setCurrentView] = useState('welcome');
-  const guideUrl = 'https://readiness-app.vercel.app/ReadinessManual.pdf';
+  const guideUrl = 'https://readiness-app.vercel.app/Readiness_Manual.pdf';
 
   const assessmentData = {
     factors: [

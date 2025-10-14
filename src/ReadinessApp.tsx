@@ -123,7 +123,7 @@ const ReadinessApp = () => {
           { 
             id: 'feasibility', 
             title: 'Feasibility', 
-            question: 'How developed is your repairsplan?',
+            question: 'How developed is your repairs plan?',
             levels: [
               { value: 0, label: 'Inactive', description: 'Expectations unclear or unrealistic. No internal plan.' },
               { value: 1, label: 'Aware', description: 'Vague plan exists with no clarity on participants or application.' },

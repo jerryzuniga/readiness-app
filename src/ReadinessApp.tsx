@@ -241,6 +241,39 @@ const ReadinessApp = () => {
       }
     ]
   };
+        // New subfactors added
+        assessmentData.factors.push({
+          id: 'newFactor',
+          title: 'Factor 6: New Factor Title',
+          subfactors: [
+            {
+              id: 'newSubfactor1',
+              title: 'New Subfactor 1',
+              question: 'What is the question for new subfactor 1?',
+              levels: [
+                { value: 0, label: 'Inactive', description: 'Description for inactive.' },
+                { value: 1, label: 'Aware', description: 'Description for aware.' },
+                { value: 2, label: 'Exploring', description: 'Description for exploring.' },
+                { value: 3, label: 'Planning', description: 'Description for planning.' },
+                { value: 4, label: 'Preparing', description: 'Description for preparing.' },
+                { value: 5, label: 'Ready', description: 'Description for ready.' }
+              ]
+            },
+            {
+              id: 'newSubfactor2',
+              title: 'New Subfactor 2',
+              question: 'What is the question for new subfactor 2?',
+              levels: [
+                { value: 0, label: 'Inactive', description: 'Description for inactive.' },
+                { value: 1, label: 'Aware', description: 'Description for aware.' },
+                { value: 2, label: 'Exploring', description: 'Description for exploring.' },
+                { value: 3, label: 'Planning', description: 'Description for planning.' },
+                { value: 4, label: 'Preparing', description: 'Description for preparing.' },
+                { value: 5, label: 'Ready', description: 'Description for ready.' }
+              ]
+            }
+          ]
+        });
 
   const allSubfactors = assessmentData.factors.flatMap(f => 
     f.subfactors.map(sf => ({ ...sf, factorTitle: f.title }))

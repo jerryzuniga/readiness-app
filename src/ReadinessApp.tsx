@@ -1,4 +1,3 @@
-// @ts-nocheck  Temporary: bypass strict typing until proper interfaces are restored
 import React, { useState } from 'react';
 import { ChevronRight, ChevronLeft, Home, CheckCircle, AlertCircle, TrendingUp, FileText, Download, MessageSquare, Printer } from 'lucide-react';
 
@@ -10,7 +9,7 @@ const ReadinessApp = () => {
   const [comments, setComments] = useState({});
   const [showComments, setShowComments] = useState(false);
   const [currentView, setCurrentView] = useState('welcome');
-  const guideUrl = 'https://readiness-app.vercel.app/Readiness_Manual.pdf';
+  const guideUrl = 'https://readiness-app.vercel.app/ReadinessManual.pdf';
 
   const assessmentData = {
     factors: [
@@ -21,7 +20,7 @@ const ReadinessApp = () => {
           { 
             id: 'leadership', 
             title: 'Leadership and Board Commitment', 
-            question: 'How would you rate your organization\'s leadership and board commitment?',
+            question: 'How would you rate your organization's leadership and board commitment?',
             levels: [
               { value: 0, label: 'Inactive', description: 'No awareness or discussion of home repairs among board or leadership.' },
               { value: 1, label: 'Aware', description: 'Some vague awareness, but no structured discussions or expressed interest.' },
@@ -79,7 +78,7 @@ const ReadinessApp = () => {
           { 
             id: 'organizational', 
             title: 'Capacity Building Need', 
-            question: 'How clearly identified is the need for capacity building?',
+            question: 'How clearly identified is the need for repairs capacity building?',
             levels: [
               { value: 0, label: 'Inactive', description: 'No connection between gaps and need for capacity building.' },
               { value: 1, label: 'Aware', description: 'Limited understanding of how internal gaps relate to capacity building.' },
@@ -111,7 +110,7 @@ const ReadinessApp = () => {
           { 
             id: 'goals', 
             title: 'Clarity of Goals', 
-            question: 'How clearly defined are your capacity-building goals?',
+            question: 'How clearly defined are your repairscapacity-building goals?',
             levels: [
               { value: 0, label: 'Inactive', description: 'No capacity-building goals identified.' },
               { value: 1, label: 'Aware', description: 'General ideas about needs, but goals unclear or unrealistic.' },
@@ -124,7 +123,7 @@ const ReadinessApp = () => {
           { 
             id: 'feasibility', 
             title: 'Feasibility', 
-            question: 'How realistic is your plan?',
+            question: 'How developed is your repairsplan?',
             levels: [
               { value: 0, label: 'Inactive', description: 'Expectations unclear or unrealistic. No internal plan.' },
               { value: 1, label: 'Aware', description: 'Vague plan exists with no clarity on participants or application.' },
@@ -241,39 +240,6 @@ const ReadinessApp = () => {
       }
     ]
   };
-        // New subfactors added
-        assessmentData.factors.push({
-          id: 'newFactor',
-          title: 'Factor 6: New Factor Title',
-          subfactors: [
-            {
-              id: 'newSubfactor1',
-              title: 'New Subfactor 1',
-              question: 'What is the question for new subfactor 1?',
-              levels: [
-                { value: 0, label: 'Inactive', description: 'Description for inactive.' },
-                { value: 1, label: 'Aware', description: 'Description for aware.' },
-                { value: 2, label: 'Exploring', description: 'Description for exploring.' },
-                { value: 3, label: 'Planning', description: 'Description for planning.' },
-                { value: 4, label: 'Preparing', description: 'Description for preparing.' },
-                { value: 5, label: 'Ready', description: 'Description for ready.' }
-              ]
-            },
-            {
-              id: 'newSubfactor2',
-              title: 'New Subfactor 2',
-              question: 'What is the question for new subfactor 2?',
-              levels: [
-                { value: 0, label: 'Inactive', description: 'Description for inactive.' },
-                { value: 1, label: 'Aware', description: 'Description for aware.' },
-                { value: 2, label: 'Exploring', description: 'Description for exploring.' },
-                { value: 3, label: 'Planning', description: 'Description for planning.' },
-                { value: 4, label: 'Preparing', description: 'Description for preparing.' },
-                { value: 5, label: 'Ready', description: 'Description for ready.' }
-              ]
-            }
-          ]
-        });
 
   const allSubfactors = assessmentData.factors.flatMap(f => 
     f.subfactors.map(sf => ({ ...sf, factorTitle: f.title }))
@@ -419,7 +385,7 @@ const ReadinessApp = () => {
                 Home Repair Program Readiness Assessment
               </h1>
               <p className="text-blue-100 text-lg">
-                Evaluate your organization capacity to launch a home repair program
+                Evaluate your organizational capacity to launch a home repair program
               </p>
             </div>
 
@@ -434,7 +400,7 @@ const ReadinessApp = () => {
                     <div>
                       <h3 className="font-semibold text-gray-800 mb-1">15 Questions Across 5 Key Factors</h3>
                       <p className="text-gray-600 text-sm">
-                        Capacity, Need, Approach, Leverage and Impact, and Sustainability
+                        Capacity, Need, Approach, Leverage and Sustainability
                       </p>
                     </div>
                   </div>
@@ -468,9 +434,9 @@ const ReadinessApp = () => {
                       <span className="text-blue-600 font-bold">💾</span>
                     </div>
                     <div>
-                      <h3 className="font-semibold text-gray-800 mb-1">Save Your Results</h3>
+                      <h3 className="font-semibold text-gray-800 mb-1">Saving Your Results</h3>
                       <p className="text-gray-600 text-sm">
-                        Results are not saved automatically - use the Print to PDF button to save your assessment
+                        Your inputs are not saved - Use the Print to PDF button to save your assessment results
                       </p>
                     </div>
                   </div>
@@ -549,7 +515,7 @@ const ReadinessApp = () => {
                   </div>
                   <div>
                     <h1 className="text-2xl font-bold">Home Repair Program Readiness Assessment</h1>
-                    <p className="text-blue-100 text-sm">Evaluate your organization readiness</p>
+                    <p className="text-blue-100 text-sm">Evaluate your organizational readiness</p>
                   </div>
                 </div>
                 <div className="bg-white/10 rounded-lg p-4">
@@ -616,7 +582,7 @@ const ReadinessApp = () => {
                       onChange={(e) => setComments({ ...comments, [currentSubfactor.id]: e.target.value })}
                       placeholder="Add notes..."
                       className="w-full mt-3 px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 resize-none"
-                      rows={3}
+                      rows="3"
                     />
                   )}
                 </div>
@@ -766,7 +732,7 @@ const ReadinessApp = () => {
                       onClick={() => setCurrentView('assessment')}
                       className="px-6 py-3 bg-orange-500 text-white font-semibold rounded-lg hover:bg-orange-600 transition-colors"
                     >
-                      Continue Assessment
+                      Continue to Assessment
                     </button>
                   </div>
                 </div>
@@ -1079,7 +1045,7 @@ const ReadinessApp = () => {
                       onClick={() => setCurrentView('assessment')}
                       className="px-6 py-3 bg-orange-500 text-white font-semibold rounded-lg hover:bg-orange-600 transition-colors"
                     >
-                      Continue Assessment
+                      Continue to Assessment
                     </button>
                   </div>
                 </div>

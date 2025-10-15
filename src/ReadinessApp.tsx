@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { ChevronRight, ChevronLeft, Home, CheckCircle, AlertCircle, TrendingUp, FileText, Download, MessageSquare, Printer } from 'lucide-react';
 
-const VERSION = '1.5.2';
-const CODE_RELEASE = 'CR-20250115-003'; // Code Release Number for version tracking
+const VERSION = '1.5.3';
+const CODE_RELEASE = '20250115143000'; // Code Release Number: YYYYMMDDHHMMSS format
 
 // ============================================
-// TEXT CONFIGURATION - Easy to update all copy
+// TEXT CONFIGURATION - For easy updates to all copy
 // ============================================
 const CONTENT = {
   version: VERSION,
@@ -953,11 +953,11 @@ const ReadinessApp = () => {
             <div className="mb-6 flex flex-wrap justify-between items-start gap-4">
               <h2 className="text-3xl font-bold">Assessment Results</h2>
               <div className="flex gap-2">
-                <button onClick={exportToCSV} className="flex items-center gap-2 px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 font-semibold">
-                  <Download className="w-4 h-4" /> Export CSV
-                </button>
                 <button onClick={() => window.print()} className="flex items-center gap-2 px-4 py-2 bg-gray-700 text-white rounded-lg hover:bg-gray-800 font-semibold">
                   <Printer className="w-4 h-4" /> Print to PDF
+                </button>
+                <button onClick={() => setCurrentView('next-steps')} className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 font-semibold">
+                  <TrendingUp className="w-4 h-4" /> Action Items
                 </button>
               </div>
             </div>
@@ -1056,15 +1056,6 @@ const ReadinessApp = () => {
                       __html: getReadinessDescription(results.overallScore).description.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
                     }} />
                   </div>
-                </div>
-
-                <div className="flex gap-3 mb-8">
-                  <button onClick={() => window.print()} className="flex items-center gap-2 px-6 py-3 bg-gray-700 text-white rounded-lg hover:bg-gray-800 font-semibold">
-                    <Printer className="w-5 h-5" /> {CONTENT.dashboard.printButton}
-                  </button>
-                  <button onClick={() => setCurrentView('next-steps')} className="flex items-center gap-2 px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 font-semibold">
-                    <TrendingUp className="w-5 h-5" /> {CONTENT.dashboard.actionItemsButton}
-                  </button>
                 </div>
 
                 <div className="mb-8">

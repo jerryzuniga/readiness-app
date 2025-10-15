@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { ChevronRight, ChevronLeft, Home, CheckCircle, AlertCircle, TrendingUp, FileText, Download, MessageSquare, Printer } from 'lucide-react';
 
-const VERSION = '1.4.8';
+const VERSION = '1.4.9';
+const CODE_RELEASE = 'CR-20250115-001'; // Code Release Number for version tracking
 
 // ============================================
 // TEXT CONFIGURATION - Easy to update all copy
@@ -401,19 +402,137 @@ const ReadinessApp = () => {
     a.click();
   };
 
+  const getDetailedNextSteps = (subfactorId, currentScore) => {
+    const nextSteps = {
+      leadership: {
+        0: "Schedule a board presentation to introduce housing preservation as a strategic opportunity. Share peer affiliate examples and local data on vulnerable homeowner populations. Use resources like the Housing Preservation Playbook to illustrate why repairs matter for your community.",
+        1: "Move from informal awareness to structured exploration by forming a board and staff working group. Review Policy 33 together and invite HFHI staff or successful peer affiliates to present at a board meeting about housing preservation strategies.",
+        2: "Develop a concept paper or case statement that frames housing preservation as a strategic priority. Schedule regular leadership discussions (quarterly minimum) about repair program feasibility, timeline, and resource requirements.",
+        3: "Create a strategic roadmap with clear milestones for moving from planning to implementation. Establish board-level commitment by incorporating housing preservation goals into your strategic plan and identifying a board champion.",
+        4: "Finalize board approval of repair program policy and concept. Assign executive-level accountability for program launch, establish success metrics, and begin communicating the vision internally and to stakeholders."
+      },
+      staff: {
+        0: "Identify 1-2 staff members who could explore repair program feasibility. Create protected time for them to research peer affiliates, attend HFHI webinars, and gather preliminary information about what launching a program would require.",
+        1: "Develop a participation strategy that outlines which staff will be involved in capacity building, their time commitment, and how learnings will be shared across the organization. Begin informal conversations about staff interest and capacity.",
+        2: "Create a detailed learning plan that identifies specific training opportunities, assigns staff to participate, and establishes how they will apply new knowledge. Consider job descriptions or role adjustments to formalize repair program responsibilities.",
+        3: "Confirm staff participation in comprehensive training and establish clear expectations for applying skills. Schedule regular team meetings to share learnings and begin drafting operational procedures based on training content.",
+        4: "Complete all planned training with full staff engagement. Assign specific operational roles (intake coordinator, project manager, volunteer coordinator) and ensure staff have the tools and authority needed to move toward launch."
+      },
+      systems: {
+        0: "Begin identifying what systems, tools, and equipment would be needed for repair operations. Research what other affiliates use for project tracking, intake management, and quality control. Make a preliminary list of gaps.",
+        1: "Turn general awareness into specific planning by documenting current systems and identifying gaps. Create a prioritized list of improvements needed (intake process, project tracking, equipment inventory, contractor management).",
+        2: "Test lightweight solutions for priority system needs. For example, pilot a simple intake form, try a project tracking spreadsheet, or conduct a tool inventory. Gather feedback from staff about what would make operations manageable.",
+        3: "Develop a written system readiness plan that outlines which tools and procedures will be adopted, tested timeline, responsible parties, and budget requirements. Begin piloting key systems like intake databases or project management tools.",
+        4: "Execute your system improvement plan by implementing intake databases, procurement procedures, contractor tracking, and quality control processes. Train all relevant staff on new systems and establish regular review cycles for continuous improvement."
+      },
+      housing: {
+        0: "Start gathering basic information about housing conditions in your service area. Review census data, public health reports, or housing quality studies. Talk to local agencies serving vulnerable homeowners to understand what repair needs they observe.",
+        1: "Move beyond anecdotes by initiating systematic data collection. Create a simple tracking system for repair inquiries, start a waiting list, or partner with agencies to document referrals. Attend community meetings to listen for housing concerns.",
+        2: "Conduct targeted outreach to gather qualitative data about repair needs. Interview homeowners, survey community partners, or host listening sessions. Document specific examples of housing challenges and their impact on residents.",
+        3: "Compile your findings into a needs assessment document with both quantitative data (number of inquiries, demographic information) and qualitative evidence (stories, examples, partner observations). Identify priority repair types and populations.",
+        4: "Create a comprehensive community needs profile that demonstrates clear demand for repair services. Use multiple data sources (waitlists, assessments, partner referrals, external reports) to make a compelling case for program launch."
+      },
+      organizational: {
+        0: "Begin identifying internal capacity gaps that would need to be addressed before launching a repair program. Consider staffing, systems, equipment, policies, and expertise. Document what's missing without judgment.",
+        1: "Facilitate honest conversations with staff and leadership about organizational readiness. Use a simple self-assessment tool to identify gaps in policies, systems, technical knowledge, staffing, or equipment that relate to repair capacity.",
+        2: "Connect identified capacity gaps to specific capacity-building needs. For each gap, articulate what support or investment would help address it (training, hiring, equipment purchase, system development, technical assistance).",
+        3: "Develop a capacity-building plan that prioritizes gaps and outlines strategies for addressing them. Clearly link each capacity-building goal to repair program readiness. Begin implementing priority improvements.",
+        4: "Execute your capacity-building plan with clear documentation of how investments support repair program launch. Track progress, adjust strategies as needed, and prepare to demonstrate organizational readiness to funders and partners."
+      },
+      timing: {
+        0: "Explore whether housing preservation aligns with current organizational priorities and external trends. Consider whether there are emerging opportunities (new funding, partner interest, community demand) that create favorable timing.",
+        1: "Document early indicators that suggest repairs could be timely: growing community requests, partner inquiries, staff interest, board curiosity, or alignment with strategic planning cycles. Build the case for exploring feasibility now.",
+        2: "Assess whether current organizational conditions support moving forward with planning. Consider leadership transitions, strategic planning processes, funding opportunities, or community partnerships that create momentum.",
+        3: "Establish clear rationale for pursuing capacity building now by linking timing to organizational priorities, community needs, and external opportunities. Set realistic timeline expectations with leadership and board.",
+        4: "Communicate urgency effectively to internal and external stakeholders. Document time-sensitive factors (transitions, funding deadlines, community crises, strategic windows) that make immediate capacity building critical."
+      },
+      goals: {
+        0: "Begin articulating what you hope to achieve through capacity building. Even if goals are preliminary, start capturing ideas about what repair program readiness would mean for your organization.",
+        1: "Move from vague ideas to specific statements about capacity-building goals. What skills, systems, policies, or resources do you need to develop? Write these down even if they need refinement.",
+        2: "Refine your goals to ensure they clearly connect to repair program readiness. For each goal, articulate how achieving it moves you closer to being able to serve homeowners. Prioritize goals based on importance.",
+        3: "Develop SMART goals (Specific, Measurable, Achievable, Relevant, Time-bound) for capacity building. Ensure goals address core readiness elements: policy development, staff training, system improvements, partnership building.",
+        4: "Finalize highly detailed, actionable goals that clearly support critical repair capacity components. Assign ownership, establish metrics for success, and integrate goals into project planning and accountability systems."
+      },
+      feasibility: {
+        0: "Acknowledge that developing a feasible plan requires exploration. Begin researching what other affiliates did to build repair capacity. Identify 2-3 peer organizations you could learn from about realistic pathways to program launch.",
+        1: "Draft a preliminary plan outline that addresses who will participate in capacity building, what activities are needed, when they will occur, and how learning will be applied. Expect this to be rough and incomplete.",
+        2: "Develop your plan with more structure by identifying specific training opportunities, assigning tentative participants, outlining application steps, and establishing a general timeline. Fill in gaps through conversations with HFHI or peers.",
+        3: "Create a realistic plan with clear strategy, confirmed participants, defined responsibilities, and feasible timeline. Ensure resources (time, budget, staff capacity) align with planned activities. Get leadership sign-off.",
+        4: "Finalize a strong, detailed plan with clear pathways, backup strategies, and accountability mechanisms. Document how capacity-building activities connect to specific operational readiness milestones like policy approval or intake system implementation."
+      },
+      alignment: {
+        0: "Begin thinking about how capacity-building activities would connect to actual program outcomes. What would success look like? How would capacity building help you serve homeowners effectively?",
+        1: "Articulate the connection between capacity building and your desired impact. Move beyond ad hoc thinking to consider how training, systems, and partnerships position you to achieve housing preservation outcomes.",
+        2: "Strengthen alignment by ensuring capacity-building activities address both immediate readiness needs and longer-term sustainability. Consider how what you build now will support ongoing program operations.",
+        3: "Demonstrate clear alignment between capacity-building priorities and program goals. Show how planned activities support key outcomes: serving vulnerable homeowners, building sustainable operations, achieving quality standards.",
+        4: "Achieve full alignment between capacity building and long-term outcomes including systems change, community impact, and organizational sustainability. Articulate theory of change connecting capacity investments to housing preservation impact."
+      },
+      resources: {
+        0: "Begin identifying what resources beyond grant funding might support repair program development. Consider existing assets: staff expertise, volunteer networks, equipment, partner relationships, or in-kind support.",
+        1: "Create a preliminary resource inventory that includes current assets and potential sources of additional support. Research funding opportunities, partnership possibilities, and creative resource-sharing arrangements.",
+        2: "Develop a resource development strategy that identifies specific opportunities to leverage additional support. Reach out to potential partners, research grants, or explore volunteer recruitment strategies.",
+        3: "Implement your resource development plan by actively pursuing complementary funding, formalizing partnerships, recruiting volunteers, or securing in-kind donations. Document resource diversity to demonstrate leverage.",
+        4: "Execute a comprehensive resource development strategy that demonstrates strong leverage through diverse funding sources, active partnerships, volunteer engagement, and creative use of existing assets. Show clear plan for sustaining resource mobilization."
+      },
+      partnerships: {
+        0: "Begin identifying potential partners who share interest in housing preservation. Consider local agencies, government programs, faith communities, healthcare organizations, or other nonprofits serving vulnerable homeowners.",
+        1: "Reach out to potential partners for exploratory conversations. Share your interest in developing repair capacity and learn about their work. Identify mutual interests and potential collaboration opportunities.",
+        2: "Move from informal discussions to more structured partnership conversations. Discuss specific ways partners could support capacity building or future program operations. Begin documenting partner commitments or expressions of support.",
+        3: "Formalize key partnerships through MOUs, letters of support, or partnership agreements. Invite partners to participate in planning activities, training sessions, or advisory roles. Clarify mutual expectations and benefits.",
+        4: "Activate well-established partnerships through joint activities like referral systems, co-training events, shared resources, or collaborative program design. Demonstrate how partnerships strengthen program capacity and community impact."
+      },
+      postgrant: {
+        0: "Begin thinking about what happens after capacity-building support ends. Even if details are unclear, acknowledge that sustainability requires planning. Research how other affiliates sustained repair programs.",
+        1: "Identify preliminary ideas for sustaining repair capacity beyond the grant period. Consider potential funding sources, fee structures, volunteer models, or partnership arrangements that could support ongoing operations.",
+        2: "Develop informal sustainability strategies by exploring specific options: grant opportunities, program fees, volunteer coordination, partnership cost-sharing, or integration with existing programs. Test assumptions with peers.",
+        3: "Create a moderate sustainability plan that outlines strategies for maintaining core program components after grant support ends. Identify likely funding sources, partnership roles, and operational efficiencies that enable continuation.",
+        4: "Finalize a clear, realistic sustainability plan with specific funding strategies, partnership commitments, operational models, and contingency approaches. Assign responsibility for sustainability planning and establish metrics for tracking progress."
+      },
+      vision: {
+        0: "Begin articulating why housing preservation matters for your community and organization. What impact do you hope to achieve? Who would benefit? How would repair services advance your mission?",
+        1: "Develop your vision by connecting housing preservation to community needs and organizational purpose. Write a vision statement that describes what success would look like even if implementation details remain unclear.",
+        2: "Strengthen your vision by grounding it in community needs data and organizational values. Engage staff and board in refining the vision to ensure broad ownership and connection to strategic priorities.",
+        3: "Develop a moderately clear, compelling vision that articulates who you will serve, what types of repairs you will provide, how the program aligns with mission, and what community impact you seek to achieve.",
+        4: "Finalize a strong, strategic vision for housing preservation that inspires internal alignment and external support. Articulate how repair services create lasting community impact, advance equity, and position your organization for sustainable growth."
+      },
+      application: {
+        0: "Acknowledge that capacity-building investments should lead to actual program implementation. Begin thinking about what you would need to do after training and planning to actually serve homeowners.",
+        1: "Develop preliminary ideas about how you will apply capacity-building learning. Will you launch a pilot? Integrate repairs into existing programs? Partner with others? Begin exploring options even if direction is unclear.",
+        2: "Create a general plan for applying new capacity that outlines basic implementation steps, timeline, and resource requirements. Identify major milestones like completing policy, hiring staff, or conducting first projects.",
+        3: "Develop a moderately detailed implementation plan that describes how you will transition from capacity building to program operations. Outline pilot activities, staffing models, partnership roles, and quality standards.",
+        4: "Finalize a clear, realistic post-grant implementation plan with specific activities, responsible parties, timeline, and success metrics. Demonstrate that capacity-building investments will translate directly into serving homeowners."
+      },
+      community: {
+        0: "Begin thinking about how repair program development connects to broader community benefit beyond your organization's internal goals. Who benefits? How does this advance community well-being?",
+        1: "Articulate preliminary connections between repair capacity building and community outcomes. Consider impacts on homeowner health, safety, stability, and dignity. Think about neighborhood-level effects.",
+        2: "Strengthen the case for community benefit by connecting repair services to documented needs, vulnerable populations, and community development goals. Begin describing both individual and systemic impacts.",
+        3: "Clearly articulate how repair program development creates broader community benefit. Document connections to health outcomes, aging in place, neighborhood stability, equity, and community development priorities.",
+        4: "Demonstrate measurable, well-documented community benefits through data, examples, and projected outcomes. Show how repair capacity building advances sector-wide goals, systemic change, and meaningful impact for vulnerable populations."
+      }
+    };
+
+    return nextSteps[subfactorId]?.[currentScore] || "Continue building capacity in this area by implementing the recommendations from your assessment guide.";
+  };
+
   const getRecommendations = (factorScores) => {
     const recs = [];
     Object.entries(factorScores).forEach(([, data]) => {
       data.subfactors.forEach(sf => {
         if (sf.score !== undefined) {
           let priority = 'Low';
-          if (sf.score < 2) priority = 'High';
+          if (sf.score === 5) priority = 'Ready';
+          else if (sf.score < 2) priority = 'High';
           else if (sf.score < 3) priority = 'Medium';
+          
+          const subfactorId = allSubfactors.find(s => s.title === sf.title)?.id;
+          const detailedNextSteps = subfactorId ? getDetailedNextSteps(subfactorId, sf.score) : '';
+          
           recs.push({
             factor: data.title,
             subfactor: sf.title,
             score: sf.score,
-            priority
+            priority,
+            nextSteps: detailedNextSteps
           });
         }
       });
@@ -802,27 +921,27 @@ const ReadinessApp = () => {
     const getReadinessDescription = (score) => {
       if (score < 1) return {
         stage: 'Inactive',
-        description: 'Your organization is at the Inactive stage of readiness with an overall score of ' + score.toFixed(1) + ' out of 5.0. At this stage, there is limited awareness or discussion of home repairs among board or leadership, and no clear connection has been made between existing organizational gaps and the need for capacity building. Home repair programming is not yet seen as a relevant or strategic topic for your affiliate. Leadership may not have initiated formal conversations about housing preservation, and there is minimal understanding of how repair services could fit into your mission or strategic priorities. Staff have not been assigned to explore this work, and internal systems for managing repair operations are not in place. To advance readiness, begin by educating leadership on why repairs matter through peer affiliate examples, local data on vulnerable populations, or resources like the Housing Preservation Playbook. Consider scheduling a board presentation to introduce housing preservation as a strategic growth area, and start informal discussions about whether repair services align with your community needs and organizational capacity. Focus on building awareness and exploring whether this work could serve your mission before moving to more structured planning.'
+        description: 'Your organization is at the **Inactive** stage of readiness with an overall score of **' + score.toFixed(1) + ' out of 5.0**. At this stage, there is limited awareness or discussion of home repairs among board or leadership, and no clear connection has been made between existing organizational gaps and the need for capacity building. Home repair programming is not yet seen as a relevant or strategic topic for your affiliate. Leadership may not have initiated formal conversations about housing preservation, and there is minimal understanding of how repair services could fit into your mission or strategic priorities. Staff have not been assigned to explore this work, and internal systems for managing repair operations are not in place. To advance readiness, begin by educating leadership on why repairs matter through peer affiliate examples, local data on vulnerable populations, or resources like the Housing Preservation Playbook. Consider scheduling a board presentation to introduce housing preservation as a strategic growth area, and start informal discussions about whether repair services align with your community needs and organizational capacity. Focus on building awareness and exploring whether this work could serve your mission before moving to more structured planning.'
       };
       if (score < 2) return {
         stage: 'Aware',
-        description: 'Your organization is at the Aware stage of readiness with an overall score of ' + score.toFixed(1) + ' out of 5.0. At this stage, there is general recognition that something is missing or that repairs could be valuable, but the connection to repair readiness remains vague. Leadership may have expressed informal interest in home repairs, but no formal conversations or strategic plans have been developed. Staff may be aware of repair needs in the community through anecdotal evidence or one-off requests, but no systematic data gathering has occurred. The organization lacks clarity on internal capacity gaps, and there is limited understanding of what resources, systems, or staffing would be needed to launch a repair program. Goals remain unclear or unrealistic, and no concrete steps have been taken toward planning or capacity building. To advance readiness, use board meetings or staff retreats to introduce housing preservation more formally through presentations from HFHI staff or peer affiliates who have launched successful programs. Begin conversations about "what\'s missing" by framing discussions around what would make your organization more prepared to run a repair program. Start collecting basic local indicators such as public health data, housing quality reports, or census information showing homeowner challenges in your service area. Engage local partners—agencies, churches, or nonprofits serving vulnerable homeowners—to gather insights about repair needs they are observing. The goal is to move from general awareness to intentional exploration.'
+        description: 'Your organization is at the **Aware** stage of readiness with an overall score of **' + score.toFixed(1) + ' out of 5.0**. At this stage, there is general recognition that something is missing or that repairs could be valuable, but the connection to repair readiness remains vague. Leadership may have expressed informal interest in home repairs, but no formal conversations or strategic plans have been developed. Staff may be aware of repair needs in the community through anecdotal evidence or one-off requests, but no systematic data gathering has occurred. The organization lacks clarity on internal capacity gaps, and there is limited understanding of what resources, systems, or staffing would be needed to launch a repair program. Goals remain unclear or unrealistic, and no concrete steps have been taken toward planning or capacity building. To advance readiness, use board meetings or staff retreats to introduce housing preservation more formally through presentations from HFHI staff or peer affiliates who have launched successful programs. Begin conversations about "what\'s missing" by framing discussions around what would make your organization more prepared to run a repair program. Start collecting basic local indicators such as public health data, housing quality reports, or census information showing homeowner challenges in your service area. Engage local partners—agencies, churches, or nonprofits serving vulnerable homeowners—to gather insights about repair needs they are observing. The goal is to move from general awareness to intentional exploration.'
       };
       if (score < 3) return {
         stage: 'Exploring',
-        description: 'Your organization is at the Exploring stage of readiness with an overall score of ' + score.toFixed(1) + ' out of 5.0. Your team has begun to identify some internal needs or challenges and is starting to tie them to potential repair program goals or capacity strategies. Leadership has initiated exploratory conversations and shown interest in small-scale repair activities, though these discussions remain informal. One or two staff members may have been named to explore feasibility, but their responsibilities, time commitments, and roles in future program development remain unclear. The organization has community-level awareness of repair needs supported by anecdotes or limited examples, but lacks detailed quantitative data or systematic needs assessment. Internal capacity gaps have been acknowledged—such as staffing shortages, tool limitations, or system deficiencies—but are not clearly linked to a capacity-building strategy. A few goals may have been identified, but they remain loosely tied to repair readiness. Initial conversations about system improvements (tracking tools, project workflow, equipment) have started, but no action has been taken yet. At this stage, you\'re moving beyond awareness into early exploration. To advance readiness, form a board and staff working group to explore feasibility more systematically. Draft a participation strategy identifying key roles and how learnings will be shared across the organization. Begin capturing real data on community repair needs by tracking inquiries, starting a waiting list, or conducting interviews and surveys with homeowners. Turn discussions about system improvements into early planning by testing lightweight tools or gathering stakeholder feedback. Review Policy 33 together as a team and start developing a short concept paper that outlines your vision. The goal is to move from informal conversations to structured exploration with defined next steps.'
+        description: 'Your organization is at the **Exploring** stage of readiness with an overall score of **' + score.toFixed(1) + ' out of 5.0**. Your team has begun to identify some internal needs or challenges and is starting to tie them to potential repair program goals or capacity strategies. Leadership has initiated exploratory conversations and shown interest in small-scale repair activities, though these discussions remain informal. One or two staff members may have been named to explore feasibility, but their responsibilities, time commitments, and roles in future program development remain unclear. The organization has community-level awareness of repair needs supported by anecdotes or limited examples, but lacks detailed quantitative data or systematic needs assessment. Internal capacity gaps have been acknowledged—such as staffing shortages, tool limitations, or system deficiencies—but are not clearly linked to a capacity-building strategy. A few goals may have been identified, but they remain loosely tied to repair readiness. Initial conversations about system improvements (tracking tools, project workflow, equipment) have started, but no action has been taken yet. At this stage, you\'re moving beyond awareness into early exploration. To advance readiness, form a board and staff working group to explore feasibility more systematically. Draft a participation strategy identifying key roles and how learnings will be shared across the organization. Begin capturing real data on community repair needs by tracking inquiries, starting a waiting list, or conducting interviews and surveys with homeowners. Turn discussions about system improvements into early planning by testing lightweight tools or gathering stakeholder feedback. Review Policy 33 together as a team and start developing a short concept paper that outlines your vision. The goal is to move from informal conversations to structured exploration with defined next steps.'
       };
       if (score < 4) return {
         stage: 'Planning',
-        description: 'Your organization is at the Planning stage of readiness with an overall score of ' + score.toFixed(1) + ' out of 5.0. You have identified key gaps and are beginning to explore how to address them, with the team aligning around next steps and early strategies. Leadership and board have moved beyond exploration to regular discussions about repair programming, and home repairs are now part of formal strategic conversations. Specific staff have been selected for training and planning activities, though their participation may still be limited to select sessions or informal involvement. The organization has identified some specific housing stabilization needs through intentional efforts such as partner referrals, qualitative feedback, or early data gathering. Capacity-building needs are being explored, with the affiliate beginning to understand how internal gaps relate to repair readiness. Goals are moderately clear and generally aligned with repair capacity building, though some may need refinement or prioritization. A realistic plan exists with basic strategy and key team members identified, and system and equipment needs have been clearly identified with early-stage planning, piloting, or budgeting underway. Partnerships have been named with general support, though not yet formalized, and there is moderate planning for sustainability with partial clarity around resources and future direction. To advance readiness, develop a strategic roadmap or case statement that aligns the board around timing, goals, and what launching a pilot would require. Build momentum by developing a detailed training and learning plan that aligns staff participation with key development milestones such as policy creation or intake design. Document repair needs in a simple format—create a summary or slide deck illustrating examples, costs, and populations affected. Create a system readiness plan outlining which tools or procedures will be adopted, tested, or adapted. Begin formalizing partnerships with MOUs or partnership agreements that clarify roles and responsibilities. The goal is to move from early planning to concrete preparation with documented plans and assigned accountability.'
+        description: 'Your organization is at the **Planning** stage of readiness with an overall score of **' + score.toFixed(1) + ' out of 5.0**. You have identified key gaps and are beginning to explore how to address them, with the team aligning around next steps and early strategies. Leadership and board have moved beyond exploration to regular discussions about repair programming, and home repairs are now part of formal strategic conversations. Specific staff have been selected for training and planning activities, though their participation may still be limited to select sessions or informal involvement. The organization has identified some specific housing stabilization needs through intentional efforts such as partner referrals, qualitative feedback, or early data gathering. Capacity-building needs are being explored, with the affiliate beginning to understand how internal gaps relate to repair readiness. Goals are moderately clear and generally aligned with repair capacity building, though some may need refinement or prioritization. A realistic plan exists with basic strategy and key team members identified, and system and equipment needs have been clearly identified with early-stage planning, piloting, or budgeting underway. Partnerships have been named with general support, though not yet formalized, and there is moderate planning for sustainability with partial clarity around resources and future direction. To advance readiness, develop a strategic roadmap or case statement that aligns the board around timing, goals, and what launching a pilot would require. Build momentum by developing a detailed training and learning plan that aligns staff participation with key development milestones such as policy creation or intake design. Document repair needs in a simple format—create a summary or slide deck illustrating examples, costs, and populations affected. Create a system readiness plan outlining which tools or procedures will be adopted, tested, or adapted. Begin formalizing partnerships with MOUs or partnership agreements that clarify roles and responsibilities. The goal is to move from early planning to concrete preparation with documented plans and assigned accountability.'
       };
       if (score < 5) return {
         stage: 'Preparing',
-        description: 'Your organization is at the Preparing stage of readiness with an overall score of ' + score.toFixed(1) + ' out of 5.0. You have clearly defined needs directly tied to repair program readiness, with drafts, outlines, or initial frameworks in place to seek support or implement improvements. Housing preservation has been integrated into strategic planning, and leadership and board have taken early steps such as assigning staff, approving concept drafts, including repairs in strategic planning, or exploring funding opportunities. Staff have been identified, scheduled for learning, and assigned to apply new skills to planning or early implementation steps, demonstrating organizational commitment to capacity building. The affiliate has a clear understanding of housing repair needs supported by specific data sources, community feedback, or observable trends, and capacity-building goals are specific and realistic, tied directly to core elements of repair readiness such as staffing, systems development, or training. A written, resourced plan exists with clear structure, responsibilities, and timing, and participants are confirmed with internal processes in place to support engagement. A documented and organized plan exists to strengthen administrative, operational, and equipment-related systems, with staff roles clearly defined and implementation timelines established. Partnerships are clearly defined and providing consistent support, and there is a clear, realistic plan for maintaining or expanding program components after grant support ends. The organization demonstrates strong alignment with capacity-building goals, clearly geared toward sustainability and strategic impact. To move to full readiness, begin developing operational components such as drafting or revising a board-approved repair policy and outlining a staffing or volunteer model. Finalize operational procedures and quality standards, complete staff training and role assignments, and prepare for internal systems development. Use community needs data to shape your program design by aligning repair priorities (accessibility, roofing, HVAC) with actual needs. Begin executing on key system areas such as implementing an intake database, procurement tools, and contractor tracking, ensuring staff are trained and resourced. Activate partnerships through joint activities like referral systems, co-training events, or shared resource pools. The goal is to move from preparation to operational readiness with all systems, staff, and partnerships in place for launch.'
+        description: 'Your organization is at the **Preparing** stage of readiness with an overall score of **' + score.toFixed(1) + ' out of 5.0**. You have clearly defined needs directly tied to repair program readiness, with drafts, outlines, or initial frameworks in place to seek support or implement improvements. Housing preservation has been integrated into strategic planning, and leadership and board have taken early steps such as assigning staff, approving concept drafts, including repairs in strategic planning, or exploring funding opportunities. Staff have been identified, scheduled for learning, and assigned to apply new skills to planning or early implementation steps, demonstrating organizational commitment to capacity building. The affiliate has a clear understanding of housing repair needs supported by specific data sources, community feedback, or observable trends, and capacity-building goals are specific and realistic, tied directly to core elements of repair readiness such as staffing, systems development, or training. A written, resourced plan exists with clear structure, responsibilities, and timing, and participants are confirmed with internal processes in place to support engagement. A documented and organized plan exists to strengthen administrative, operational, and equipment-related systems, with staff roles clearly defined and implementation timelines established. Partnerships are clearly defined and providing consistent support, and there is a clear, realistic plan for maintaining or expanding program components after grant support ends. The organization demonstrates strong alignment with capacity-building goals, clearly geared toward sustainability and strategic impact. To move to full readiness, begin developing operational components such as drafting or revising a board-approved repair policy and outlining a staffing or volunteer model. Finalize operational procedures and quality standards, complete staff training and role assignments, and prepare for internal systems development. Use community needs data to shape your program design by aligning repair priorities (accessibility, roofing, HVAC) with actual needs. Begin executing on key system areas such as implementing an intake database, procurement tools, and contractor tracking, ensuring staff are trained and resourced. Activate partnerships through joint activities like referral systems, co-training events, or shared resource pools. The goal is to move from preparation to operational readiness with all systems, staff, and partnerships in place for launch.'
       };
       return {
         stage: 'Ready',
-        description: 'Your organization is Ready to launch a home repair program with an exceptional overall score of ' + score.toFixed(1) + ' out of 5.0. Congratulations! Housing preservation is fully embedded in your affiliate\'s strategic vision, and you are well-positioned to pursue funding, technical assistance, or pilot implementation. Leadership is aligned, engaged, and actively preparing for launch with a clear commitment from board and executive team. A dedicated team or cross-functional staff group is fully committed, engaged in learning, and equipped with a plan to lead development of the affiliate\'s repair program. The organization has a strong, data-driven understanding of housing repair needs, supported by waitlists, formal assessments, external reports, or comprehensive community feedback, demonstrating clear demand for services. Capacity-building investments are justified with data and directly linked to repair program implementation or sustainability. Goals are highly detailed, actionable, and directly support critical components of home repair capacity such as program design, systems development, staffing, and equity considerations. The plan is strong and feasible with clear pathways for participation, structured application of learning, and accountability for follow-through. Your approach is fully aligned with long-term outcomes including sustainability, systems change, and the affiliate\'s ability to deliver home repair services over time. A fully developed and actionable system improvement plan is in place, integrated across your organization and aligned with your repair launch timeline, including tools for tracking, project management, and compliance. Well-established partnerships exist with aligned goals, clear roles, and active engagement, positioning the organization to leverage external support effectively. A strong, actionable sustainability plan with specific follow-up steps, responsible parties, and transition supports is in place, ensuring the program can continue and potentially scale beyond initial funding. Your organization should now focus on operational readiness by moving into the execution phase. Finalize resource allocation, assign staff to operational roles, establish quality control mechanisms, and begin pilot activities or soft launches. Continue building your case for ongoing funding by documenting early successes and demonstrating community impact. Use outcome frameworks or the Quality of Life Framework to communicate the full value of your approach to funders and community partners. Prepare for continuous improvement through regular evaluation and adaptation as you learn from implementation experience. Your readiness positions you not just to launch, but to build a sustainable, impactful repair program that serves your community for years to come.'
+        description: 'Your organization is **Ready** to launch a home repair program with an exceptional overall score of **' + score.toFixed(1) + ' out of 5.0**. Congratulations! Housing preservation is fully embedded in your affiliate\'s strategic vision, and you are well-positioned to pursue funding, technical assistance, or pilot implementation. Leadership is aligned, engaged, and actively preparing for launch with a clear commitment from board and executive team. A dedicated team or cross-functional staff group is fully committed, engaged in learning, and equipped with a plan to lead development of the affiliate\'s repair program. The organization has a strong, data-driven understanding of housing repair needs, supported by waitlists, formal assessments, external reports, or comprehensive community feedback, demonstrating clear demand for services. Capacity-building investments are justified with data and directly linked to repair program implementation or sustainability. Goals are highly detailed, actionable, and directly support critical components of home repair capacity such as program design, systems development, staffing, and equity considerations. The plan is strong and feasible with clear pathways for participation, structured application of learning, and accountability for follow-through. Your approach is fully aligned with long-term outcomes including sustainability, systems change, and the affiliate\'s ability to deliver home repair services over time. A fully developed and actionable system improvement plan is in place, integrated across your organization and aligned with your repair launch timeline, including tools for tracking, project management, and compliance. Well-established partnerships exist with aligned goals, clear roles, and active engagement, positioning the organization to leverage external support effectively. A strong, actionable sustainability plan with specific follow-up steps, responsible parties, and transition supports is in place, ensuring the program can continue and potentially scale beyond initial funding. Your organization should now focus on operational readiness by moving into the execution phase. Finalize resource allocation, assign staff to operational roles, establish quality control mechanisms, and begin pilot activities or soft launches. Continue building your case for ongoing funding by documenting early successes and demonstrating community impact. Use outcome frameworks or the Quality of Life Framework to communicate the full value of your approach to funders and community partners. Prepare for continuous improvement through regular evaluation and adaptation as you learn from implementation experience. Your readiness positions you not just to launch, but to build a sustainable, impactful repair program that serves your community for years to come.'
       };
     };
 
@@ -923,9 +1042,9 @@ const ReadinessApp = () => {
                   </div>
                   
                   <div className="bg-gray-50 rounded-lg p-6">
-                    <p className="text-gray-700 leading-relaxed">
-                      {getReadinessDescription(results.overallScore).description}
-                    </p>
+                    <p className="text-gray-700 leading-relaxed" dangerouslySetInnerHTML={{
+                      __html: getReadinessDescription(results.overallScore).description.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+                    }} />
                   </div>
                 </div>
 
@@ -1012,6 +1131,7 @@ const ReadinessApp = () => {
     const high = recs.filter(r => r.priority === 'High');
     const med = recs.filter(r => r.priority === 'Medium');
     const low = recs.filter(r => r.priority === 'Low');
+    const ready = recs.filter(r => r.priority === 'Ready');
 
     return (
       <>
@@ -1049,7 +1169,7 @@ const ReadinessApp = () => {
                     General Guidance
                   </h3>
                   <ul className="space-y-2 text-gray-700">
-                    <li>• Review areas scoring below Planning (3) for immediate attention</li>
+                    <li>• Review areas scoring below <span className="inline-flex items-center px-2 py-0.5 rounded text-xs font-semibold bg-yellow-400 text-white">Planning (3)</span> for immediate attention</li>
                     <li>• Create a 3-6 month action plan addressing your lowest-scoring factors</li>
                     <li>• Engage leadership and staff in discussing assessment results</li>
                     <li>• Connect with HFHI for technical assistance in priority areas</li>
@@ -1079,6 +1199,12 @@ const ReadinessApp = () => {
                             <h4 className="font-bold text-gray-800 text-lg">{rec.subfactor} - Score: {rec.score}</h4>
                             <p className="text-sm text-gray-600 mt-1">{rec.factor}</p>
                           </div>
+                          {rec.nextSteps && (
+                            <div className="mt-4 p-4 bg-white rounded border border-red-100">
+                              <p className="text-sm font-semibold text-gray-700 mb-2">Recommended Next Steps:</p>
+                              <p className="text-sm text-gray-700 leading-relaxed">{rec.nextSteps}</p>
+                            </div>
+                          )}
                         </div>
                       ))}
                     </div>
@@ -1101,6 +1227,12 @@ const ReadinessApp = () => {
                             <h4 className="font-bold text-gray-800 text-lg">{rec.subfactor} - Score: {rec.score}</h4>
                             <p className="text-sm text-gray-600 mt-1">{rec.factor}</p>
                           </div>
+                          {rec.nextSteps && (
+                            <div className="mt-4 p-4 bg-white rounded border border-yellow-100">
+                              <p className="text-sm font-semibold text-gray-700 mb-2">Recommended Next Steps:</p>
+                              <p className="text-sm text-gray-700 leading-relaxed">{rec.nextSteps}</p>
+                            </div>
+                          )}
                         </div>
                       ))}
                     </div>
@@ -1122,6 +1254,38 @@ const ReadinessApp = () => {
                             </div>
                             <h4 className="font-bold text-gray-800 text-lg">{rec.subfactor} - Score: {rec.score}</h4>
                             <p className="text-sm text-gray-600 mt-1">{rec.factor}</p>
+                          </div>
+                          {rec.nextSteps && (
+                            <div className="mt-4 p-4 bg-white rounded border border-gray-100">
+                              <p className="text-sm font-semibold text-gray-700 mb-2">Recommended Next Steps:</p>
+                              <p className="text-sm text-gray-700 leading-relaxed">{rec.nextSteps}</p>
+                            </div>
+                          )}
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {ready.length > 0 && (
+                  <div className="mb-6">
+                    <h3 className="text-xl font-bold text-gray-800 mb-4 flex items-center gap-2">
+                      <CheckCircle className="w-6 h-6 text-green-600" />
+                      Ready - Maintain Excellence
+                    </h3>
+                    <div className="space-y-4">
+                      {ready.map((rec, idx) => (
+                        <div key={idx} className="bg-green-50 border border-green-200 rounded-lg p-6">
+                          <div className="mb-3">
+                            <div className="inline-block px-3 py-1 rounded bg-green-600 text-white text-xs font-semibold mb-3">
+                              Ready
+                            </div>
+                            <h4 className="font-bold text-gray-800 text-lg">{rec.subfactor} - Score: {rec.score}</h4>
+                            <p className="text-sm text-gray-600 mt-1">{rec.factor}</p>
+                          </div>
+                          <div className="mt-4 p-4 bg-white rounded border border-green-100">
+                            <p className="text-sm font-semibold text-green-700 mb-2">✓ Excellent Progress!</p>
+                            <p className="text-sm text-gray-700 leading-relaxed">You have achieved readiness in this area. Continue maintaining excellence and share your success strategies with other areas that need development.</p>
                           </div>
                         </div>
                       ))}

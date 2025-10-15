@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { ChevronRight, ChevronLeft, Home, CheckCircle, AlertCircle, TrendingUp, FileText, Download, MessageSquare, Printer } from 'lucide-react';
 
-const VERSION = '1.4.9';
-const CODE_RELEASE = 'CR-20250115-001'; // Code Release Number for version tracking
+const VERSION = '1.5.2';
+const CODE_RELEASE = 'CR-20250115-003'; // Code Release Number for version tracking
 
 // ============================================
 // TEXT CONFIGURATION - Easy to update all copy
@@ -950,7 +950,17 @@ const ReadinessApp = () => {
         <TopNav />
         <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 p-6">
           <div className="max-w-6xl mx-auto bg-white rounded-lg shadow-xl p-8">
-            <h2 className="text-3xl font-bold mb-6">Assessment Results</h2>
+            <div className="mb-6 flex flex-wrap justify-between items-start gap-4">
+              <h2 className="text-3xl font-bold">Assessment Results</h2>
+              <div className="flex gap-2">
+                <button onClick={exportToCSV} className="flex items-center gap-2 px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 font-semibold">
+                  <Download className="w-4 h-4" /> Export CSV
+                </button>
+                <button onClick={() => window.print()} className="flex items-center gap-2 px-4 py-2 bg-gray-700 text-white rounded-lg hover:bg-gray-800 font-semibold">
+                  <Printer className="w-4 h-4" /> Print to PDF
+                </button>
+              </div>
+            </div>
             {!isAssessmentComplete ? (
               <div className="bg-amber-50 border-l-4 border-orange-500 p-8 rounded-lg">
                 <div className="flex items-start gap-4">
@@ -1137,8 +1147,18 @@ const ReadinessApp = () => {
       <>
         <TopNav />
         <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 p-6">
-          <div className="max-w-4xl mx-auto bg-white rounded-lg shadow-xl p-8">
-            <h2 className="text-3xl font-bold mb-6">Next Steps</h2>
+          <div className="max-w-6xl mx-auto bg-white rounded-lg shadow-xl p-8">
+            <div className="mb-6 flex flex-wrap justify-between items-start gap-4">
+              <h2 className="text-3xl font-bold">Next Steps</h2>
+              <div className="flex gap-2">
+                <button onClick={exportToCSV} className="flex items-center gap-2 px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 font-semibold">
+                  <Download className="w-4 h-4" /> Export CSV
+                </button>
+                <button onClick={() => window.print()} className="flex items-center gap-2 px-4 py-2 bg-gray-700 text-white rounded-lg hover:bg-gray-800 font-semibold">
+                  <Printer className="w-4 h-4" /> Print to PDF
+                </button>
+              </div>
+            </div>
             {!isAssessmentComplete ? (
               <div className="bg-amber-50 border-l-4 border-orange-500 p-8 rounded-lg">
                 <div className="flex items-start gap-4">
@@ -1175,12 +1195,6 @@ const ReadinessApp = () => {
                     <li>• Connect with HFHI for technical assistance in priority areas</li>
                     <li>• Schedule a follow-up assessment in 6 months to track progress</li>
                   </ul>
-                </div>
-
-                <div className="flex justify-end mb-8">
-                  <button onClick={() => window.print()} className="flex items-center gap-2 px-6 py-3 bg-gray-700 text-white rounded-lg hover:bg-gray-800 font-semibold">
-                    <Printer className="w-5 h-5" /> Print to PDF
-                  </button>
                 </div>
 
                 {high.length > 0 && (

@@ -1,7 +1,107 @@
 import React, { useState } from 'react';
 import { ChevronRight, ChevronLeft, Home, CheckCircle, AlertCircle, TrendingUp, FileText, Download, MessageSquare, Printer } from 'lucide-react';
 
-const VERSION = '1.4.3';
+const VERSION = '1.4.8';
+
+// ============================================
+// TEXT CONFIGURATION - Easy to update all copy
+// ============================================
+const CONTENT = {
+  version: VERSION,
+  welcome: {
+    title: "Home Repair Program Readiness Assessment",
+    subtitle: "Evaluate your organizational readiness",
+    aboutTitle: "What to Expect",
+    questionCount: "15 Questions Across 5 Key Factors",
+    questionDetails: "Capacity, Need, Approach, Leverage and Sustainability",
+    duration: "15-20 Minutes to Complete",
+    durationDetails: "Take your time to thoughtfully assess each area",
+    results: "Instant Results and Recommendations",
+    resultsDetails: "Get a comprehensive dashboard with prioritized action items",
+    save: "Saving Your Results",
+    saveDetails: "Your inputs are not saved - Use the Print to PDF button to save your assessment results",
+    guideTitle: "Download the Assessment Guide",
+    guideDescription: "Get detailed explanations of all factors, sub-factors, and the readiness scale. This guide will help you answer questions more accurately and understand your results.",
+    guideButton: "Download Assessment Guide (PDF)",
+    tipsTitle: "Tips for Best Results",
+    tips: [
+      "Be honest in your self-assessment - this identifies real areas for growth",
+      "Review the Assessment Guide before starting for better context",
+      "Involve key staff members to gather diverse perspectives",
+      "Add notes to questions to capture important details",
+      "You can navigate back to change answers at any time"
+    ],
+    startButton: "Start Assessment",
+    versionNote: "Your responses are not saved automatically"
+  },
+  nav: {
+    homeTitle: "Repair Readiness Assessment",
+    assessment: "Assessment",
+    results: "Results",
+    dashboard: "Dashboard",
+    nextSteps: "Next Steps",
+    guide: "Guide",
+    backToHome: "Back to Home"
+  },
+  assessment: {
+    title: "Home Repair Program Readiness Assessment",
+    subtitle: "Evaluate your organization readiness",
+    progressLabel: "Progress",
+    addNotes: "Add Notes",
+    hideNotes: "Hide Notes",
+    notesPlaceholder: "Add notes about this question...",
+    previousButton: "Previous",
+    nextButton: "Next",
+    viewResultsButton: "View Results"
+  },
+  results: {
+    title: "Results",
+    exportButton: "Export CSV",
+    printButton: "Print to PDF",
+    scoreLabel: "Score:",
+    notesLabel: "Notes:",
+    notAnswered: "Not answered",
+    viewDashboardButton: "View Dashboard",
+    nextStepsButton: "Next Steps"
+  },
+  dashboard: {
+    title: "Dashboard",
+    overallScoreTitle: "Overall Readiness Score",
+    distributionTitle: "Readiness Distribution",
+    factorOverviewTitle: "Factor Overview",
+    printButton: "Print to PDF",
+    actionItemsButton: "Action Items",
+    incompleteTitle: "Complete Your Assessment First",
+    incompleteMessage: "Personalized dashboard will be available once you complete all assessment questions.",
+    continueButton: "Continue Assessment",
+    completedLabel: "completed"
+  },
+  nextSteps: {
+    title: "Next Steps",
+    guidanceTitle: "General Guidance",
+    guidance: [
+      "Review areas scoring below Planning (3) for immediate attention",
+      "Create a 3-6 month action plan addressing your lowest-scoring factors",
+      "Engage leadership and staff in discussing assessment results",
+      "Connect with HFHI for technical assistance in priority areas",
+      "Schedule a follow-up assessment in 6 months to track progress"
+    ],
+    printButton: "Print to PDF",
+    highPriority: "High Priority Action Items",
+    mediumPriority: "Medium Priority Action Items",
+    lowPriority: "Low Priority Action Items",
+    priorityLabels: {
+      high: "High Priority",
+      medium: "Medium Priority",
+      low: "Low Priority"
+    },
+    scoreLabel: "Score:",
+    incompleteTitle: "Complete Your Assessment First",
+    incompleteMessage: "Personalized next steps will be available once you complete all assessment questions.",
+    continueButton: "Continue Assessment",
+    completedLabel: "completed"
+  }
+};
 
 const ReadinessApp = () => {
   const [currentStep, setCurrentStep] = useState(0);
@@ -20,7 +120,7 @@ const ReadinessApp = () => {
           { 
             id: 'leadership', 
             title: 'Leadership and Board Commitment', 
-            question: 'How would you rate your organization leadership and board commitment?',
+            question: 'How would you rate your organization\'s leadership and board commitment to home repairs?',
             levels: [
               { value: 0, label: 'Inactive', description: 'No awareness or discussion of home repairs among board or leadership.' },
               { value: 1, label: 'Aware', description: 'Some vague awareness, but no structured discussions or expressed interest.' },
@@ -33,7 +133,7 @@ const ReadinessApp = () => {
           { 
             id: 'staff', 
             title: 'Staff Commitment', 
-            question: 'How prepared is your staff to engage in training?',
+            question: 'How prepared is your staff to engage in repairs training?',
             levels: [
               { value: 0, label: 'Inactive', description: 'No staff assigned or identified. No clear strategy or timeline.' },
               { value: 1, label: 'Aware', description: 'General leadership support, but limited staff enthusiasm or participation expected.' },
@@ -46,7 +146,7 @@ const ReadinessApp = () => {
           { 
             id: 'systems', 
             title: 'Internal Systems', 
-            question: 'How well has your organization planned for system improvements?',
+            question: 'How well has your organization planned for system improvements to support repair efforts?',
             levels: [
               { value: 0, label: 'Inactive', description: 'No resource needs identified, no tools or equipment or processes in place.' },
               { value: 1, label: 'Aware', description: 'Some awareness that systems need attention, but no action plan.' },
@@ -78,27 +178,27 @@ const ReadinessApp = () => {
           { 
             id: 'organizational', 
             title: 'Capacity Building Need', 
-            question: 'How clearly identified is the need for capacity building?',
+            question: 'How clearly identified is the need for repairs capacity building?',
             levels: [
-              { value: 0, label: 'Inactive', description: 'No connection between gaps and need for capacity building.' },
-              { value: 1, label: 'Aware', description: 'Limited understanding of how internal gaps relate to capacity building.' },
-              { value: 2, label: 'Exploring', description: 'Some gaps acknowledged but not linked to repair readiness.' },
-              { value: 3, label: 'Planning', description: 'Specific capacity gaps identified and exploring how to address them.' },
-              { value: 4, label: 'Preparing', description: 'Clearly defined gaps directly tied to repair program readiness.' },
-              { value: 5, label: 'Ready', description: 'Strong, detailed rationale for capacity-building fully aligned with objectives.' }
+              { value: 0, label: 'Inactive', description: 'No connection made between existing gaps and need for capacity building.' },
+              { value: 1, label: 'Aware', description: 'Limited or vague understanding of how internal gaps relate to capacity building.' },
+              { value: 2, label: 'Exploring', description: 'Some internal gaps acknowledged but not clearly linked to repair readiness.' },
+              { value: 3, label: 'Planning', description: 'Specific capacity gaps identified and affiliate is beginning to explore how to address them.' },
+              { value: 4, label: 'Preparing', description: 'Clearly defined gaps tied to repair program readiness, such as hiring or compliance.' },
+              { value: 5, label: 'Ready', description: 'Strong, detailed rationale for capacity-building investments fully aligned with repair objectives.' }
             ]
           },
           { 
             id: 'timing', 
             title: 'Urgency and Timing', 
-            question: 'How timely is this opportunity?',
+            question: 'How timely is a repairs effort for your organization?',
             levels: [
-              { value: 0, label: 'Inactive', description: 'No urgency recognized. No active initiatives or external pressures.' },
-              { value: 1, label: 'Aware', description: 'Early signs of alignment from anecdotal needs or mild partner pressure.' },
-              { value: 2, label: 'Exploring', description: 'General alignment in timing with no major obstacles to participation.' },
+              { value: 0, label: 'Inactive', description: 'No urgency recognized. No active initiatives prompting affiliate to prioritize repairs.' },
+              { value: 1, label: 'Aware', description: 'Early signs of alignment beginning to surface, such as anecdotal needs or mild pressure from partners.' },
+              { value: 2, label: 'Exploring', description: 'General alignment in timing but urgency is not yet strongly felt.' },
               { value: 3, label: 'Planning', description: 'Timing is relevant and fits within current priorities or planning cycles.' },
-              { value: 4, label: 'Preparing', description: 'Strong sense of urgency from specific transitions, challenges, or pressures.' },
-              { value: 5, label: 'Ready', description: 'Clearly documented, high-urgency needs make this moment critical.' }
+              { value: 4, label: 'Preparing', description: 'Strong sense of urgency. Affiliate is facing specific transitions or external pressures.' },
+              { value: 5, label: 'Ready', description: 'Clearly documented high-urgency needs make this capacity-building moment critical.' }
             ]
           }
         ]
@@ -110,7 +210,7 @@ const ReadinessApp = () => {
           { 
             id: 'goals', 
             title: 'Clarity of Goals', 
-            question: 'How clearly defined are your capacity-building goals?',
+            question: 'How clear are your repairs capacity-building goals?',
             levels: [
               { value: 0, label: 'Inactive', description: 'No capacity-building goals identified.' },
               { value: 1, label: 'Aware', description: 'General ideas about needs, but goals unclear or unrealistic.' },
@@ -123,7 +223,7 @@ const ReadinessApp = () => {
           { 
             id: 'feasibility', 
             title: 'Feasibility', 
-            question: 'How realistic is your plan?',
+            question: 'How realistic is your repairs plan?',
             levels: [
               { value: 0, label: 'Inactive', description: 'Expectations unclear or unrealistic. No internal plan.' },
               { value: 1, label: 'Aware', description: 'Vague plan exists with no clarity on participants or application.' },
@@ -181,7 +281,7 @@ const ReadinessApp = () => {
           { 
             id: 'postgrant', 
             title: 'Beyond Grant Term', 
-            question: 'How positioned are you for sustainability?',
+            question: 'How positioned are you for sustainability beyond the grant?',
             levels: [
               { value: 0, label: 'Inactive', description: 'No sustainability planning. Grant seen as one-time opportunity.' },
               { value: 1, label: 'Aware', description: 'Few ideas for sustaining efforts but no clarity or plan.' },
@@ -245,6 +345,16 @@ const ReadinessApp = () => {
     f.subfactors.map(sf => ({ ...sf, factorTitle: f.title }))
   );
 
+  const getReadinessLevel = (score) => {
+    if (score === undefined || score === null) return { label: 'N/A', color: 'bg-gray-400' };
+    if (score < 1) return { label: 'Inactive', color: 'bg-gray-400' };
+    if (score < 2) return { label: 'Aware', color: 'bg-red-400' };
+    if (score < 3) return { label: 'Exploring', color: 'bg-orange-400' };
+    if (score < 4) return { label: 'Planning', color: 'bg-yellow-400' };
+    if (score < 5) return { label: 'Preparing', color: 'bg-blue-400' };
+    return { label: 'Ready', color: 'bg-green-400' };
+  };
+
   const calculateResults = () => {
     const factorScores = {};
     assessmentData.factors.forEach(factor => {
@@ -266,25 +376,15 @@ const ReadinessApp = () => {
     });
 
     const overallScore = Object.values(factorScores).length > 0 
-      ? Object.values(factorScores).reduce((sum, f) => sum + f.score, 0) / Object.keys(factorScores).length 
+      ? Object.values(factorScores).reduce((sum, f) => sum + f.score, 0) / Object.values(factorScores).length
       : 0;
-    
-    return { factorScores, overallScore };
-  };
 
-  const getReadinessLevel = (score) => {
-    if (score === undefined || score === null) return { label: 'N/A', color: 'bg-gray-300' };
-    if (score < 0.8) return { label: 'Inactive', color: 'bg-gray-400' };
-    if (score < 1.8) return { label: 'Aware', color: 'bg-red-400' };
-    if (score < 2.8) return { label: 'Exploring', color: 'bg-orange-400' };
-    if (score < 3.8) return { label: 'Planning', color: 'bg-yellow-400' };
-    if (score < 4.8) return { label: 'Preparing', color: 'bg-blue-400' };
-    return { label: 'Ready', color: 'bg-green-500' };
+    return { factorScores, overallScore };
   };
 
   const exportToCSV = () => {
     const results = calculateResults();
-    let csv = 'Factor,Sub-factor,Score,Level,Comments\n';
+    let csv = 'Factor,Subfactor,Score,Level,Comments\n';
     Object.entries(results.factorScores).forEach(([, data]) => {
       data.subfactors.forEach(sf => {
         const level = sf.score !== undefined ? getReadinessLevel(sf.score).label : 'N/A';
@@ -335,36 +435,41 @@ const ReadinessApp = () => {
             <button
               onClick={() => setCurrentView('welcome')}
               className="w-8 h-8 bg-blue-600 rounded flex items-center justify-center hover:bg-blue-700 transition-colors"
-              title="Back to Home"
+              title={CONTENT.nav.backToHome}
             >
               <Home className="w-5 h-5 text-white" />
             </button>
             <div>
-              <h1 className="text-lg font-bold text-gray-800">Repair Readiness Assessment</h1>
-              <p className="text-xs text-gray-500">v{VERSION}</p>
+              <h1 className="text-lg font-bold text-gray-800">{CONTENT.nav.homeTitle}</h1>
+              <p className="text-xs text-gray-500">v{CONTENT.version}</p>
             </div>
           </div>
           <nav className="flex gap-2">
-            {['assessment', 'results', 'dashboard', 'next-steps'].map(view => (
+            {[
+              { key: 'assessment', label: CONTENT.nav.assessment },
+              { key: 'results', label: CONTENT.nav.results },
+              { key: 'dashboard', label: CONTENT.nav.dashboard },
+              { key: 'next-steps', label: CONTENT.nav.nextSteps }
+            ].map(view => (
               <button
-                key={view}
-                onClick={() => setCurrentView(view)}
+                key={view.key}
+                onClick={() => setCurrentView(view.key)}
                 className={`px-4 py-2 rounded-lg font-medium text-sm ${
-                  currentView === view
+                  currentView === view.key
                     ? 'bg-blue-600 text-white'
                     : 'text-blue-600 border-2 border-blue-600 hover:bg-blue-50'
                 }`}
               >
-                {view.split('-').map(w => w[0].toUpperCase() + w.slice(1)).join(' ')}
+                {view.label}
               </button>
             ))}
             <button
               onClick={() => window.open(guideUrl, '_blank')}
               className="flex items-center gap-2 px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 font-medium text-sm"
-              title="Download Assessment Guide"
+              title={CONTENT.welcome.guideButton}
             >
               <Download className="w-4 h-4" />
-              Guide
+              {CONTENT.nav.guide}
             </button>
           </nav>
         </div>
@@ -382,26 +487,24 @@ const ReadinessApp = () => {
                 <Home className="w-10 h-10 text-blue-600" />
               </div>
               <h1 className="text-3xl md:text-4xl font-bold mb-2">
-                Home Repair Program Readiness Assessment
+                {CONTENT.welcome.title}
               </h1>
               <p className="text-blue-100 text-lg">
-                Evaluate your organization capacity to launch a home repair program
+                {CONTENT.welcome.subtitle}
               </p>
             </div>
 
             <div className="p-8 md:p-12">
               <div className="mb-8">
-                <h2 className="text-2xl font-bold text-gray-800 mb-4">What to Expect</h2>
+                <h2 className="text-2xl font-bold text-gray-800 mb-4">{CONTENT.welcome.aboutTitle}</h2>
                 <div className="space-y-4">
                   <div className="flex items-start gap-3">
                     <div className="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0 mt-1">
                       <span className="text-blue-600 font-bold">15</span>
                     </div>
                     <div>
-                      <h3 className="font-semibold text-gray-800 mb-1">15 Questions Across 5 Key Factors</h3>
-                      <p className="text-gray-600 text-sm">
-                        Capacity, Need, Approach, Leverage and Impact, and Sustainability
-                      </p>
+                      <h3 className="font-semibold text-gray-800 mb-1">{CONTENT.welcome.questionCount}</h3>
+                      <p className="text-gray-600 text-sm">{CONTENT.welcome.questionDetails}</p>
                     </div>
                   </div>
 
@@ -410,10 +513,8 @@ const ReadinessApp = () => {
                       <span className="text-blue-600 font-bold">⏱️</span>
                     </div>
                     <div>
-                      <h3 className="font-semibold text-gray-800 mb-1">15-20 Minutes to Complete</h3>
-                      <p className="text-gray-600 text-sm">
-                        Take your time to thoughtfully assess each area
-                      </p>
+                      <h3 className="font-semibold text-gray-800 mb-1">{CONTENT.welcome.duration}</h3>
+                      <p className="text-gray-600 text-sm">{CONTENT.welcome.durationDetails}</p>
                     </div>
                   </div>
 
@@ -422,10 +523,8 @@ const ReadinessApp = () => {
                       <span className="text-blue-600 font-bold">📊</span>
                     </div>
                     <div>
-                      <h3 className="font-semibold text-gray-800 mb-1">Instant Results and Recommendations</h3>
-                      <p className="text-gray-600 text-sm">
-                        Get a comprehensive dashboard with prioritized action items
-                      </p>
+                      <h3 className="font-semibold text-gray-800 mb-1">{CONTENT.welcome.results}</h3>
+                      <p className="text-gray-600 text-sm">{CONTENT.welcome.resultsDetails}</p>
                     </div>
                   </div>
 
@@ -434,10 +533,8 @@ const ReadinessApp = () => {
                       <span className="text-blue-600 font-bold">💾</span>
                     </div>
                     <div>
-                      <h3 className="font-semibold text-gray-800 mb-1">Save Your Results</h3>
-                      <p className="text-gray-600 text-sm">
-                        Results are not saved automatically - use the Print to PDF button to save your assessment
-                      </p>
+                      <h3 className="font-semibold text-gray-800 mb-1">{CONTENT.welcome.save}</h3>
+                      <p className="text-gray-600 text-sm">{CONTENT.welcome.saveDetails}</p>
                     </div>
                   </div>
                 </div>
@@ -449,19 +546,14 @@ const ReadinessApp = () => {
                     <FileText className="w-7 h-7 text-white" />
                   </div>
                   <div className="flex-1">
-                    <h3 className="text-lg font-bold text-gray-800 mb-2">
-                      Download the Assessment Guide
-                    </h3>
-                    <p className="text-gray-700 text-sm mb-4">
-                      Get detailed explanations of all factors, sub-factors, and the readiness scale. 
-                      This guide will help you answer questions more accurately and understand your results.
-                    </p>
+                    <h3 className="text-lg font-bold text-gray-800 mb-2">{CONTENT.welcome.guideTitle}</h3>
+                    <p className="text-gray-700 text-sm mb-4">{CONTENT.welcome.guideDescription}</p>
                     <button
                       onClick={() => window.open(guideUrl, '_blank')}
                       className="flex items-center gap-2 px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors font-semibold shadow-md hover:shadow-lg"
                     >
                       <Download className="w-5 h-5" />
-                      Download Assessment Guide (PDF)
+                      {CONTENT.welcome.guideButton}
                     </button>
                   </div>
                 </div>
@@ -470,14 +562,12 @@ const ReadinessApp = () => {
               <div className="bg-blue-50 border-l-4 border-blue-500 p-6 rounded-r-lg mb-8">
                 <h3 className="font-bold text-gray-800 mb-3 flex items-center gap-2">
                   <AlertCircle className="w-5 h-5 text-blue-600" />
-                  Tips for Best Results
+                  {CONTENT.welcome.tipsTitle}
                 </h3>
                 <ul className="space-y-2 text-gray-700 text-sm">
-                  <li>Be honest in your self-assessment - this identifies real areas for growth</li>
-                  <li>Review the Assessment Guide before starting for better context</li>
-                  <li>Involve key staff members to gather diverse perspectives</li>
-                  <li>Add notes to questions to capture important details</li>
-                  <li>You can navigate back to change answers at any time</li>
+                  {CONTENT.welcome.tips.map((tip, idx) => (
+                    <li key={idx}>• {tip}</li>
+                  ))}
                 </ul>
               </div>
 
@@ -486,13 +576,13 @@ const ReadinessApp = () => {
                   onClick={() => setCurrentView('assessment')}
                   className="flex items-center justify-center gap-2 px-8 py-4 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-bold text-lg shadow-lg hover:shadow-xl"
                 >
-                  Start Assessment
+                  {CONTENT.welcome.startButton}
                   <ChevronRight className="w-6 h-6" />
                 </button>
               </div>
 
               <p className="text-center text-sm text-gray-500 mt-6">
-                Version {VERSION} - Your responses are not saved automatically
+                Version {CONTENT.version} - {CONTENT.welcome.versionNote}
               </p>
             </div>
           </div>
@@ -580,7 +670,7 @@ const ReadinessApp = () => {
                     <textarea
                       value={comments[currentSubfactor.id] || ''}
                       onChange={(e) => setComments({ ...comments, [currentSubfactor.id]: e.target.value })}
-                      placeholder="Add notes..."
+                      placeholder="Add notes about this question..."
                       className="w-full mt-3 px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 resize-none"
                       rows="3"
                     />
@@ -709,12 +799,39 @@ const ReadinessApp = () => {
     };
     const dist = getDist();
 
+    const getReadinessDescription = (score) => {
+      if (score < 1) return {
+        stage: 'Inactive',
+        description: 'Your organization is at the Inactive stage of readiness with an overall score of ' + score.toFixed(1) + ' out of 5.0. At this stage, there is limited awareness or discussion of home repairs among board or leadership, and no clear connection has been made between existing organizational gaps and the need for capacity building. Home repair programming is not yet seen as a relevant or strategic topic for your affiliate. Leadership may not have initiated formal conversations about housing preservation, and there is minimal understanding of how repair services could fit into your mission or strategic priorities. Staff have not been assigned to explore this work, and internal systems for managing repair operations are not in place. To advance readiness, begin by educating leadership on why repairs matter through peer affiliate examples, local data on vulnerable populations, or resources like the Housing Preservation Playbook. Consider scheduling a board presentation to introduce housing preservation as a strategic growth area, and start informal discussions about whether repair services align with your community needs and organizational capacity. Focus on building awareness and exploring whether this work could serve your mission before moving to more structured planning.'
+      };
+      if (score < 2) return {
+        stage: 'Aware',
+        description: 'Your organization is at the Aware stage of readiness with an overall score of ' + score.toFixed(1) + ' out of 5.0. At this stage, there is general recognition that something is missing or that repairs could be valuable, but the connection to repair readiness remains vague. Leadership may have expressed informal interest in home repairs, but no formal conversations or strategic plans have been developed. Staff may be aware of repair needs in the community through anecdotal evidence or one-off requests, but no systematic data gathering has occurred. The organization lacks clarity on internal capacity gaps, and there is limited understanding of what resources, systems, or staffing would be needed to launch a repair program. Goals remain unclear or unrealistic, and no concrete steps have been taken toward planning or capacity building. To advance readiness, use board meetings or staff retreats to introduce housing preservation more formally through presentations from HFHI staff or peer affiliates who have launched successful programs. Begin conversations about "what\'s missing" by framing discussions around what would make your organization more prepared to run a repair program. Start collecting basic local indicators such as public health data, housing quality reports, or census information showing homeowner challenges in your service area. Engage local partners—agencies, churches, or nonprofits serving vulnerable homeowners—to gather insights about repair needs they are observing. The goal is to move from general awareness to intentional exploration.'
+      };
+      if (score < 3) return {
+        stage: 'Exploring',
+        description: 'Your organization is at the Exploring stage of readiness with an overall score of ' + score.toFixed(1) + ' out of 5.0. Your team has begun to identify some internal needs or challenges and is starting to tie them to potential repair program goals or capacity strategies. Leadership has initiated exploratory conversations and shown interest in small-scale repair activities, though these discussions remain informal. One or two staff members may have been named to explore feasibility, but their responsibilities, time commitments, and roles in future program development remain unclear. The organization has community-level awareness of repair needs supported by anecdotes or limited examples, but lacks detailed quantitative data or systematic needs assessment. Internal capacity gaps have been acknowledged—such as staffing shortages, tool limitations, or system deficiencies—but are not clearly linked to a capacity-building strategy. A few goals may have been identified, but they remain loosely tied to repair readiness. Initial conversations about system improvements (tracking tools, project workflow, equipment) have started, but no action has been taken yet. At this stage, you\'re moving beyond awareness into early exploration. To advance readiness, form a board and staff working group to explore feasibility more systematically. Draft a participation strategy identifying key roles and how learnings will be shared across the organization. Begin capturing real data on community repair needs by tracking inquiries, starting a waiting list, or conducting interviews and surveys with homeowners. Turn discussions about system improvements into early planning by testing lightweight tools or gathering stakeholder feedback. Review Policy 33 together as a team and start developing a short concept paper that outlines your vision. The goal is to move from informal conversations to structured exploration with defined next steps.'
+      };
+      if (score < 4) return {
+        stage: 'Planning',
+        description: 'Your organization is at the Planning stage of readiness with an overall score of ' + score.toFixed(1) + ' out of 5.0. You have identified key gaps and are beginning to explore how to address them, with the team aligning around next steps and early strategies. Leadership and board have moved beyond exploration to regular discussions about repair programming, and home repairs are now part of formal strategic conversations. Specific staff have been selected for training and planning activities, though their participation may still be limited to select sessions or informal involvement. The organization has identified some specific housing stabilization needs through intentional efforts such as partner referrals, qualitative feedback, or early data gathering. Capacity-building needs are being explored, with the affiliate beginning to understand how internal gaps relate to repair readiness. Goals are moderately clear and generally aligned with repair capacity building, though some may need refinement or prioritization. A realistic plan exists with basic strategy and key team members identified, and system and equipment needs have been clearly identified with early-stage planning, piloting, or budgeting underway. Partnerships have been named with general support, though not yet formalized, and there is moderate planning for sustainability with partial clarity around resources and future direction. To advance readiness, develop a strategic roadmap or case statement that aligns the board around timing, goals, and what launching a pilot would require. Build momentum by developing a detailed training and learning plan that aligns staff participation with key development milestones such as policy creation or intake design. Document repair needs in a simple format—create a summary or slide deck illustrating examples, costs, and populations affected. Create a system readiness plan outlining which tools or procedures will be adopted, tested, or adapted. Begin formalizing partnerships with MOUs or partnership agreements that clarify roles and responsibilities. The goal is to move from early planning to concrete preparation with documented plans and assigned accountability.'
+      };
+      if (score < 5) return {
+        stage: 'Preparing',
+        description: 'Your organization is at the Preparing stage of readiness with an overall score of ' + score.toFixed(1) + ' out of 5.0. You have clearly defined needs directly tied to repair program readiness, with drafts, outlines, or initial frameworks in place to seek support or implement improvements. Housing preservation has been integrated into strategic planning, and leadership and board have taken early steps such as assigning staff, approving concept drafts, including repairs in strategic planning, or exploring funding opportunities. Staff have been identified, scheduled for learning, and assigned to apply new skills to planning or early implementation steps, demonstrating organizational commitment to capacity building. The affiliate has a clear understanding of housing repair needs supported by specific data sources, community feedback, or observable trends, and capacity-building goals are specific and realistic, tied directly to core elements of repair readiness such as staffing, systems development, or training. A written, resourced plan exists with clear structure, responsibilities, and timing, and participants are confirmed with internal processes in place to support engagement. A documented and organized plan exists to strengthen administrative, operational, and equipment-related systems, with staff roles clearly defined and implementation timelines established. Partnerships are clearly defined and providing consistent support, and there is a clear, realistic plan for maintaining or expanding program components after grant support ends. The organization demonstrates strong alignment with capacity-building goals, clearly geared toward sustainability and strategic impact. To move to full readiness, begin developing operational components such as drafting or revising a board-approved repair policy and outlining a staffing or volunteer model. Finalize operational procedures and quality standards, complete staff training and role assignments, and prepare for internal systems development. Use community needs data to shape your program design by aligning repair priorities (accessibility, roofing, HVAC) with actual needs. Begin executing on key system areas such as implementing an intake database, procurement tools, and contractor tracking, ensuring staff are trained and resourced. Activate partnerships through joint activities like referral systems, co-training events, or shared resource pools. The goal is to move from preparation to operational readiness with all systems, staff, and partnerships in place for launch.'
+      };
+      return {
+        stage: 'Ready',
+        description: 'Your organization is Ready to launch a home repair program with an exceptional overall score of ' + score.toFixed(1) + ' out of 5.0. Congratulations! Housing preservation is fully embedded in your affiliate\'s strategic vision, and you are well-positioned to pursue funding, technical assistance, or pilot implementation. Leadership is aligned, engaged, and actively preparing for launch with a clear commitment from board and executive team. A dedicated team or cross-functional staff group is fully committed, engaged in learning, and equipped with a plan to lead development of the affiliate\'s repair program. The organization has a strong, data-driven understanding of housing repair needs, supported by waitlists, formal assessments, external reports, or comprehensive community feedback, demonstrating clear demand for services. Capacity-building investments are justified with data and directly linked to repair program implementation or sustainability. Goals are highly detailed, actionable, and directly support critical components of home repair capacity such as program design, systems development, staffing, and equity considerations. The plan is strong and feasible with clear pathways for participation, structured application of learning, and accountability for follow-through. Your approach is fully aligned with long-term outcomes including sustainability, systems change, and the affiliate\'s ability to deliver home repair services over time. A fully developed and actionable system improvement plan is in place, integrated across your organization and aligned with your repair launch timeline, including tools for tracking, project management, and compliance. Well-established partnerships exist with aligned goals, clear roles, and active engagement, positioning the organization to leverage external support effectively. A strong, actionable sustainability plan with specific follow-up steps, responsible parties, and transition supports is in place, ensuring the program can continue and potentially scale beyond initial funding. Your organization should now focus on operational readiness by moving into the execution phase. Finalize resource allocation, assign staff to operational roles, establish quality control mechanisms, and begin pilot activities or soft launches. Continue building your case for ongoing funding by documenting early successes and demonstrating community impact. Use outcome frameworks or the Quality of Life Framework to communicate the full value of your approach to funders and community partners. Prepare for continuous improvement through regular evaluation and adaptation as you learn from implementation experience. Your readiness positions you not just to launch, but to build a sustainable, impactful repair program that serves your community for years to come.'
+      };
+    };
+
     return (
       <>
         <TopNav />
         <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 p-6">
           <div className="max-w-6xl mx-auto bg-white rounded-lg shadow-xl p-8">
-            <h2 className="text-3xl font-bold mb-6">Dashboard</h2>
+            <h2 className="text-3xl font-bold mb-6">Assessment Results</h2>
             {!isAssessmentComplete ? (
               <div className="bg-amber-50 border-l-4 border-orange-500 p-8 rounded-lg">
                 <div className="flex items-start gap-4">
@@ -724,139 +841,125 @@ const ReadinessApp = () => {
                     </div>
                   </div>
                   <div className="flex-1">
-                    <h3 className="text-2xl font-bold text-gray-800 mb-2">Complete Your Assessment First</h3>
+                    <h3 className="text-2xl font-bold text-gray-800 mb-2">{CONTENT.dashboard.incompleteTitle}</h3>
                     <p className="text-gray-700 mb-6">
-                      Personalized next steps will be available once you complete all assessment questions.
+                      {CONTENT.dashboard.incompleteMessage}
                     </p>
-                    <button 
+                    <button
                       onClick={() => setCurrentView('assessment')}
-                      className="px-6 py-3 bg-orange-500 text-white font-semibold rounded-lg hover:bg-orange-600 transition-colors"
+                      className="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 font-semibold"
                     >
-                      Continue Assessment
+                      {CONTENT.dashboard.continueButton} ({answeredQuestions}/{totalQuestions} {CONTENT.dashboard.completedLabel})
                     </button>
                   </div>
                 </div>
               </div>
             ) : (
               <>
-                <div className="bg-gradient-to-r from-blue-600 to-blue-700 rounded-lg p-6 text-white mb-6">
-                  <h3 className="text-xl font-semibold mb-2">Overall Readiness Score</h3>
-                  <div className="flex items-end gap-4">
-                    <div className="text-5xl font-bold">{results.overallScore.toFixed(1)}</div>
-                    <div className="text-2xl mb-2">/ 5.0</div>
+                <div className="bg-white border rounded-lg p-8 mb-6">
+                  <h3 className="text-2xl font-bold text-center mb-6">Overall Readiness Level</h3>
+                  <div className="flex items-center gap-8 mb-6">
+                    <div className="flex-1">
+                      <div className="relative h-16 rounded-full overflow-visible mb-2" style={{
+                        background: 'linear-gradient(to right, #9ca3af 0%, #9ca3af 20%, #f87171 20%, #f87171 40%, #fb923c 40%, #fb923c 60%, #fbbf24 60%, #fbbf24 80%, #60a5fa 80%, #60a5fa 100%)'
+                      }}>
+                        <div 
+                          className="absolute top-0 h-full w-1 bg-gray-900 shadow-lg z-10"
+                          style={{ left: `${(results.overallScore / 5) * 100}%` }}
+                        >
+                          <div className="absolute -top-12 left-0 transform -translate-x-1/2 bg-gray-900 text-white px-4 py-2 rounded-lg text-base font-bold whitespace-nowrap shadow-md">
+                            {results.overallScore.toFixed(1)}
+                            <div className="absolute top-full left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-4 border-r-4 border-t-4 border-l-transparent border-r-transparent border-t-gray-900"></div>
+                          </div>
+                          <div className="absolute -bottom-12 left-0 transform -translate-x-1/2 bg-gray-900 text-white px-3 py-1 rounded text-xs font-semibold whitespace-nowrap shadow-md">
+                            Your Score
+                            <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-4 border-r-4 border-b-4 border-l-transparent border-r-transparent border-b-gray-900"></div>
+                          </div>
+                        </div>
+                      </div>
+                      <div className="flex justify-between mt-12 text-xs text-gray-600">
+                        <span>0.0</span>
+                        <span>1.0</span>
+                        <span>2.0</span>
+                        <span>3.0</span>
+                        <span>4.0</span>
+                        <span>5.0</span>
+                      </div>
+                      <div className="flex justify-between mt-1 text-xs font-semibold">
+                        <span className="text-gray-500">Inactive</span>
+                        <span className="text-red-500">Aware</span>
+                        <span className="text-orange-500">Exploring</span>
+                        <span className="text-yellow-500">Planning</span>
+                        <span className="text-blue-500">Preparing</span>
+                        <span className="text-green-500">Ready</span>
+                      </div>
+                    </div>
+                    <div className="flex-shrink-0 text-center">
+                      <p className="text-gray-600 text-sm mb-2">Your Score</p>
+                      <div className="w-32 h-32 rounded-full border-8 flex items-center justify-center" style={{
+                        borderColor: results.overallScore < 1 ? '#9ca3af' : 
+                                    results.overallScore < 2 ? '#f87171' : 
+                                    results.overallScore < 3 ? '#fb923c' : 
+                                    results.overallScore < 4 ? '#fbbf24' : 
+                                    results.overallScore < 5 ? '#60a5fa' : '#34d399'
+                      }}>
+                        <div>
+                          <div className="text-4xl font-bold">{results.overallScore.toFixed(1)}</div>
+                          <div className="text-sm text-gray-600">out of 5.0</div>
+                        </div>
+                      </div>
+                      <div className="mt-3">
+                        <span className={`inline-block px-4 py-2 rounded-full text-sm font-semibold text-white`} style={{
+                          backgroundColor: results.overallScore < 1 ? '#9ca3af' : 
+                                         results.overallScore < 2 ? '#f87171' : 
+                                         results.overallScore < 3 ? '#fb923c' : 
+                                         results.overallScore < 4 ? '#fbbf24' : 
+                                         results.overallScore < 5 ? '#60a5fa' : '#34d399'
+                        }}>
+                          {getReadinessLevel(results.overallScore).label}
+                        </span>
+                      </div>
+                    </div>
                   </div>
-                  <span className={`inline-block px-4 py-2 rounded-full mt-3 ${getReadinessLevel(results.overallScore).color} text-white font-semibold`}>
-                    {getReadinessLevel(results.overallScore).label}
-                  </span>
+                  
+                  <div className="bg-gray-50 rounded-lg p-6">
+                    <p className="text-gray-700 leading-relaxed">
+                      {getReadinessDescription(results.overallScore).description}
+                    </p>
+                  </div>
                 </div>
 
                 <div className="flex gap-3 mb-8">
                   <button onClick={() => window.print()} className="flex items-center gap-2 px-6 py-3 bg-gray-700 text-white rounded-lg hover:bg-gray-800 font-semibold">
-                    <Printer className="w-5 h-5" /> Print to PDF
+                    <Printer className="w-5 h-5" /> {CONTENT.dashboard.printButton}
                   </button>
                   <button onClick={() => setCurrentView('next-steps')} className="flex items-center gap-2 px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 font-semibold">
-                    <TrendingUp className="w-5 h-5" /> Action Items
+                    <TrendingUp className="w-5 h-5" /> {CONTENT.dashboard.actionItemsButton}
                   </button>
                 </div>
 
                 <div className="mb-8">
-                  <h3 className="text-xl font-bold text-gray-800 mb-4">Assessment Results</h3>
-                  <div className="bg-white rounded-lg border border-gray-200 p-6">
-                    <div className="flex flex-col md:flex-row items-center justify-center gap-8 mb-6">
-                      <div className="flex-1 w-full max-w-2xl">
-                        <div className="text-center mb-6">
-                          <h4 className="text-lg font-semibold text-gray-700">Overall Readiness Level</h4>
+                  <h3 className="text-2xl font-bold text-gray-800 mb-6">{CONTENT.dashboard.distributionTitle}</h3>
+                  <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+                    {[
+                      { label: 'Inactive', color: 'bg-gray-400', borderColor: 'border-gray-300', bgColor: 'bg-gray-50' },
+                      { label: 'Aware', color: 'bg-red-400', borderColor: 'border-red-300', bgColor: 'bg-red-50' },
+                      { label: 'Exploring', color: 'bg-orange-400', borderColor: 'border-orange-300', bgColor: 'bg-orange-50' },
+                      { label: 'Planning', color: 'bg-yellow-400', borderColor: 'border-yellow-300', bgColor: 'bg-yellow-50' },
+                      { label: 'Preparing', color: 'bg-blue-400', borderColor: 'border-blue-300', bgColor: 'bg-blue-50' },
+                      { label: 'Ready', color: 'bg-green-400', borderColor: 'border-green-300', bgColor: 'bg-green-50' }
+                    ].map(item => (
+                      <div key={item.label} className={`${item.bgColor} ${item.borderColor} border-2 rounded-lg p-4 text-center`}>
+                        <div className={`w-16 h-16 ${item.color} rounded-full mx-auto mb-3 flex items-center justify-center shadow-md`}>
+                          <span className="text-white font-bold text-2xl">{dist[item.label]}</span>
                         </div>
-                        
-                        <div className="relative">
-                          <div className="h-12 bg-gradient-to-r from-gray-400 via-red-400 via-orange-400 via-yellow-400 via-blue-400 to-green-500 rounded-full overflow-hidden">
-                            <div 
-                              className="absolute top-0 bottom-0 w-1 bg-gray-800"
-                              style={{ left: `${(results.overallScore / 5) * 100}%` }}
-                            >
-                              <div className="absolute -top-10 left-1/2 transform -translate-x-1/2 bg-gray-800 text-white px-3 py-1 rounded text-sm font-bold whitespace-nowrap">
-                                {results.overallScore.toFixed(1)}
-                              </div>
-                            </div>
-                          </div>
-                          
-                          <div className="flex justify-between mt-2 text-xs font-medium">
-                            <span className="text-gray-600">0.0</span>
-                            <span className="text-gray-600">1.0</span>
-                            <span className="text-gray-600">2.0</span>
-                            <span className="text-gray-600">3.0</span>
-                            <span className="text-gray-600">4.0</span>
-                            <span className="text-gray-600">5.0</span>
-                          </div>
-                          
-                          <div className="flex justify-between mt-3 text-xs font-semibold">
-                            <span className="text-gray-600">Inactive</span>
-                            <span className="text-red-600">Aware</span>
-                            <span className="text-orange-600">Exploring</span>
-                            <span className="text-yellow-600">Planning</span>
-                            <span className="text-blue-600">Preparing</span>
-                            <span className="text-green-600">Ready</span>
-                          </div>
-                        </div>
+                        <div className="text-sm font-semibold text-gray-700">{item.label}</div>
                       </div>
-
-                      <div className="flex-shrink-0">
-                        <div className="w-48 h-48 rounded-full border-8 border-gray-200 flex flex-col items-center justify-center bg-white shadow-lg">
-                          <div className="text-center">
-                            <div className="text-sm text-gray-500 mb-1">Your Score</div>
-                            <div className="text-5xl font-bold text-gray-800">{results.overallScore.toFixed(1)}</div>
-                            <div className="text-sm text-gray-500 mt-1">out of 5.0</div>
-                            <div className={`mt-3 px-4 py-1 rounded-full text-sm font-semibold ${getReadinessLevel(results.overallScore).color} text-white`}>
-                              {getReadinessLevel(results.overallScore).label}
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className="prose max-w-none mt-6 pt-6 border-t border-gray-200">
-                      <p className="text-gray-700 leading-relaxed">
-                        {results.overallScore < 0.8 && (
-                          <>Your organization is at the <strong>Inactive</strong> stage of readiness, with an overall score of <strong>{results.overallScore.toFixed(1)} out of 5.0</strong>. This indicates that there is currently no clear connection between existing organizational gaps and the need for capacity building to support a home repair program.</>
-                        )}
-                        {results.overallScore >= 0.8 && results.overallScore < 1.8 && (
-                          <>Your organization is at the <strong>Aware</strong> stage of readiness, with an overall score of <strong>{results.overallScore.toFixed(1)} out of 5.0</strong>. At this stage, there is general recognition that something is missing or that home repairs could be valuable, but the connection to repair readiness remains vague and undeveloped.</>
-                        )}
-                        {results.overallScore >= 1.8 && results.overallScore < 2.8 && (
-                          <>Your organization is at the <strong>Exploring</strong> stage of readiness, with an overall score of <strong>{results.overallScore.toFixed(1)} out of 5.0</strong>. Your team has begun to identify some internal needs or challenges and is starting to tie them to potential repair program goals or capacity strategies.</>
-                        )}
-                        {results.overallScore >= 2.8 && results.overallScore < 3.8 && (
-                          <>Your organization is at the <strong>Planning</strong> stage of readiness, with an overall score of <strong>{results.overallScore.toFixed(1)} out of 5.0</strong>. You have identified key gaps and are beginning to explore how to address them, with the team aligning around next steps and early strategies.</>
-                        )}
-                        {results.overallScore >= 3.8 && results.overallScore < 4.8 && (
-                          <>Your organization is at the <strong>Preparing</strong> stage of readiness, with an overall score of <strong>{results.overallScore.toFixed(1)} out of 5.0</strong>. You have clearly defined needs directly tied to repair program readiness, with drafts, outlines, or initial frameworks in place.</>
-                        )}
-                        {results.overallScore >= 4.8 && (
-                          <>Your organization is at the <strong>Ready</strong> stage of readiness, with an outstanding overall score of <strong>{results.overallScore.toFixed(1)} out of 5.0</strong>. Congratulations! Your affiliate has a strong, actionable plan fully aligned with your repair program vision.</>
-                        )}
-                      </p>
-                    </div>
+                    ))}
                   </div>
                 </div>
 
-                <h3 className="text-xl font-bold mb-4">Readiness Distribution</h3>
-                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 mb-8">
-                  {['Inactive', 'Aware', 'Exploring', 'Planning', 'Preparing', 'Ready'].map(label => {
-                    const colors = { Inactive: 'bg-gray-400', Aware: 'bg-red-400', Exploring: 'bg-orange-400', Planning: 'bg-yellow-400', Preparing: 'bg-blue-400', Ready: 'bg-green-500' };
-                    const borderColors = { Inactive: 'border-gray-300', Aware: 'border-red-300', Exploring: 'border-orange-300', Planning: 'border-yellow-300', Preparing: 'border-blue-300', Ready: 'border-green-300' };
-                    const bgColors = { Inactive: 'bg-gray-50', Aware: 'bg-red-50', Exploring: 'bg-orange-50', Planning: 'bg-yellow-50', Preparing: 'bg-blue-50', Ready: 'bg-green-50' };
-                    return (
-                      <div key={label} className={`${bgColors[label]} rounded-lg p-4 border-2 ${borderColors[label]} text-center`}>
-                        <div className={`w-12 h-12 rounded-full ${colors[label]} mx-auto mb-2 flex items-center justify-center`}>
-                          <span className="text-white font-bold text-xl">{dist[label]}</span>
-                        </div>
-                        <div className="text-sm font-semibold text-gray-700">{label}</div>
-                      </div>
-                    );
-                  })}
-                </div>
-
-                <h3 className="text-xl font-bold mb-4">Factor Overview</h3>
+                <h3 className="text-2xl font-bold mb-6">{CONTENT.dashboard.factorOverviewTitle}</h3>
                 {assessmentData.factors.map(factor => {
                   const factorData = results.factorScores[factor.id];
                   if (!factorData) return null;
@@ -903,118 +1006,6 @@ const ReadinessApp = () => {
     );
   }
 
-  const getActionGuidance = (subfactorId, score) => {
-    const guidance = {
-      leadership: {
-        0: "Begin by educating leadership on why repairs matter. Review local data on vulnerable populations and use storytelling or peer affiliate examples to spark interest.",
-        1: "Use board meetings to introduce housing preservation as a strategic growth area. Consider inviting a peer affiliate to present on program impact.",
-        2: "Form a board/staff working group to explore feasibility. Draft a short concept paper and start a light community needs scan.",
-        3: "Develop a strategic roadmap or case statement. Align the board around timing, goals, and what launching a pilot would require.",
-        4: "Begin developing operational components. Draft or revise a board-approved repair policy and outline a staffing or volunteer model."
-      },
-      staff: {
-        0: "Start with internal discussions about program potential. Identify who would likely lead or support repair efforts through a staff interest survey.",
-        1: "Increase internal engagement by presenting the vision and value of repairs to staff. Help them understand how repair aligns with mission.",
-        2: "Clarify roles and expectations. Develop a simple staff readiness plan identifying who will participate in capacity building efforts.",
-        3: "Build on momentum by developing a training and learning plan. Align participation with key development milestones.",
-        4: "Begin integrating learning into program design. Ensure staff have time and support to implement what they learn."
-      },
-      systems: {
-        0: "Begin by reviewing your current systems through a preservation lens. Identify where existing procedures may fall short for managing repairs.",
-        1: "Document known limitations and start prioritizing system areas for development. Bring together staff to assess gaps collaboratively.",
-        2: "Turn discussion into early planning. Assign team members to explore solutions, gather feedback, or test lightweight tools.",
-        3: "Create a system readiness plan. Outline which tools or procedures will be adopted, tested, or adapted for a home repair program.",
-        4: "Advance into implementation. Begin executing on key areas like intake database, procurement tools, and contractor tracking."
-      },
-      housing: {
-        0: "Start by collecting basic local indicators. Look for public health data, local housing quality reports, or census data showing homeowner challenges.",
-        1: "Engage local partners. Reach out to agencies, churches, or nonprofits that serve vulnerable homeowners about trends they're seeing.",
-        2: "Begin capturing real data. Track inquiries or past one-off repair requests. Start a waiting list and use interviews or surveys.",
-        3: "Document needs in a simple format. Create a short summary or slide deck illustrating examples, costs, and populations affected.",
-        4: "Use this data to shape your program design. Align repair priorities (e.g., accessibility, roofing, HVAC) with actual community needs."
-      },
-      organizational: {
-        0: "Start mapping where your affiliate feels stretched or under-resourced. Consider operations, staff roles, training needs, and tools required.",
-        1: "Hold a team conversation focused on what's missing. Try framing it around what would make us more prepared to run a repair program.",
-        2: "Draft a working list of needs and tie them directly to the program startup journey. For example, lack of project manager could delay pilot efforts.",
-        3: "Begin shaping your case for support. Define how addressing these gaps will strengthen your affiliate's ability to deliver repair services.",
-        4: "Document these needs in a brief or capacity-building request. Consider using templates to organize them for leadership or funder review."
-      },
-      timing: {
-        0: "Evaluate community and organizational factors. Consider aging housing stock, disaster vulnerability, or equity gaps that could justify a stronger repair focus.",
-        1: "Begin documenting emerging needs. Gather evidence or testimonials that suggest repair services are becoming more timely or relevant.",
-        2: "Assess internal capacity for engagement. Confirm that timing aligns with other strategic priorities, board cycles, or staff availability.",
-        3: "Integrate preservation into upcoming planning efforts. Flag this opportunity in strategic discussions, budgeting, or staff development calendars.",
-        4: "Accelerate decision-making. Prepare leadership and staff for active engagement and monitor funding opportunities to act quickly."
-      },
-      goals: {
-        0: "Start by identifying your biggest barriers to readiness. Use those as a foundation to brainstorm goal statements.",
-        1: "Refine your goals using SMART criteria. Focus on outcomes that are Specific, Measurable, Achievable, Relevant, and Time-bound.",
-        2: "Map each goal to a repair program need. Ask, 'How does this help us get closer to launch?' and revise or consolidate where necessary.",
-        3: "Prioritize your goals. Choose 2-3 that are most achievable and impactful, and begin outlining how progress will be measured.",
-        4: "Link your goals to actionable activities. This helps demonstrate that your goals are grounded in best practices."
-      },
-      feasibility: {
-        0: "Clarify expectations and align with leadership. Begin discussing what staff time, support, and resources will be needed to fully engage.",
-        1: "Sketch out a basic participation outline. Define who should attend, how time will be allocated, and what outcomes you hope to achieve.",
-        2: "Draft a participation strategy. Identify roles and develop a rough schedule for training engagement and post-training application.",
-        3: "Share the plan with your team. Confirm buy-in and explore how to embed training into regular workflows or strategic goals.",
-        4: "Assign accountability. Ensure participants know what they're responsible for and how they'll be supported in applying what they learn."
-      },
-      alignment: {
-        0: "Review the program's capacity-building goals and logic. Re-express your own needs and goals using the language of sustainability, scale, and repair impact.",
-        1: "Translate your internal needs into aligned outcomes. Ask: 'How does this activity help us sustain or expand our capacity over time?'",
-        2: "Broaden the lens. Begin linking tactical efforts (e.g., training, policy development) to strategic outcomes like program longevity or service equity.",
-        3: "Add durability to your plans. Incorporate long-term indicators like staff retention, system sustainability, or expanded service pipelines.",
-        4: "Position your approach for funders and partners. Show how today's investments lead to future resilience, efficiency, and growth."
-      },
-      resources: {
-        0: "Initiate resource mapping. Brainstorm internal and external sources of support, such as unrestricted funds, board engagement, or in-kind donations.",
-        1: "Draft a simple plan. Identify one or two target sources (e.g., local foundation, donor base) and outline basic next steps for engagement.",
-        2: "Strengthen resource connections. Assess the feasibility of each source and begin coordinating outreach or proposal planning.",
-        3: "Align resources to specific goals. Map each funding or support opportunity to a tangible program milestone.",
-        4: "Activate multi-channel resource development. Engage board, development staff, or partners to help secure the identified resources."
-      },
-      partnerships: {
-        0: "Survey your local network. Identify who is already working in housing, health, or aging services and explore shared interests.",
-        1: "Initiate informal contact. Reach out to one or two potential partners to gauge interest in supporting your efforts.",
-        2: "Clarify partnership roles. Consider a partner kickoff meeting or letter of support that outlines alignment and intentions.",
-        3: "Define collaboration points. Establish when and how partners will be engaged and what roles they will play as your program grows.",
-        4: "Develop MOUs or working agreements. Solidify terms, expectations, and contributions to demonstrate aligned investment."
-      },
-      postgrant: {
-        0: "Shift to long-term thinking. Ask, 'What would we need to keep this going?' Start a basic sustainability conversation with your team.",
-        1: "Identify key sustainability levers. These could include policy changes, new staffing models, fee structures, or ongoing partner support.",
-        2: "Outline your best option. Choose one or two strategies (e.g., volunteer pipeline, shared equipment) and begin building out details.",
-        3: "Link your plan to results. Ensure your sustainability strategies are tied to outcomes that the grant helped achieve.",
-        4: "Build support for sustainability. Communicate the plan to stakeholders and explore funding, training, or partnership supports."
-      },
-      vision: {
-        0: "Start with your 'why.' Revisit your mission and community data. Ask how repair work advances long-term impact for your population.",
-        1: "Facilitate a visioning session. Engage staff and board in crafting a shared vision for a sustainable, strategic repair program.",
-        2: "Ground your vision in need. Use data, testimonials, or trends (aging in place, health equity, disaster recovery) to sharpen your purpose.",
-        3: "Link your vision to a theory of change. Clarify what short-, medium-, and long-term impacts your repair work will generate.",
-        4: "Share and test your vision. Include it in presentations, grant proposals, or conversations with stakeholders to build momentum."
-      },
-      application: {
-        0: "Identify key takeaways. Ask, 'What do we want to keep using?' Consider tools, systems, roles, or relationships that should continue.",
-        1: "Draft a post-grant checklist. Outline what actions, resources, or follow-up steps will be needed to sustain momentum.",
-        2: "Stress-test your plan. Evaluate potential obstacles and begin addressing how to manage them once grant support ends.",
-        3: "Clarify timing and roles. Assign who is responsible for implementing post-grant actions and create a light project timeline.",
-        4: "Build internal accountability. Ensure follow-up actions are baked into your team's workplans or dashboard systems."
-      },
-      community: {
-        0: "Start by asking, 'Who else could benefit?' Consider local coalitions, municipal leaders, or community groups aligned with your work.",
-        1: "Explore shared outcomes. Identify overlap between your goals and those of external groups (e.g., aging in place, blight reduction).",
-        2: "Clarify how others are impacted. Use examples of indirect beneficiaries (e.g., neighbors, public health) or shared systems.",
-        3: "Gather testimonials or local feedback. Use data or quotes to reinforce your broader value proposition.",
-        4: "Track ripple effects. Begin measuring indirect impacts like increased referrals, cross-sector collaboration, or civic engagement."
-      }
-    };
-    
-    return guidance[subfactorId]?.[score] || "Continue building capacity in this area through targeted planning and stakeholder engagement.";
-  };
-
   if (currentView === 'next-steps') {
     const results = isAssessmentComplete ? calculateResults() : null;
     const recs = results ? getRecommendations(results.factorScores) : [];
@@ -1041,11 +1032,11 @@ const ReadinessApp = () => {
                     <p className="text-gray-700 mb-6">
                       Personalized next steps will be available once you complete all assessment questions.
                     </p>
-                    <button 
+                    <button
                       onClick={() => setCurrentView('assessment')}
-                      className="px-6 py-3 bg-orange-500 text-white font-semibold rounded-lg hover:bg-orange-600 transition-colors"
+                      className="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 font-semibold"
                     >
-                      Continue Assessment
+                      Continue Assessment ({answeredQuestions}/{totalQuestions} completed)
                     </button>
                   </div>
                 </div>
@@ -1058,7 +1049,7 @@ const ReadinessApp = () => {
                     General Guidance
                   </h3>
                   <ul className="space-y-2 text-gray-700">
-                    <li>• Review areas scoring below Planning for immediate attention</li>
+                    <li>• Review areas scoring below Planning (3) for immediate attention</li>
                     <li>• Create a 3-6 month action plan addressing your lowest-scoring factors</li>
                     <li>• Engage leadership and staff in discussing assessment results</li>
                     <li>• Connect with HFHI for technical assistance in priority areas</li>
@@ -1088,7 +1079,6 @@ const ReadinessApp = () => {
                             <h4 className="font-bold text-gray-800 text-lg">{rec.subfactor} - Score: {rec.score}</h4>
                             <p className="text-sm text-gray-600 mt-1">{rec.factor}</p>
                           </div>
-                          <p className="text-sm text-gray-700">{getActionGuidance(rec.subfactor.toLowerCase().replace(/ /g, '').replace(/&/g, ''), rec.score)}</p>
                         </div>
                       ))}
                     </div>
@@ -1098,20 +1088,19 @@ const ReadinessApp = () => {
                 {med.length > 0 && (
                   <div className="mb-6">
                     <h3 className="text-xl font-bold text-gray-800 mb-4 flex items-center gap-2">
-                      <AlertCircle className="w-6 h-6 text-orange-600" />
+                      <AlertCircle className="w-6 h-6 text-yellow-600" />
                       Medium Priority Action Items
                     </h3>
                     <div className="space-y-4">
                       {med.map((rec, idx) => (
-                        <div key={idx} className="bg-orange-50 border border-orange-200 rounded-lg p-6">
+                        <div key={idx} className="bg-yellow-50 border border-yellow-200 rounded-lg p-6">
                           <div className="mb-3">
-                            <div className="inline-block px-3 py-1 rounded bg-orange-500 text-white text-xs font-semibold mb-3">
+                            <div className="inline-block px-3 py-1 rounded bg-yellow-600 text-white text-xs font-semibold mb-3">
                               Medium Priority
                             </div>
                             <h4 className="font-bold text-gray-800 text-lg">{rec.subfactor} - Score: {rec.score}</h4>
                             <p className="text-sm text-gray-600 mt-1">{rec.factor}</p>
                           </div>
-                          <p className="text-sm text-gray-700">{getActionGuidance(rec.subfactor.toLowerCase().replace(/ /g, '').replace(/&/g, ''), rec.score)}</p>
                         </div>
                       ))}
                     </div>
@@ -1134,7 +1123,6 @@ const ReadinessApp = () => {
                             <h4 className="font-bold text-gray-800 text-lg">{rec.subfactor} - Score: {rec.score}</h4>
                             <p className="text-sm text-gray-600 mt-1">{rec.factor}</p>
                           </div>
-                          <p className="text-sm text-gray-700">{getActionGuidance(rec.subfactor.toLowerCase().replace(/ /g, '').replace(/&/g, ''), rec.score)}</p>
                         </div>
                       ))}
                     </div>

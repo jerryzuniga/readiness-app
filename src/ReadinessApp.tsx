@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { 
   ChevronRight, ChevronLeft, Check, Printer, ArrowRight, 
-  BarChart3, ClipboardCheck, Home, Info, User, Menu,
-  Handshake, Wrench, Users, FileText, Download, Share2,
+  BarChart3, ClipboardCheck, Home, User, Menu,
+  Handshake, Wrench, Users, FileText, Download,
   AlertCircle, BookOpen, Clock, Save, TrendingUp 
 } from 'lucide-react';
 
@@ -389,10 +389,10 @@ export default function HomeRepairAssessment() {
     link.rel = 'icon';
     
     // Create SVG data URI for the favicon: White house on Habitat Blue (#2C5697) rounded square
-    // This matches the "logo in the upper left" description
+    // Note: using fill="#2C5697" which is valid when encoded properly by encodeURIComponent
     const svgString = `
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
-        <rect width="32" height="32" rx="6" fill="%232C5697"/>
+        <rect width="32" height="32" rx="6" fill="#2C5697"/>
         <path d="M7 13 L16 6 L25 13 V24 A2 2 0 0 1 23 26 H9 A2 2 0 0 1 7 24 Z" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
         <path d="M13 26 V16 H19 V26" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
       </svg>

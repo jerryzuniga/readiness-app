@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { 
   ChevronRight, ChevronLeft, Check, Printer, ArrowRight, 
-  BarChart3, ClipboardCheck, Home, User, Menu,
-  Handshake, Wrench, Users, FileText, Download,
+  BarChart3, ClipboardCheck, Home, Info, User, Menu,
+  Handshake, Wrench, Users, FileText, Download, Share2,
   AlertCircle, BookOpen, Clock, Save, TrendingUp 
 } from 'lucide-react';
 
@@ -556,7 +556,7 @@ export default function HomeRepairAssessment() {
           <div className="mt-8 text-center flex flex-col items-center">
             <h1 className="text-4xl md:text-5xl font-bold text-[#333] mb-6">Home Repair Readiness Assessment</h1>
             <p className="text-[#555] text-lg max-w-2xl mx-auto mb-12 leading-relaxed">
-              Evaluate your affiliate’s readiness to launch a sustainable, scalable home repair program. Use this data-centered assessment to create a tailored roadmap that builds capacity and strengthens long-term community impact.
+              Evaluate your affiliate’s readiness to launch a sustainable, scalable home repair program across five HUD-based factors: Capacity, Need, Approach, Leverage, and Impact. This data-centered assessment helps create a tailored roadmap that strengthens organizational capacity and long-term programming impact.
             </p>
             
             <div className="flex justify-center gap-8 mb-12 flex-wrap">

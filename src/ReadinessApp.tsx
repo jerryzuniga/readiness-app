@@ -592,11 +592,9 @@ export default function HomeRepairAssessment() {
               )}
             </div>
 
-            {/* --- NEW "WHAT TO EXPECT" SECTION --- */}
             <div className="w-full max-w-3xl bg-white rounded-xl shadow-sm border border-gray-200 p-8 text-left mb-12">
               <h3 className="text-2xl font-bold text-[#2C5697] mb-8">What to Expect</h3>
               <div className="space-y-8">
-                {/* Item 1 */}
                 <div className="flex gap-5">
                   <div className="flex-shrink-0 w-12 h-12 rounded-full bg-[#E3F2FD] flex items-center justify-center text-[#2C5697] font-bold text-lg">
                     15
@@ -607,7 +605,6 @@ export default function HomeRepairAssessment() {
                   </div>
                 </div>
                 
-                {/* Item 2 */}
                 <div className="flex gap-5">
                   <div className="flex-shrink-0 w-12 h-12 rounded-full bg-[#E3F2FD] flex items-center justify-center text-[#2C5697]">
                     <Clock size={24} />
@@ -618,7 +615,6 @@ export default function HomeRepairAssessment() {
                   </div>
                 </div>
 
-                {/* Item 3 */}
                 <div className="flex gap-5">
                   <div className="flex-shrink-0 w-12 h-12 rounded-full bg-[#E3F2FD] flex items-center justify-center text-[#2C5697]">
                     <BarChart3 size={24} />
@@ -629,7 +625,6 @@ export default function HomeRepairAssessment() {
                   </div>
                 </div>
 
-                {/* Item 4 */}
                 <div className="flex gap-5">
                   <div className="flex-shrink-0 w-12 h-12 rounded-full bg-[#E3F2FD] flex items-center justify-center text-[#2C5697]">
                     <Save size={24} />
@@ -653,7 +648,12 @@ export default function HomeRepairAssessment() {
 
         {/* --- VIEW: WIZARD (CARD LAYOUT) --- */}
         {view === 'wizard' && (
-          <div className="w-full mt-6">
+          <div className="w-full mt-8">
+            {/* RESTORED TITLE */}
+            <div className="mb-6">
+                 <h2 className="text-3xl font-bold text-[#333]">Assessment - Sub-factor Rating</h2>
+            </div>
+            
             <div className="mb-6 flex justify-between items-end">
               <div>
                 <span className="text-sm font-semibold text-gray-500 uppercase tracking-wide">Section {Math.floor(step/3) + 1} of 5, Item {step + 1} of {SUB_FACTORS.length}</span>
@@ -762,7 +762,7 @@ export default function HomeRepairAssessment() {
 
         {/* --- VIEW: DASHBOARD --- */}
         {view === 'dashboard' && (
-          <div className="flex flex-col gap-8 mt-4">
+          <div className="flex flex-col gap-8 mt-8">
             {/* Header */}
             <div className="flex justify-between items-end border-b border-gray-200 pb-4">
               <div>
@@ -842,9 +842,8 @@ export default function HomeRepairAssessment() {
             <div className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
               <div className="px-6 py-4 border-b border-gray-200 bg-gray-50 flex justify-between items-center">
                 <h3 className="font-bold text-gray-700">Readiness Heatmap</h3>
-                <div className="flex gap-4 text-xs text-gray-500">
-                  <div className="flex items-center gap-1"><div className="w-3 h-3 bg-gray-400 rounded-sm"></div> Selected Level</div>
-                  <div className="flex items-center gap-1"><div className="w-3 h-3 bg-gray-100 rounded-sm"></div> Unselected</div>
+                <div className="flex gap-4 text-xs text-gray-500 italic">
+                  Select the ranked score in order to change it
                 </div>
               </div>
               <div className="overflow-x-auto">

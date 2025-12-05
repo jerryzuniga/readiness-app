@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { 
   ChevronRight, ChevronLeft, Check, Printer, ArrowRight, 
-  BarChart3, ClipboardCheck, Home, Info, User, Menu,
+  BarChart3, ClipboardCheck, Home, Info, User, Menu, X, // Added X icon
   Handshake, Wrench, Users, FileText, Download, Share2,
   AlertCircle, BookOpen, Clock, Save, TrendingUp 
 } from 'lucide-react';
@@ -379,6 +379,7 @@ export default function HomeRepairAssessment() {
   const [view, setView] = useState('home'); // home, wizard, dashboard, plan
   const [step, setStep] = useState(0);
   const [answers, setAnswers] = useState({});
+  const [isMenuOpen, setIsMenuOpen] = useState(false); // State for mobile menu
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -389,7 +390,6 @@ export default function HomeRepairAssessment() {
     link.rel = 'icon';
     
     // Create SVG data URI for the favicon: White house on Habitat Blue (#2C5697) rounded square
-    // Note: using fill="#2C5697" which is valid when encoded properly by encodeURIComponent
     const svgString = `
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
         <rect width="32" height="32" rx="6" fill="#2C5697"/>
@@ -444,6 +444,12 @@ export default function HomeRepairAssessment() {
     }
   };
 
+  // Function to handle mobile navigation clicks
+  const handleMobileNav = (targetView) => {
+    setView(targetView);
+    setIsMenuOpen(false);
+  };
+
   const getOverallScore = () => {
     const total = Object.values(answers).reduce((a, b) => a + b, 0);
     const count = Object.keys(answers).length;
@@ -469,19 +475,17 @@ export default function HomeRepairAssessment() {
   const completionPercent = getCompletionPercentage();
 
   // Helper to determine stage based on score (1-6 scale)
-  // FIXED LOGIC: Any score > 3.0 enters Planning.
   const getStageFromScore = (scoreVal) => {
     const score = parseFloat(scoreVal);
     if (score <= 1) return "Inactive"; 
     if (score <= 2) return "Aware";    
     if (score <= 3) return "Exploring";
-    if (score <= 4) return "Planning"; // Now correctly returns Planning for 3.3
+    if (score <= 4) return "Planning";
     if (score <= 5) return "Preparing";
     return "Ready";                    
   };
 
   // Helper to determine stage Index based on score (0-5)
-  // FIXED LOGIC: Same alignment
   const getStageIndex = (scoreVal) => {
     const score = parseFloat(scoreVal);
     if (score <= 1) return 0; // Inactive
@@ -516,6 +520,8 @@ export default function HomeRepairAssessment() {
               <span className="text-xs text-gray-500 font-medium mt-0.5">v1.1</span>
             </div>
           </div>
+          
+          {/* Desktop Nav */}
           <nav className="hidden md:flex items-center gap-8 text-sm font-medium text-gray-600">
             <button 
               onClick={() => setView('home')} 
@@ -545,8 +551,50 @@ export default function HomeRepairAssessment() {
               Guide
             </button>
           </nav>
-          <button className="md:hidden text-gray-500"><Menu size={24} /></button>
+
+          {/* Mobile Menu Button */}
+          <button 
+            className="md:hidden text-gray-500"
+            onClick={() => setIsMenuOpen(!isMenuOpen)}
+          >
+            {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
+          </button>
         </div>
+
+        {/* Mobile Dropdown Menu */}
+        {isMenuOpen && (
+          <div className="md:hidden bg-white border-t border-gray-200 absolute w-full shadow-lg">
+            <div className="flex flex-col px-6 py-4 gap-4">
+              <button 
+                onClick={() => handleMobileNav('home')}
+                className={`text-left py-2 ${view === 'home' ? 'text-[#008996] font-bold' : 'text-gray-600'}`}
+              >
+                Home
+              </button>
+              <button 
+                onClick={() => handleMobileNav('dashboard')}
+                className={`text-left py-2 ${view === 'dashboard' || view === 'wizard' ? 'text-[#008996] font-bold' : 'text-gray-600'}`}
+              >
+                Assessment
+              </button>
+              <button 
+                onClick={() => handleMobileNav('plan')}
+                className={`text-left py-2 ${view === 'plan' ? 'text-[#008996] font-bold' : 'text-gray-600'}`}
+              >
+                Next Steps
+              </button>
+              <button 
+                onClick={() => {
+                  window.open('https://readiness-app.vercel.app/Readiness_Manual.pdf', '_blank');
+                  setIsMenuOpen(false);
+                }}
+                className="text-left py-2 flex items-center gap-2 text-gray-600"
+              >
+                <BookOpen size={16} /> Guide
+              </button>
+            </div>
+          </div>
+        )}
       </header>
 
       <main className="flex-1 w-full max-w-6xl mx-auto p-4 md:p-8">
@@ -592,9 +640,11 @@ export default function HomeRepairAssessment() {
               )}
             </div>
 
+            {/* --- NEW "WHAT TO EXPECT" SECTION --- */}
             <div className="w-full max-w-3xl bg-white rounded-xl shadow-sm border border-gray-200 p-8 text-left mb-12">
               <h3 className="text-2xl font-bold text-[#2C5697] mb-8">What to Expect</h3>
               <div className="space-y-8">
+                {/* Item 1 */}
                 <div className="flex gap-5">
                   <div className="flex-shrink-0 w-12 h-12 rounded-full bg-[#E3F2FD] flex items-center justify-center text-[#2C5697] font-bold text-lg">
                     15
@@ -605,6 +655,7 @@ export default function HomeRepairAssessment() {
                   </div>
                 </div>
                 
+                {/* Item 2 */}
                 <div className="flex gap-5">
                   <div className="flex-shrink-0 w-12 h-12 rounded-full bg-[#E3F2FD] flex items-center justify-center text-[#2C5697]">
                     <Clock size={24} />
@@ -615,6 +666,7 @@ export default function HomeRepairAssessment() {
                   </div>
                 </div>
 
+                {/* Item 3 */}
                 <div className="flex gap-5">
                   <div className="flex-shrink-0 w-12 h-12 rounded-full bg-[#E3F2FD] flex items-center justify-center text-[#2C5697]">
                     <BarChart3 size={24} />
@@ -625,6 +677,7 @@ export default function HomeRepairAssessment() {
                   </div>
                 </div>
 
+                {/* Item 4 */}
                 <div className="flex gap-5">
                   <div className="flex-shrink-0 w-12 h-12 rounded-full bg-[#E3F2FD] flex items-center justify-center text-[#2C5697]">
                     <Save size={24} />

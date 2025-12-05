@@ -20,7 +20,6 @@ const STAGE_DEFINITIONS = {
 };
 
 // UPDATED LEVEL STYLES (Grey -> Red -> Orange -> Yellow -> Light Green -> Dark Green)
-// Added 'hex' property for inline styling of dynamic elements like the score circle
 const LEVEL_STYLES = [
   { header: "bg-[#94A3B8] text-white", body: "bg-slate-50 border-slate-200", label: "Inactive", hex: "#94A3B8", textClass: "text-white" },   // Grey
   { header: "bg-[#EF5350] text-white", body: "bg-red-50 border-red-200", label: "Aware", hex: "#EF5350", textClass: "text-white" },      // Red
@@ -56,12 +55,12 @@ const SUB_FACTORS = [
     q: "How would you rate your organization’s leadership and board commitment toward developing a home repair program?",
     context: "This sub-factor looks at how clearly leadership and the board understand, prioritize, and sponsor home repair work. It reflects shared vision, strategic alignment, and willingness to authorize time, staff, and resources.",
     desc: [
-      "No awareness or discussion of home repairs among the board or leadership team.",
-      "Some awareness exists, but repair is not part of formal priorities.",
-      "Leadership has begun discussing potential value of home repairs.",
-      "Repairs are discussed regularly and basic plans are forming.",
-      "Leadership is taking early steps like assigning staff or approving concepts.",
-      "Housing preservation is embedded in strategy with active preparation for launch."
+      "Leadership and board are not discussing home repairs or seeing them as strategic.",
+      "Leaders recognize repair issues but have not connected them to formal priorities or decisions.",
+      "Leadership is curious about repairs and has begun informal conversations or small exploratory steps.",
+      "Leadership is discussing repairs regularly and outlining what a future program might require.",
+      "Leadership and board have assigned people, approved early concepts, or started exploring funding for repairs.",
+      "Repair and preservation are built into strategy, with leadership aligned, engaged, and actively preparing for launch."
     ],
     tips: {
       1: "Begin by educating leadership on why repairs matter. Review local data on vulnerable populations.",
@@ -73,16 +72,16 @@ const SUB_FACTORS = [
     }
   },
   {
-    id: "f1s2", factor: "Capacity of Affiliate", name: "Staff Commitment",
+    id: "f1s2", factor: "Capacity of Affiliate", name: "Staff Commitment to Learn and Implement Repairs",
     q: "How prepared and committed is your staff to engage in training and apply what is learned?",
     context: "This sub-factor looks at staff ownership and enthusiasm for home repairs. It considers whether people understand the purpose, see repairs as part of their job, and are ready to adjust workflows to support a formal program.",
     desc: [
-      "No staff assigned or identified to participate.",
-      "General support, but limited staff enthusiasm or capacity.",
-      "One or two staff named, but roles are unclear.",
-      "Specific staff selected for training and planning.",
-      "Staff scheduled for learning and assigned to planning steps.",
-      "Team fully committed, engaged, and equipped."
+      "No staff are identified to lead repairs, and there is no plan for training or learning.",
+      "Staff know repairs are being discussed, but expectations, roles, and learning plans remain unclear.",
+      "One or two staff are loosely named for repairs, but time, duties, and support are undefined.",
+      "Specific staff have been chosen for repair learning and are beginning to join planning conversations.",
+      "Staff are scheduled for training and are actively applying learning to early repair planning tasks.",
+      "A cross functional staff team is committed, engaged in learning, and prepared to lead repair program development."
     ],
     tips: {
       1: "Start internal discussions. Identify who would lead repairs.",
@@ -94,16 +93,16 @@ const SUB_FACTORS = [
     }
   },
   {
-    id: "f1s3", factor: "Capacity of Affiliate", name: "Internal Systems",
+    id: "f1s3", factor: "Capacity of Affiliate", name: "Demonstrating Internal Systems Development",
     q: "How well has your organization planned for improvements to key systems (admin, tools, etc.)?",
     context: "This sub-factor looks at the internal systems that would carry a repair program. It examines data, financial, HR, and project management tools and whether they can reliably support intake, tracking, reporting, and compliance.",
     desc: [
-      "No resource needs identified or systems in place.",
-      "Awareness that systems need attention, but no plan yet.",
-      "Initial conversations on tracking tools and workflow started.",
-      "System needs identified; early budgeting underway.",
-      "Written plan in place; implementation scheduled.",
-      "Fully developed, actionable system plan in place."
+      "No internal tools, processes, or systems exist to support home repair work or data tracking.",
+      "You recognize that current systems are weak for repairs, but there is no defined improvement plan.",
+      "Initial conversations have started about tools, workflows, or equipment, but no concrete action has been taken.",
+      "Key system needs are identified and early budgeting, pilots, or testing efforts are underway.",
+      "A written system improvement plan exists, with staff assigned and implementation steps scheduled.",
+      "System changes are resourced, coordinated across departments, and aligned with your anticipated repair launch timeline."
     ],
     tips: {
       1: "Review current systems. Identify where existing procedures fall short.",
@@ -121,12 +120,12 @@ const SUB_FACTORS = [
     q: "How well has your organization determined housing repair needs within your community?",
     context: "This sub-factor looks at how well you understand repair needs in the community. It reflects use of local data, partnerships, and lived experience to identify which households, neighborhoods, and issues require the most attention.",
     desc: [
-      "No data gathered on local repair needs.",
-      "Anecdotal understanding only.",
-      "Initial lists or feedback collected but not analyzed.",
-      "Specific needs identified via early data collection.",
-      "Clear understanding supported by data sources.",
-      "Strong data-driven understanding (waitlists, assessments)."
+      "No data or structured feedback has been gathered about local housing repair or stabilization needs.",
+      "Repair needs are recognized mainly through anecdotes, without supporting data or documented examples.",
+      "Early lists, referrals, or stories are being collected, but they are not yet analyzed or organized.",
+      "Specific stabilization needs are documented using basic data or examples tied to local households.",
+      "You have a clear, data informed picture of major repair needs across populations and neighborhoods.",
+      "Repair needs are well quantified with waitlists, assessments, or external reports that clearly justify launching a program."
     ],
     tips: {
       1: "Collect basic indicators (public health data, census data).",
@@ -138,16 +137,16 @@ const SUB_FACTORS = [
     }
   },
   {
-    id: "f2s2", factor: "Repair Program Need", name: "Organizational Need",
+    id: "f2s2", factor: "Repair Program Need", name: "Organizational Need for Capacity Building",
     q: "How clearly has your organization identified the need for capacity building to support programming?",
     context: "This sub-factor looks at how repair work fits your affiliate's own needs and strategy. It considers mission alignment, business model implications, and how repairs can strengthen existing construction, mortgage, and community efforts.",
     desc: [
-      "No connection made between gaps and capacity building.",
-      "Vague understanding of internal gaps.",
-      "Some gaps acknowledged but not linked to strategy.",
-      "Gaps prioritized; exploration begun.",
-      "Defined plan exists aligned with goals.",
-      "Investments justified with data and linked to sustainability."
+      "Internal gaps exist, but they have not been connected to a need for capacity building.",
+      "There is general awareness of organizational strain, yet gaps are not clearly defined or prioritized.",
+      "Key gaps such as staffing, systems, or skills are named but not linked to specific repair goals.",
+      "Capacity gaps are documented, prioritized, and being explored as part of a broader repair readiness plan.",
+      "A concrete capacity building plan exists, with actions, timelines, and responsibilities aligned to repair goals.",
+      "Capacity investments are clearly justified and tied to launching or sustaining a formal, mission aligned repair program."
     ],
     tips: {
       1: "Map where the affiliate feels stretched (staff, tools, training).",
@@ -163,12 +162,12 @@ const SUB_FACTORS = [
     q: "How timely is this capacity-building opportunity for your organization or community?",
     context: "This sub-factor looks at whether now is the right moment to invest in repairs. It captures external drivers like funding or disasters and internal capacity to act so that the program launches at a sustainable pace.",
     desc: [
-      "No urgency recognized.",
-      "Early signs of alignment surfacing.",
-      "Timing aligns but no external driver.",
-      "Fits within near-term planning cycles.",
-      "Specific pressures (funding, disaster) make this ideal.",
-      "High-urgency needs (post-disaster, policy change) documented."
+      "No sense of urgency exists, and repairs are not viewed as a timely organizational priority.",
+      "Early signs of need or interest appear, but timing still feels optional rather than pressing.",
+      "Repairs generally fit your interests and capacity, but no strong external driver has been identified.",
+      "Repair readiness aligns with upcoming planning cycles, staffing changes, or community initiatives on the near horizon.",
+      "Specific pressures or opportunities, such as funding or disasters, make this a high impact moment to act.",
+      "Documented internal and external conditions make acting now critical, and leadership agrees timing should be prioritized."
     ],
     tips: {
       1: "Evaluate aging housing stock or disaster vulnerability.",
@@ -182,16 +181,16 @@ const SUB_FACTORS = [
 
   // --- FACTOR 3: APPROACH ---
   {
-    id: "f3s1", factor: "Soundness of Approach", name: "Clarity of Goals",
+    id: "f3s1", factor: "Soundness of Approach", name: "Clarity of Capacity-Building Goals",
     q: "How clearly defined and realistic are your goals for this capacity-building grant?",
     context: "This sub-factor looks at how clearly you have defined the purpose of a repair program. It evaluates whether goals are specific, measurable, and tied to outcomes for households, properties, and the wider community.",
     desc: [
-      "No goals identified.",
-      "Goals aspirational but not measurable.",
-      "Goals exist but not tied to readiness.",
-      "Goals include specific, measurable results.",
-      "Specific, realistic goals tied to readiness elements.",
-      "Highly detailed, actionable goals supported by design."
+      "No clear goals exist for how capacity building would support a future home repair program.",
+      "General hopes or ideas are present, but goals are vague and not written or shared.",
+      "Preliminary goals are drafted, yet they are broad, overlapping, or not directly tied to repair work.",
+      "Goals are written, realistic, and partially connected to how capacity building will advance repairs.",
+      "Goals are specific, measurable, and clearly linked to milestones for designing or launching a repair program.",
+      "A focused goal set guides decisions, with capacity building activities mapped directly to desired repair outcomes."
     ],
     tips: {
       1: "Identify barriers. Brainstorm goal statements.",
@@ -207,12 +206,12 @@ const SUB_FACTORS = [
     q: "How realistic is your plan for participating in training and applying learning?",
     context: "This sub-factor looks at whether your plan for repairs is realistic. It considers scope, staffing, budget, and timelines to see if the work you hope to do matches the resources you can reliably secure.",
     desc: [
-      "Expectations unclear/unrealistic.",
-      "Vague plan; unclear roles.",
-      "Some details emerging but lacks structure.",
-      "Realistic plan; key team identified.",
-      "Clear structure, responsibilities, and timing.",
-      "Strong plan with accountability."
+      "There is no articulated approach for using capacity building resources to support repair programming.",
+      "Ideas for how to proceed exist, but they have not been tested for realism or fit.",
+      "A potential approach is emerging, though staffing, funding, and operational details remain largely unspecified.",
+      "A draft approach outlines roles, activities, and timelines and appears realistic with current or near term capacity.",
+      "The approach has been refined with input from partners or staff and aligned to available resources.",
+      "A feasible, well resourced approach is in place, ready to guide implementation or pilot repair activities."
     ],
     tips: {
       1: "Clarify expectations and align with leadership.",
@@ -224,16 +223,16 @@ const SUB_FACTORS = [
     }
   },
   {
-    id: "f3s3", factor: "Soundness of Approach", name: "Alignment with Outcomes",
+    id: "f3s3", factor: "Soundness of Approach", name: "Alignment with Program Outcomes",
     q: "How well does your approach align with capacity and sustainability goals?",
     context: "This sub-factor looks at how well your planned activities connect to desired outcomes. It examines whether repairs, services, and partnerships are designed to move key indicators like safety, stability, and resilience in the right direction.",
     desc: [
-      "No clear connection.",
-      "Limited/unclear connection.",
-      "Some alignment; focus is short-term.",
-      "Goals reflect capacity priorities.",
-      "Approach geared toward sustainability.",
-      "Fully aligned with long-term outcomes."
+      "Repair related activities are not connected to specific outcomes or broader housing preservation goals.",
+      "You have a sense of desired change, but outcomes are not defined or linked to activities.",
+      "Early outcome ideas exist, yet they are loosely worded or not measured against local repair needs.",
+      "Clear outcomes are drafted and partially aligned with proposed capacity building and repair strategies.",
+      "Outcomes are refined, realistic, and supported by early indicators or data collection plans.",
+      "Activities, outputs, and outcomes are tightly aligned in a simple logic model for your repair program."
     ],
     tips: {
       1: "Review program logic. Re-express goals.",
@@ -247,16 +246,16 @@ const SUB_FACTORS = [
 
   // --- FACTOR 4: LEVERAGE ---
   {
-    id: "f4s1", factor: "Leverage and Partnerships", name: "Resource Commitment",
+    id: "f4s1", factor: "Leverage and Partnerships", name: "Commitment to Seeking and Using Additional Resources",
     q: "How committed is your organization to seeking additional resources?",
     context: "This sub-factor looks at your ability to bring internal assets into the repair effort. It reflects how you leverage existing staff, volunteers, brand trust, land, and construction experience to support a sustainable program.",
     desc: [
-      "No resources identified.",
-      "Interest expressed; no plan.",
-      "Few resources identified; limited plan.",
-      "Moderate plan to seek resources.",
-      "Resource plan partially activated.",
-      "Defined, ongoing resource plan operational."
+      "No effort has been made to seek additional funding, partners, or in kind support for repair readiness.",
+      "Interest in new resources exists, but there is no specific plan, timeline, or target opportunities.",
+      "A few potential resource sources are identified, yet strategies for securing or using them remain limited.",
+      "A modest resource development plan outlines target sources and how support would advance repair readiness.",
+      "Resource efforts are underway, with outreach, proposals, or partner discussions already in motion.",
+      "An ongoing resource plan is active, with new funding or partnerships already secured to support repair capacity."
     ],
     tips: {
       1: "Initiate resource mapping (internal/external).",
@@ -268,16 +267,16 @@ const SUB_FACTORS = [
     }
   },
   {
-    id: "f4s2", factor: "Leverage and Partnerships", name: "Partnerships",
+    id: "f4s2", factor: "Leverage and Partnerships", name: "Partnerships and Collaborations",
     q: "How well has your organization identified partnerships?",
     context: "This sub-factor looks at the strength and usefulness of external partnerships for repair work. It considers relationships with funders, governments, service providers, and grassroots groups that can extend your reach and impact.",
     desc: [
-      "No partners identified.",
-      "Partners discussed; no outreach.",
-      "Potential partners showing interest.",
-      "Partners engaged through meetings.",
-      "Partnerships formalized.",
-      "Well-established partnerships with mutual goals."
+      "No partners have been identified, and repair capacity is being considered as an entirely internal effort.",
+      "Potential partners are mentioned internally, but there has been no direct outreach or engagement.",
+      "Specific partners show informal interest, yet roles, expectations, and contributions are not clearly defined.",
+      "Partners are meeting with you and beginning to coordinate around shared goals and early repair activities.",
+      "Partnerships are formalized or making active contributions that support planning or early program design.",
+      "Well established partners share goals, have clear roles, and are committed to strengthening repair capacity together."
     ],
     tips: {
       1: "Survey local network (aging services, housing).",
@@ -289,16 +288,16 @@ const SUB_FACTORS = [
     }
   },
   {
-    id: "f4s3", factor: "Leverage and Partnerships", name: "Future Leverage",
+    id: "f4s3", factor: "Leverage and Partnerships", name: "Potential for Leveraging Beyond the Grant Term",
     q: "How well positioned are you to sustain outcomes beyond the grant?",
     context: "This sub-factor looks at how well a repair program can unlock new opportunities. It evaluates potential for future funding, policy influence, shared infrastructure, and deepened relationships that strengthen housing preservation over time.",
     desc: [
-      "No sustainability planning.",
-      "Ideas exist; no plan.",
-      "Strategies identified but informal.",
-      "Vision extends 1-2 years.",
-      "Vision extends 3-5 years.",
-      "Strong sustainability plan in place."
+      "The grant is viewed as a one time opportunity, with no planning for continuation after it ends.",
+      "Some ideas for sustaining efforts exist, but there is no clear path or structure to use them.",
+      "Possible sustainability strategies are named, yet they stay informal, incomplete, or untested in practice.",
+      "A short term vision links grant activities to one or two years of continued outcomes.",
+      "A longer range vision connects sustainability strategies to organizational plans and future repair growth.",
+      "A detailed sustainability plan, with roles and next steps, positions your affiliate to extend impact beyond the grant."
     ],
     tips: {
       1: "Shift to long-term thinking.",
@@ -312,16 +311,16 @@ const SUB_FACTORS = [
 
   // --- FACTOR 5: IMPACT ---
   {
-    id: "f5s1", factor: "Impact & Sustainability", name: "Vision for Impact",
+    id: "f5s1", factor: "Impact & Sustainability", name: "Vision for Sustained Program Impact",
     q: "How clear is your vision for sustaining a home repair program?",
     context: "This sub-factor looks at how repairs fit into your long-term strategy. It examines whether you have a multi-year view of scale, investment, and risk and how repairs contribute to a durable housing preservation vision.",
     desc: [
-      "No vision developed.",
-      "Vision exists but vague.",
-      "Vision weakly connected to needs.",
-      "Moderately clear vision.",
-      "Clear, compelling vision established.",
-      "Strong strategic vision for lasting impact."
+      "No long term vision for a repair program has been articulated or connected to mission and community needs.",
+      "A rough vision exists, but it is vague, inconsistently shared, or disconnected from future planning.",
+      "Vision statements are emerging but are weakly tied to local needs or long term impact.",
+      "A moderately clear vision describes how repairs will grow and contribute to defined community outcomes.",
+      "A compelling, widely shared vision aligns with community needs and is used in conversations with stakeholders.",
+      "A strong strategic vision guides plans, budgets, staffing, and partnerships for a sustained repair program."
     ],
     tips: {
       1: "Start with your 'why'. Revisit mission.",
@@ -333,16 +332,16 @@ const SUB_FACTORS = [
     }
   },
   {
-    id: "f5s2", factor: "Impact & Sustainability", name: "Post-Grant Plan",
+    id: "f5s2", factor: "Impact & Sustainability", name: "Plan for Applying Capacity Post-Grant",
     q: "How effectively have you planned to apply systems after funding ends?",
     context: "This sub-factor looks at how repairs connect to your other programs and operations. It considers referral pathways, shared staffing, and aligned policies so that repairs are embedded in the organization, not an isolated side project.",
     desc: [
-      "No plan created.",
-      "General idea; lacks steps.",
-      "General plan; lacks detail.",
-      "Moderately developed plan.",
-      "Clear implementation plan ready.",
-      "Outcomes integrated into roles/policies."
+      "There is no plan for how tools, skills, or systems from the grant will be used afterward.",
+      "High level ideas for post grant use exist, but they lack concrete actions or ownership.",
+      "A general plan is drafted, yet feasibility around staffing, funding, or operations is still uncertain.",
+      "A practical plan outlines how key grant supported elements will continue after funding ends.",
+      "A clear implementation plan assigns responsibilities and timelines for integrating grant learning into regular practice.",
+      "Capacity gains are embedded in roles, policies, and budgets, supporting ongoing repair work beyond the grant period."
     ],
     tips: {
       1: "Identify key takeaways to keep using.",
@@ -354,16 +353,16 @@ const SUB_FACTORS = [
     }
   },
   {
-    id: "f5s3", factor: "Impact & Sustainability", name: "Community Benefit",
+    id: "f5s3", factor: "Impact & Sustainability", name: "Broader Community Benefit",
     q: "How well do you demonstrate broader community/sector benefit?",
     context: "This sub-factor looks at how repair work advances broader community benefit. It evaluates whether projects support equity, reduce displacement risk, and strengthen neighborhoods in ways that are visible and meaningful to residents.",
     desc: [
-      "No community impact identified.",
-      "Limited recognition of impact.",
-      "Some potential described.",
-      "Specific impacts identified.",
-      "Compelling case documented.",
-      "Measurable, sustained benefit demonstrated."
+      "Repair capacity is framed only as an internal benefit, with no consideration of wider community impact.",
+      "You sense there could be broader impact, but who benefits and how remains undefined.",
+      "Possible community or sector impacts are described, yet they are informal and not linked to specific outcomes.",
+      "Specific external benefits are identified, such as improved homeowner services or shared tools across partners.",
+      "Plans are forming to share learning, tools, or partnerships so others in the community can benefit.",
+      "Your capacity building effort clearly strengthens broader community or sector outcomes and has strategies for sharing impact."
     ],
     tips: {
       1: "Ask 'Who else could benefit?'.",
@@ -451,24 +450,26 @@ export default function HomeRepairAssessment() {
   const completionPercent = getCompletionPercentage();
 
   // Helper to determine stage based on score (1-6 scale)
+  // FIXED LOGIC: Any score > 3.0 enters Planning.
   const getStageFromScore = (scoreVal) => {
     const score = parseFloat(scoreVal);
-    if (score < 1.5) return "Inactive";
-    if (score < 2.5) return "Aware";
-    if (score < 3.5) return "Exploring";
-    if (score < 4.5) return "Planning";
-    if (score < 5.5) return "Preparing";
-    return "Ready";
+    if (score <= 1) return "Inactive"; 
+    if (score <= 2) return "Aware";    
+    if (score <= 3) return "Exploring";
+    if (score <= 4) return "Planning"; // Now correctly returns Planning for 3.3
+    if (score <= 5) return "Preparing";
+    return "Ready";                    
   };
 
   // Helper to determine stage Index based on score (0-5)
+  // FIXED LOGIC: Same alignment
   const getStageIndex = (scoreVal) => {
     const score = parseFloat(scoreVal);
-    if (score < 1.5) return 0; // Inactive
-    if (score < 2.5) return 1; // Aware
-    if (score < 3.5) return 2; // Exploring
-    if (score < 4.5) return 3; // Planning
-    if (score < 5.5) return 4; // Preparing
+    if (score <= 1) return 0; // Inactive
+    if (score <= 2) return 1; // Aware
+    if (score <= 3) return 2; // Exploring
+    if (score <= 4) return 3; // Planning
+    if (score <= 5) return 4; // Preparing
     return 5; // Ready
   };
 
@@ -488,18 +489,33 @@ export default function HomeRepairAssessment() {
       <header className="bg-white border-b border-gray-200 sticky top-0 z-50">
         <div className="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 bg-[#008996] rounded-md flex items-center justify-center text-white shadow-sm">
+            <div className="w-10 h-10 bg-[#2C5697] rounded-md flex items-center justify-center text-white shadow-sm">
                <Home size={24} />
             </div>
             <div className="flex flex-col">
-              <span className="font-bold text-[#2C5697] text-lg tracking-tight leading-none">Repair Readiness Assessment</span>
+              <span className="font-bold text-black text-lg tracking-tight leading-none">Repair Readiness Assessment</span>
               <span className="text-xs text-gray-500 font-medium mt-0.5">v1.1</span>
             </div>
           </div>
           <nav className="hidden md:flex items-center gap-8 text-sm font-medium text-gray-600">
-            <button onClick={() => setView('home')} className="hover:text-[#008996]">Home</button>
-            <button onClick={() => setView('dashboard')} className="hover:text-[#008996]">Assessment</button>
-            <button onClick={() => setView('plan')} className="hover:text-[#008996]">Next Steps</button>
+            <button 
+              onClick={() => setView('home')} 
+              className={`transition-colors ${view === 'home' ? 'text-[#008996] font-bold' : 'hover:text-[#008996]'}`}
+            >
+              Home
+            </button>
+            <button 
+              onClick={() => setView('dashboard')} 
+              className={`transition-colors ${view === 'dashboard' || view === 'wizard' ? 'text-[#008996] font-bold' : 'hover:text-[#008996]'}`}
+            >
+              Assessment
+            </button>
+            <button 
+              onClick={() => setView('plan')} 
+              className={`transition-colors ${view === 'plan' ? 'text-[#008996] font-bold' : 'hover:text-[#008996]'}`}
+            >
+              Next Steps
+            </button>
             <button 
               onClick={() => window.open('https://readiness-app.vercel.app/Readiness_Manual.pdf', '_blank')}
               className="flex items-center gap-2 hover:text-[#008996]"
@@ -521,7 +537,7 @@ export default function HomeRepairAssessment() {
           <div className="mt-8 text-center flex flex-col items-center">
             <h1 className="text-4xl md:text-5xl font-bold text-[#333] mb-6">Home Repair Readiness Assessment</h1>
             <p className="text-[#555] text-lg max-w-2xl mx-auto mb-12 leading-relaxed">
-              Assess your Habitat for Humanity affiliate's readiness to launch or scale a successful home repair program. This tool will provide a personalized roadmap to build capacity and increase your community impact.
+              Evaluate your affiliate’s readiness to launch a sustainable, scalable home repair program. Use this data-centered assessment to create a tailored roadmap that builds capacity and strengthens long-term community impact.
             </p>
             
             <div className="flex justify-center gap-8 mb-12 flex-wrap">
@@ -643,7 +659,8 @@ export default function HomeRepairAssessment() {
                     {FACTOR_DESCRIPTIONS[currentSubFactor.factor] || "Evaluate your affiliate's readiness in this specific area based on the HUD framework."}
                   </p>
                 </div>
-                <div className="md:w-1/3 bg-gray-50 border border-gray-200 rounded-lg p-5 text-sm text-gray-700 leading-relaxed shadow-sm">
+                {/* Fixed Height Context Box */}
+                <div className="md:w-1/3 bg-gray-50 border border-gray-200 rounded-lg p-5 text-sm text-gray-700 leading-relaxed shadow-sm h-40 overflow-y-auto">
                   <span className="block font-bold text-[#008996] mb-2 uppercase text-xs tracking-wider">About this Sub-factor</span>
                   {currentSubFactor.context || "Select a level to view more details."}
                 </div>
@@ -673,7 +690,7 @@ export default function HomeRepairAssessment() {
                       key={score}
                       onClick={() => handleAnswer(score)}
                       className={`
-                        relative rounded-lg border-2 cursor-pointer transition-all duration-200 flex flex-col overflow-hidden h-full group
+                        relative rounded-lg border-2 cursor-pointer transition-all duration-200 flex flex-col overflow-hidden h-64 group
                         ${isSelected 
                           ? 'border-[#2C5697] ring-4 ring-blue-50 transform scale-[1.02] shadow-lg z-10' 
                           : 'border-gray-200 hover:border-[#008996] hover:shadow-md'
@@ -686,7 +703,7 @@ export default function HomeRepairAssessment() {
                       </div>
                       
                       {/* Card Body */}
-                      <div className={`p-4 text-xs leading-relaxed text-gray-700 flex-grow ${style.body}`}>
+                      <div className={`p-4 text-xs leading-relaxed text-gray-700 flex-grow overflow-y-auto ${style.body}`}>
                         {currentSubFactor.desc[idx]}
                       </div>
                     </div>
@@ -745,8 +762,11 @@ export default function HomeRepairAssessment() {
                    </button>
                  )}
 
-                 <button className="flex items-center gap-2 px-4 py-2 border border-gray-300 rounded-md text-sm font-medium hover:bg-gray-50">
-                    <Download size={16}/> Export
+                 <button 
+                    onClick={() => window.print()}
+                    className="flex items-center gap-2 px-4 py-2 border border-gray-300 rounded-md text-sm font-medium hover:bg-gray-50 text-gray-700"
+                 >
+                    <Printer size={16}/> Print to PDF
                  </button>
               </div>
             </div>
@@ -897,8 +917,24 @@ export default function HomeRepairAssessment() {
 
         {/* --- VIEW: PLAN --- */}
         {view === 'plan' && (
-          <div className="mt-8">
+          <div className="flex flex-col gap-8 mt-4">
             {/* --- NEW OVERVIEW SECTION --- */}
+            {/* Header */}
+            <div className="flex justify-between items-end border-b border-gray-200 pb-4 mb-4">
+              <div>
+                <h2 className="text-3xl font-bold text-[#333]">Personalized Next Steps Plan</h2>
+                <p className="text-gray-500 mt-1">Your prioritized roadmap based on the assessment.</p>
+              </div>
+              <div className="flex gap-3">
+                 <button 
+                    onClick={() => window.print()}
+                    className="flex items-center gap-2 px-4 py-2 border border-gray-300 rounded-md text-sm font-medium hover:bg-gray-50 text-gray-700"
+                 >
+                    <Printer size={16}/> Print to PDF
+                 </button>
+              </div>
+            </div>
+
             <div className="bg-[#F8F9FA] rounded-xl p-8 mb-10 border border-gray-200">
               <div className="flex flex-col md:flex-row justify-between items-start gap-8">
                 
@@ -975,14 +1011,6 @@ export default function HomeRepairAssessment() {
                   <span>Preparing</span>
                   <span>Ready</span>
                 </div>
-              </div>
-            </div>
-
-            <div className="flex justify-between items-center mb-8">
-              <h1 className="text-3xl font-bold text-[#333]">Personalized Next Steps Plan</h1>
-              <div className="flex gap-2">
-                 <button className="px-4 py-2 border border-gray-300 rounded hover:bg-gray-50 text-sm font-medium">Export PDF</button>
-                 <button className="px-4 py-2 border border-gray-300 rounded hover:bg-gray-50 text-sm font-medium">Export CSV</button>
               </div>
             </div>
             
@@ -1121,7 +1149,7 @@ export default function HomeRepairAssessment() {
       </main>
 
       {/* --- GLOBAL FOOTER --- */}
-      <footer className="bg-[#00529B] text-white py-8 mt-auto">
+      <footer className="bg-[#2C5697] text-white py-8 mt-auto">
         <div className="max-w-6xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-4">
           <div className="text-sm">© 2025 Habitat for Humanity International. All rights reserved.</div>
           <div className="flex gap-6 text-sm font-medium">

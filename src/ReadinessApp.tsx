@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { 
   ChevronRight, ChevronLeft, Check, Printer, ArrowRight, 
-  BarChart3, ClipboardCheck, Home, Info, User, Menu, X, // Added X icon
+  BarChart3, ClipboardCheck, Home, Info, User, Menu, X,
   Handshake, Wrench, Users, FileText, Download, Share2,
   AlertCircle, BookOpen, Clock, Save, TrendingUp 
 } from 'lucide-react';
@@ -688,6 +688,24 @@ export default function HomeRepairAssessment() {
                   </div>
                 </div>
               </div>
+            </div>
+
+             {/* --- VIDEO TUTORIAL SECTION --- */}
+            <div className="w-full max-w-3xl bg-white rounded-xl shadow-sm border border-gray-200 p-8 text-left mb-12">
+              <h3 className="text-2xl font-bold text-[#2C5697] mb-6">Assessment Overview Video</h3>
+              <div style={{padding:'56.25% 0 0 0', position:'relative'}}>
+                <iframe 
+                  src="https://player.vimeo.com/video/1144624007?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" 
+                  frameBorder="0" 
+                  allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" 
+                  referrerPolicy="strict-origin-when-cross-origin" 
+                  style={{position:'absolute', top:0, left:0, width:'100%', height:'100%'}} 
+                  title="Readiness Assessment Overview"
+                ></iframe>
+              </div>
+              <p className="text-gray-600 text-lg mt-6">
+                Watch this overview video to determine if a Readiness Assessment can help your home repair launch efforts.
+              </p>
             </div>
             
             <button 

@@ -1137,7 +1137,7 @@ export default function HomeRepairAssessment() {
                             <div className="flex justify-between items-start mb-2">
                               <h3 className="font-bold text-gray-800 text-lg">{sf.name}</h3>
                               {!isScored && (
-                                <span className="text-xs font-bold bg-gray-100 text-gray-500 px-2 py-1 rounded">Not Scored</span>
+                                <span className="text-xs font-bold bg-gray-100 text-gray-500 px-2 py-1 rounded">This sub-factor has not been rated.</span>
                               )}
                             </div>
                             
@@ -1240,7 +1240,7 @@ export default function HomeRepairAssessment() {
       {/* --- GLOBAL FOOTER --- */}
       <footer className="bg-[#0099CC] text-white py-8 mt-auto">
         <div className="max-w-6xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-4">
-          <div className="text-sm">© PRO Tool. All rights reserved.</div>
+          <div className="text-sm">© 2025 PRO Tool. All rights reserved.</div>
           <div className="flex gap-6 text-sm font-medium">
             <a href="mailto:JeZuniga@habitat.org" className="hover:text-blue-200">Contact</a>
           </div>

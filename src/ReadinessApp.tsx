@@ -3,7 +3,8 @@ import {
   ChevronRight, ChevronLeft, Check, Printer, ArrowRight, 
   BarChart3, ClipboardCheck, Home, Info, User, Menu, X,
   Handshake, Wrench, Users, FileText, Download, Share2,
-  AlertCircle, BookOpen, Clock, Save, TrendingUp 
+  AlertCircle, BookOpen, Clock, Save, TrendingUp,
+  Play, Volume2, Settings, Maximize 
 } from 'lucide-react';
 
 // --- DATA MODEL (Strictly aligned with Readiness Manual v1.2) ---
@@ -640,51 +641,60 @@ export default function HomeRepairAssessment() {
               )}
             </div>
 
-            {/* --- NEW "WHAT TO EXPECT" SECTION --- */}
-            <div className="w-full max-w-3xl bg-white rounded-xl shadow-sm border border-gray-200 p-8 text-left mb-12">
-              <h3 className="text-2xl font-bold text-[#2C5697] mb-8">What to Expect</h3>
-              <div className="space-y-8">
-                {/* Item 1 */}
-                <div className="flex gap-5">
-                  <div className="flex-shrink-0 w-12 h-12 rounded-full bg-[#E3F2FD] flex items-center justify-center text-[#2C5697] font-bold text-lg">
+            {/* --- NEW "WHAT TO EXPECT" SECTION (4 Horizontal Boxes) --- */}
+            <div className="w-full max-w-6xl mb-16">
+              <h3 className="text-2xl font-bold text-[#2C5697] mb-8 text-center md:text-left">What to Expect</h3>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                
+                {/* Box 1 */}
+                <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-200 flex flex-col items-center text-center gap-4 h-full">
+                  <div className="w-12 h-12 rounded-full bg-[#E3F2FD] flex items-center justify-center text-[#2C5697] font-bold text-lg shrink-0">
                     15
                   </div>
                   <div>
-                    <h4 className="text-lg font-bold text-[#333]">15 Questions Across 5 Key Factors</h4>
-                    <p className="text-gray-600 mt-1">Capacity, Need, Approach, Leverage and Impact</p>
+                    <h4 className="text-lg font-bold text-[#333]">15 Questions</h4>
+                    <p className="text-sm text-gray-600 mt-2 leading-relaxed">
+                      Across 5 Key Factors: Capacity, Need, Approach, Leverage and Impact
+                    </p>
                   </div>
                 </div>
                 
-                {/* Item 2 */}
-                <div className="flex gap-5">
-                  <div className="flex-shrink-0 w-12 h-12 rounded-full bg-[#E3F2FD] flex items-center justify-center text-[#2C5697]">
+                {/* Box 2 */}
+                <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-200 flex flex-col items-center text-center gap-4 h-full">
+                  <div className="w-12 h-12 rounded-full bg-[#E3F2FD] flex items-center justify-center text-[#2C5697] shrink-0">
                     <Clock size={24} />
                   </div>
                   <div>
-                    <h4 className="text-lg font-bold text-[#333]">15-20 Minutes to Complete</h4>
-                    <p className="text-gray-600 mt-1">Take your time to thoughtfully assess each area</p>
+                    <h4 className="text-lg font-bold text-[#333]">15-20 Minutes</h4>
+                    <p className="text-sm text-gray-600 mt-2 leading-relaxed">
+                      Take your time to thoughtfully assess each area
+                    </p>
                   </div>
                 </div>
 
-                {/* Item 3 */}
-                <div className="flex gap-5">
-                  <div className="flex-shrink-0 w-12 h-12 rounded-full bg-[#E3F2FD] flex items-center justify-center text-[#2C5697]">
+                {/* Box 3 */}
+                <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-200 flex flex-col items-center text-center gap-4 h-full">
+                  <div className="w-12 h-12 rounded-full bg-[#E3F2FD] flex items-center justify-center text-[#2C5697] shrink-0">
                     <BarChart3 size={24} />
                   </div>
                   <div>
-                    <h4 className="text-lg font-bold text-[#333]">Instant Results and Recommendations</h4>
-                    <p className="text-gray-600 mt-1">Get a comprehensive dashboard with prioritized action items</p>
+                    <h4 className="text-lg font-bold text-[#333]">Instant Results</h4>
+                    <p className="text-sm text-gray-600 mt-2 leading-relaxed">
+                      Get a comprehensive dashboard with prioritized action items
+                    </p>
                   </div>
                 </div>
 
-                {/* Item 4 */}
-                <div className="flex gap-5">
-                  <div className="flex-shrink-0 w-12 h-12 rounded-full bg-[#E3F2FD] flex items-center justify-center text-[#2C5697]">
+                {/* Box 4 */}
+                <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-200 flex flex-col items-center text-center gap-4 h-full">
+                  <div className="w-12 h-12 rounded-full bg-[#E3F2FD] flex items-center justify-center text-[#2C5697] shrink-0">
                     <Save size={24} />
                   </div>
                   <div>
                     <h4 className="text-lg font-bold text-[#333]">Saving Your Results</h4>
-                    <p className="text-gray-600 mt-1">Your inputs are not saved - Use the Print to PDF button to save your assessment results</p>
+                    <p className="text-sm text-gray-600 mt-2 leading-relaxed">
+                      Your inputs are not saved - Use the Print to PDF button to save your assessment results
+                    </p>
                   </div>
                 </div>
               </div>
@@ -692,7 +702,7 @@ export default function HomeRepairAssessment() {
 
              {/* --- VIDEO TUTORIAL SECTION --- */}
             <div className="w-full max-w-3xl bg-white rounded-xl shadow-sm border border-gray-200 p-8 text-left mb-12">
-              <h3 className="text-2xl font-bold text-[#2C5697] mb-6">Assessment Overview Video</h3>
+              <h3 className="text-2xl font-bold text-[#2C5697] mb-6">Readiness Tutorial</h3>
               <div style={{padding:'56.25% 0 0 0', position:'relative'}}>
                 <iframe 
                   src="https://player.vimeo.com/video/1144624007?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" 

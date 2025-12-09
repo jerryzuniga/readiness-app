@@ -665,7 +665,7 @@ export default function HomeRepairAssessment() {
                 
                 {/* Box 1 */}
                 <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-200 flex flex-col items-center text-center gap-4 h-full">
-                  <div className="w-12 h-12 rounded-full bg-[#E3F2FD] flex items-center justify-center text-[#2C5697] font-bold text-lg shrink-0">
+                  <div className="w-12 h-12 rounded-full bg-sky-50 flex items-center justify-center text-[#0099CC] font-bold text-lg shrink-0">
                     15
                   </div>
                   <div>
@@ -678,7 +678,7 @@ export default function HomeRepairAssessment() {
                 
                 {/* Box 2 */}
                 <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-200 flex flex-col items-center text-center gap-4 h-full">
-                  <div className="w-12 h-12 rounded-full bg-[#E3F2FD] flex items-center justify-center text-[#2C5697] shrink-0">
+                  <div className="w-12 h-12 rounded-full bg-sky-50 flex items-center justify-center text-[#0099CC] shrink-0">
                     <Clock size={24} />
                   </div>
                   <div>
@@ -691,7 +691,7 @@ export default function HomeRepairAssessment() {
 
                 {/* Box 3 */}
                 <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-200 flex flex-col items-center text-center gap-4 h-full">
-                  <div className="w-12 h-12 rounded-full bg-[#E3F2FD] flex items-center justify-center text-[#2C5697] shrink-0">
+                  <div className="w-12 h-12 rounded-full bg-sky-50 flex items-center justify-center text-[#0099CC] shrink-0">
                     <BarChart3 size={24} />
                   </div>
                   <div>
@@ -704,7 +704,7 @@ export default function HomeRepairAssessment() {
 
                 {/* Box 4 */}
                 <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-200 flex flex-col items-center text-center gap-4 h-full">
-                  <div className="w-12 h-12 rounded-full bg-[#E3F2FD] flex items-center justify-center text-[#2C5697] shrink-0">
+                  <div className="w-12 h-12 rounded-full bg-sky-50 flex items-center justify-center text-[#0099CC] shrink-0">
                     <Save size={24} />
                   </div>
                   <div>
@@ -1131,24 +1131,25 @@ export default function HomeRepairAssessment() {
                       // Apply dynamic icon color based on score (or default gray for unscored)
                       const scoreIndex = answers[sf.id] ? answers[sf.id] - 1 : -1;
                       const iconColorClass = scoreIndex >= 0 ? SCORE_ICON_COLORS[scoreIndex] : 'bg-gray-100 text-gray-500';
+                      const FactorIcon = FACTOR_ICONS[sf.factor] || ClipboardCheck;
 
                       return (
                         <div key={sf.id} className="bg-white p-6 rounded-lg border border-gray-200 shadow-sm flex flex-col md:flex-row gap-6">
                           <div className="flex-shrink-0">
                              <div className={`w-10 h-10 rounded-full flex items-center justify-center ${iconColorClass}`}>
-                                {isScored ? <ClipboardCheck size={20}/> : <AlertCircle size={20}/>}
+                                <FactorIcon size={20}/>
                              </div>
                           </div>
                           <div className="flex-grow">
                             <div className="flex justify-between items-start mb-2">
                               <h3 className="font-bold text-gray-800 text-lg">{sf.name}</h3>
+                              {!isScored && (
+                                <span className="text-xs font-bold bg-gray-100 text-gray-500 px-2 py-1 rounded">This sub-factor has not been rated.</span>
+                              )}
                               {isScored && (
                                 <span className={`text-xs font-bold px-3 py-1 rounded-full border ${LEVEL_STYLES[scoreIndex].body} text-gray-700`}>
                                    {answers[sf.id]} - {LEVELS[scoreIndex]}
                                 </span>
-                              )}
-                              {!isScored && (
-                                <span className="text-xs font-bold bg-gray-100 text-gray-500 px-2 py-1 rounded">This sub-factor has not been rated.</span>
                               )}
                             </div>
                             

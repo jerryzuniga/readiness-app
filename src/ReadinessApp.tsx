@@ -389,10 +389,10 @@ export default function HomeRepairAssessment() {
     link.type = 'image/svg+xml';
     link.rel = 'icon';
     
-    // Create SVG data URI for the favicon: White house on Habitat Blue (#2C5697) rounded square
+    // Create SVG data URI for the favicon: White house on Bright Blue (#0099CC) rounded square
     const svgString = `
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
-        <rect width="32" height="32" rx="6" fill="#2C5697"/>
+        <rect width="32" height="32" rx="6" fill="#0099CC"/>
         <path d="M7 13 L16 6 L25 13 V24 A2 2 0 0 1 23 26 H9 A2 2 0 0 1 7 24 Z" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
         <path d="M13 26 V16 H19 V26" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
       </svg>
@@ -512,7 +512,7 @@ export default function HomeRepairAssessment() {
       <header className="bg-white border-b border-gray-200 sticky top-0 z-50">
         <div className="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 bg-[#2C5697] rounded-md flex items-center justify-center text-white shadow-sm">
+            <div className="w-10 h-10 bg-[#0099CC] rounded-md flex items-center justify-center text-white shadow-sm">
                <Home size={24} />
             </div>
             <div className="flex flex-col">
@@ -1238,7 +1238,7 @@ export default function HomeRepairAssessment() {
       </main>
 
       {/* --- GLOBAL FOOTER --- */}
-      <footer className="bg-[#2C5697] text-white py-8 mt-auto">
+      <footer className="bg-[#0099CC] text-white py-8 mt-auto">
         <div className="max-w-6xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-4">
           <div className="text-sm">© 2025 Habitat for Humanity International. All rights reserved.</div>
           <div className="flex gap-6 text-sm font-medium">

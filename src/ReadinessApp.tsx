@@ -4,7 +4,8 @@ import {
   BarChart3, ClipboardCheck, Home, Info, User, Menu, X,
   Handshake, Wrench, Users, FileText, Download, Share2,
   AlertCircle, BookOpen, Clock, Save, TrendingUp,
-  Play, Volume2, Settings, Maximize 
+  Play, Volume2, Settings, Maximize, Search, 
+  Briefcase, Building2 
 } from 'lucide-react';
 
 // --- DATA MODEL (Strictly aligned with Readiness Manual v1.2) ---
@@ -42,8 +43,8 @@ const SCORE_ICON_COLORS = [
 
 // MAPPING FACTOR TO ICON
 const FACTOR_ICONS = {
-  "Capacity of Affiliate": ClipboardCheck,
-  "Repair Program Need": Home,
+  "Capacity of Affiliate": Briefcase, 
+  "Repair Program Need": Search, 
   "Soundness of Approach": FileText,
   "Leverage and Partnerships": Handshake,
   "Impact & Sustainability": Users
@@ -619,23 +620,30 @@ export default function HomeRepairAssessment() {
             
             <div className="flex justify-center gap-8 mb-12 flex-wrap">
               {[
-                { icon: ClipboardCheck, label: "Capacity" },
-                { icon: Home, label: "Need" },
+                { icon: ClipboardCheck, label: "Capacity" }, // Changed to Briefcase
+                { icon: Home, label: "Need" }, // Changed to Search
                 { icon: FileText, label: "Approach" },
                 { icon: Handshake, label: "Leverage" },
                 { icon: Users, label: "Impact" }
-              ].map((item, idx) => (
-                <div key={idx} className="flex flex-col items-center gap-3">
-                  <item.icon size={40} strokeWidth={1.5} className="text-[#008996]" />
-                  <span className="text-sm font-medium text-gray-600">{item.label}</span>
-                </div>
-              ))}
+              ].map((item, idx) => {
+                 // Correctly map the icon based on the updated icons used in the app
+                 let IconComponent = item.icon;
+                 if (item.label === "Capacity") IconComponent = Briefcase;
+                 if (item.label === "Need") IconComponent = Search;
+
+                 return (
+                  <div key={idx} className="flex flex-col items-center gap-3">
+                    <IconComponent size={40} strokeWidth={1.5} className="text-[#0099CC]" />
+                    <span className="text-sm font-medium text-gray-600">{item.label}</span>
+                  </div>
+                 );
+              })}
             </div>
 
             <div className="flex justify-center gap-4 mb-16">
               <button 
                 onClick={Object.keys(answers).length > 0 ? handleContinue : handleStart}
-                className="bg-[#008996] hover:bg-[#007681] text-white px-8 py-3 rounded-full text-lg font-semibold transition-colors shadow-md"
+                className="bg-[#0099CC] hover:bg-[#007399] text-white px-8 py-3 rounded-full text-lg font-semibold transition-colors shadow-md"
               >
                 {Object.keys(answers).length > 0 ? "Complete Assessment" : "Start Assessment"}
               </button>
@@ -643,7 +651,7 @@ export default function HomeRepairAssessment() {
               {Object.keys(answers).length > 0 && (
                 <button 
                   onClick={() => setView('dashboard')}
-                  className="border-2 border-[#008996] text-[#008996] hover:bg-[#E0F2F1] px-8 py-3 rounded-full text-lg font-semibold transition-colors"
+                  className="border-2 border-[#0099CC] text-[#0099CC] hover:bg-sky-50 px-8 py-3 rounded-full text-lg font-semibold transition-colors"
                 >
                   View Previous Results
                 </button>
@@ -652,7 +660,7 @@ export default function HomeRepairAssessment() {
 
             {/* --- NEW "WHAT TO EXPECT" SECTION (4 Horizontal Boxes) --- */}
             <div className="w-full max-w-6xl mb-16">
-              <h3 className="text-2xl font-bold text-[#2C5697] mb-8 text-center md:text-left">What to Expect</h3>
+              {/* Removed "What to Expect" title */}
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                 
                 {/* Box 1 */}
@@ -711,7 +719,7 @@ export default function HomeRepairAssessment() {
 
              {/* --- VIDEO TUTORIAL SECTION --- */}
             <div className="w-full max-w-3xl bg-white rounded-xl shadow-sm border border-gray-200 p-8 text-left mb-12">
-              <h3 className="text-2xl font-bold text-[#2C5697] mb-6">Readiness Tutorial</h3>
+              <h3 className="text-2xl font-bold text-[#0099CC] mb-6">Readiness Tutorial</h3>
               <div style={{padding:'56.25% 0 0 0', position:'relative'}}>
                 <iframe 
                   src="https://player.vimeo.com/video/1144624007?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" 
@@ -729,7 +737,7 @@ export default function HomeRepairAssessment() {
             
             <button 
               onClick={() => window.open('https://readiness-app.vercel.app/Readiness_Manual.pdf', '_blank')}
-              className="text-[#2C5697] underline text-sm hover:text-blue-800 mb-8"
+              className="text-[#0099CC] underline text-sm hover:text-blue-800 mb-8"
             >
               Learn about the 6 readiness levels
             </button>
@@ -741,7 +749,7 @@ export default function HomeRepairAssessment() {
           <div className="w-full mt-4">
             {/* DYNAMIC FACTOR TITLE WITH ICON */}
             <div className="mb-2 flex items-center gap-4">
-                 <div className="p-3 bg-[#E0F2F1] rounded-xl text-[#008996]">
+                 <div className="p-3 bg-[#E0F2F1] rounded-xl text-[#0099CC]">
                     {React.createElement(FACTOR_ICONS[currentSubFactor.factor] || ClipboardCheck, { size: 32 })}
                  </div>
                  <h2 className="text-3xl font-bold text-[#333]">
@@ -763,7 +771,7 @@ export default function HomeRepairAssessment() {
                 <span className="text-sm font-semibold text-gray-500 uppercase tracking-wide">Section {Math.floor(step/3) + 1} of 5, Item {step + 1} of {SUB_FACTORS.length}</span>
                 <div className="h-1.5 w-64 bg-gray-200 rounded-full mt-2 overflow-hidden">
                   <div 
-                    className="h-full bg-[#008996] transition-all duration-500 ease-out"
+                    className="h-full bg-[#0099CC] transition-all duration-500 ease-out"
                     style={{ width: `${((step + 1) / SUB_FACTORS.length) * 100}%` }}
                   ></div>
                 </div>
@@ -791,7 +799,7 @@ export default function HomeRepairAssessment() {
               </div>
 
               {/* Select One Label - Moved and Tightened */}
-              <p className="text-sm font-bold text-[#008996] uppercase tracking-wide mb-3">Select One</p>
+              <p className="text-sm font-bold text-[#0099CC] uppercase tracking-wide mb-3">Select One</p>
 
               {/* CARDS SCORING UI */}
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-4 mb-10">
@@ -809,7 +817,7 @@ export default function HomeRepairAssessment() {
                         relative rounded-lg border-2 cursor-pointer transition-all duration-200 flex flex-col overflow-hidden h-64 group
                         ${isSelected 
                           ? 'border-[#2C5697] ring-4 ring-blue-50 transform scale-[1.02] shadow-lg z-10' 
-                          : 'border-gray-200 hover:border-[#008996] hover:shadow-md'
+                          : 'border-gray-200 hover:border-[#0099CC] hover:shadow-md'
                         }
                       `}
                     >
@@ -848,7 +856,7 @@ export default function HomeRepairAssessment() {
                 </div>
                 <button 
                   onClick={() => setView('dashboard')}
-                  className="text-[#008996] font-bold underline text-sm hover:text-teal-800"
+                  className="text-[#0099CC] font-bold underline text-sm hover:text-teal-800"
                 >
                   Save and Exit
                 </button>
@@ -871,7 +879,7 @@ export default function HomeRepairAssessment() {
                  {completionPercent < 100 && (
                    <button 
                      onClick={handleContinue}
-                     className="px-6 py-2 bg-[#008996] hover:bg-[#007681] text-white rounded-full font-bold shadow-sm flex items-center gap-2 transition-all"
+                     className="px-6 py-2 bg-[#0099CC] hover:bg-[#007399] text-white rounded-full font-bold shadow-sm flex items-center gap-2 transition-all"
                    >
                      {completionPercent === 0 ? "Start Assessment" : "Complete Assessment"}
                      <ArrowRight size={16}/>
@@ -901,9 +909,9 @@ export default function HomeRepairAssessment() {
                 <div className="text-sm text-gray-500 uppercase font-bold mb-1">Preparing/Ready</div>
                 <div className="text-3xl font-bold text-[#5CB85C]">{getCountByLevel(5, 6)}</div>
               </div>
-              <div className="bg-white p-4 rounded-lg shadow-sm border-l-4 border-[#008996]">
+              <div className="bg-white p-4 rounded-lg shadow-sm border-l-4 border-[#0099CC]">
                 <div className="text-sm text-gray-500 uppercase font-bold mb-1">Assessment Completion</div>
-                <div className="text-3xl font-bold text-[#008996]">{completionPercent}%</div>
+                <div className="text-3xl font-bold text-[#0099CC]">{completionPercent}%</div>
               </div>
             </div>
 
@@ -978,7 +986,7 @@ export default function HomeRepairAssessment() {
               {completionPercent < 100 ? (
                 <button 
                   onClick={handleContinue}
-                  className="px-6 py-3 bg-[#00529B] text-white font-bold rounded-full hover:bg-blue-800 shadow-md flex items-center gap-2"
+                  className="px-6 py-3 bg-[#0099CC] hover:bg-[#007399] text-white font-bold rounded-full hover:bg-blue-800 shadow-md flex items-center gap-2"
                 >
                   {completionPercent === 0 ? "Start Assessment" : "Complete Assessment"}
                   <ArrowRight size={16}/>
@@ -994,7 +1002,7 @@ export default function HomeRepairAssessment() {
 
               <button 
                 onClick={() => setView('plan')}
-                className="px-6 py-3 border-2 border-[#008996] text-[#008996] font-bold rounded-full hover:bg-teal-50"
+                className="px-6 py-3 border-2 border-[#0099CC] text-[#0099CC] font-bold rounded-full hover:bg-sky-50"
               >
                 Generate Next Steps Plan
               </button>
@@ -1123,13 +1131,12 @@ export default function HomeRepairAssessment() {
                       // Apply dynamic icon color based on score (or default gray for unscored)
                       const scoreIndex = answers[sf.id] ? answers[sf.id] - 1 : -1;
                       const iconColorClass = scoreIndex >= 0 ? SCORE_ICON_COLORS[scoreIndex] : 'bg-gray-100 text-gray-500';
-                      const FactorIcon = FACTOR_ICONS[sf.factor] || ClipboardCheck;
 
                       return (
                         <div key={sf.id} className="bg-white p-6 rounded-lg border border-gray-200 shadow-sm flex flex-col md:flex-row gap-6">
                           <div className="flex-shrink-0">
                              <div className={`w-10 h-10 rounded-full flex items-center justify-center ${iconColorClass}`}>
-                                <FactorIcon size={20}/>
+                                {isScored ? <ClipboardCheck size={20}/> : <AlertCircle size={20}/>}
                              </div>
                           </div>
                           <div className="flex-grow">
@@ -1158,7 +1165,7 @@ export default function HomeRepairAssessment() {
                                 <p className="text-sm text-gray-500 italic">This factor was skipped during the assessment.</p>
                                 <button 
                                   onClick={() => handleGoToQuestion(SUB_FACTORS.indexOf(sf))}
-                                  className="text-sm text-[#008996] font-semibold flex items-center gap-1 hover:underline self-start"
+                                  className="text-sm text-[#0099CC] font-semibold flex items-center gap-1 hover:underline self-start"
                                 >
                                   Complete Assessment <ArrowRight size={14}/>
                                 </button>

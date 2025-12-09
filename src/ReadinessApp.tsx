@@ -620,24 +620,17 @@ export default function HomeRepairAssessment() {
             
             <div className="flex justify-center gap-8 mb-12 flex-wrap">
               {[
-                { icon: ClipboardCheck, label: "Capacity" }, // Changed to Briefcase
-                { icon: Home, label: "Need" }, // Changed to Search
+                { icon: Briefcase, label: "Capacity" }, // Briefcase for Capacity
+                { icon: Search, label: "Need" },        // Search for Need
                 { icon: FileText, label: "Approach" },
                 { icon: Handshake, label: "Leverage" },
                 { icon: Users, label: "Impact" }
-              ].map((item, idx) => {
-                 // Correctly map the icon based on the updated icons used in the app
-                 let IconComponent = item.icon;
-                 if (item.label === "Capacity") IconComponent = Briefcase;
-                 if (item.label === "Need") IconComponent = Search;
-
-                 return (
+              ].map((item, idx) => (
                   <div key={idx} className="flex flex-col items-center gap-3">
-                    <IconComponent size={40} strokeWidth={1.5} className="text-[#0099CC]" />
+                    <item.icon size={40} strokeWidth={1.5} className="text-[#0099CC]" />
                     <span className="text-sm font-medium text-gray-600">{item.label}</span>
                   </div>
-                 );
-              })}
+              ))}
             </div>
 
             <div className="flex justify-center gap-4 mb-16">
@@ -1143,13 +1136,13 @@ export default function HomeRepairAssessment() {
                           <div className="flex-grow">
                             <div className="flex justify-between items-start mb-2">
                               <h3 className="font-bold text-gray-800 text-lg">{sf.name}</h3>
-                              {!isScored && (
-                                <span className="text-xs font-bold bg-gray-100 text-gray-500 px-2 py-1 rounded">This sub-factor has not been rated.</span>
-                              )}
                               {isScored && (
                                 <span className={`text-xs font-bold px-3 py-1 rounded-full border ${LEVEL_STYLES[scoreIndex].body} text-gray-700`}>
                                    {answers[sf.id]} - {LEVELS[scoreIndex]}
                                 </span>
+                              )}
+                              {!isScored && (
+                                <span className="text-xs font-bold bg-gray-100 text-gray-500 px-2 py-1 rounded">This sub-factor has not been rated.</span>
                               )}
                             </div>
                             

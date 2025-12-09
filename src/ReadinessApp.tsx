@@ -525,25 +525,25 @@ export default function HomeRepairAssessment() {
           <nav className="hidden md:flex items-center gap-8 text-sm font-medium text-gray-600">
             <button 
               onClick={() => setView('home')} 
-              className={`transition-colors ${view === 'home' ? 'text-[#008996] font-bold' : 'hover:text-[#008996]'}`}
+              className={`transition-colors ${view === 'home' ? 'text-[#0099CC] font-bold' : 'hover:text-[#0099CC]'}`}
             >
               Home
             </button>
             <button 
               onClick={() => setView('dashboard')} 
-              className={`transition-colors ${view === 'dashboard' || view === 'wizard' ? 'text-[#008996] font-bold' : 'hover:text-[#008996]'}`}
+              className={`transition-colors ${view === 'dashboard' || view === 'wizard' ? 'text-[#0099CC] font-bold' : 'hover:text-[#0099CC]'}`}
             >
               Assessment
             </button>
             <button 
               onClick={() => setView('plan')} 
-              className={`transition-colors ${view === 'plan' ? 'text-[#008996] font-bold' : 'hover:text-[#008996]'}`}
+              className={`transition-colors ${view === 'plan' ? 'text-[#0099CC] font-bold' : 'hover:text-[#0099CC]'}`}
             >
               Next Steps
             </button>
             <button 
               onClick={() => window.open('https://readiness-app.vercel.app/Readiness_Manual.pdf', '_blank')}
-              className="flex items-center gap-2 hover:text-[#008996]"
+              className="flex items-center gap-2 hover:text-[#0099CC]"
             >
               <div className="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center text-gray-500">
                 <BookOpen size={16} />
@@ -567,19 +567,19 @@ export default function HomeRepairAssessment() {
             <div className="flex flex-col px-6 py-4 gap-4">
               <button 
                 onClick={() => handleMobileNav('home')}
-                className={`text-left py-2 ${view === 'home' ? 'text-[#008996] font-bold' : 'text-gray-600'}`}
+                className={`text-left py-2 ${view === 'home' ? 'text-[#0099CC] font-bold' : 'text-gray-600'}`}
               >
                 Home
               </button>
               <button 
                 onClick={() => handleMobileNav('dashboard')}
-                className={`text-left py-2 ${view === 'dashboard' || view === 'wizard' ? 'text-[#008996] font-bold' : 'text-gray-600'}`}
+                className={`text-left py-2 ${view === 'dashboard' || view === 'wizard' ? 'text-[#0099CC] font-bold' : 'text-gray-600'}`}
               >
                 Assessment
               </button>
               <button 
                 onClick={() => handleMobileNav('plan')}
-                className={`text-left py-2 ${view === 'plan' ? 'text-[#008996] font-bold' : 'text-gray-600'}`}
+                className={`text-left py-2 ${view === 'plan' ? 'text-[#0099CC] font-bold' : 'text-gray-600'}`}
               >
                 Next Steps
               </button>
@@ -1240,11 +1240,9 @@ export default function HomeRepairAssessment() {
       {/* --- GLOBAL FOOTER --- */}
       <footer className="bg-[#0099CC] text-white py-8 mt-auto">
         <div className="max-w-6xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-4">
-          <div className="text-sm">© 2025 Habitat for Humanity International. All rights reserved.</div>
+          <div className="text-sm">© PRO Tool. All rights reserved.</div>
           <div className="flex gap-6 text-sm font-medium">
-            <button className="hover:text-blue-200">Privacy Policy</button>
-            <button className="hover:text-blue-200">Contact</button>
-            <button className="hover:text-blue-200">Legal</button>
+            <a href="mailto:JeZuniga@habitat.org" className="hover:text-blue-200">Contact</a>
           </div>
         </div>
       </footer>

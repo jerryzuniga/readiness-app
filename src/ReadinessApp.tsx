@@ -40,6 +40,15 @@ const SCORE_ICON_COLORS = [
   "bg-green-100 text-green-700"    // 6: Ready (Green)
 ];
 
+// MAPPING FACTOR TO ICON
+const FACTOR_ICONS = {
+  "Capacity of Affiliate": ClipboardCheck,
+  "Repair Program Need": Home,
+  "Soundness of Approach": FileText,
+  "Leverage and Partnerships": Handshake,
+  "Impact & Sustainability": Users
+};
+
 // Context descriptions for the 5 Factors
 const FACTOR_DESCRIPTIONS = {
   "Capacity of Affiliate": "This factor looks at your internal commitment, people, and systems to support a formal home repair program, not just occasional activities. It evaluates governance, leadership alignment, and operational readiness.",
@@ -729,12 +738,26 @@ export default function HomeRepairAssessment() {
 
         {/* --- VIEW: WIZARD (CARD LAYOUT) --- */}
         {view === 'wizard' && (
-          <div className="w-full mt-8">
-            {/* RESTORED TITLE */}
-            <div className="mb-6">
-                 <h2 className="text-3xl font-bold text-[#333]">Assessment - Sub-factor Rating</h2>
+          <div className="w-full mt-4">
+            {/* DYNAMIC FACTOR TITLE WITH ICON */}
+            <div className="mb-2 flex items-center gap-4">
+                 <div className="p-3 bg-[#E0F2F1] rounded-xl text-[#008996]">
+                    {React.createElement(FACTOR_ICONS[currentSubFactor.factor] || ClipboardCheck, { size: 32 })}
+                 </div>
+                 <h2 className="text-3xl font-bold text-[#333]">
+                   Factor {Math.floor(step / 3) + 1}: {currentSubFactor.factor}
+                 </h2>
+                 {/* Factor Description - Moved here from Card */}
+                 <div className="ml-auto md:max-w-md text-gray-600 text-sm bg-gray-50 p-4 rounded-lg border border-gray-200 hidden md:block">
+                   {FACTOR_DESCRIPTIONS[currentSubFactor.factor] || "Evaluate your affiliate's readiness in this specific area based on the HUD framework."}
+                 </div>
             </div>
             
+            {/* Mobile Factor Desc (Visible only on small screens) */}
+            <div className="md:hidden mb-6 text-gray-600 text-sm bg-gray-50 p-4 rounded-lg border border-gray-200">
+               {FACTOR_DESCRIPTIONS[currentSubFactor.factor]}
+            </div>
+
             <div className="mb-6 flex justify-between items-end">
               <div>
                 <span className="text-sm font-semibold text-gray-500 uppercase tracking-wide">Section {Math.floor(step/3) + 1} of 5, Item {step + 1} of {SUB_FACTORS.length}</span>
@@ -749,26 +772,19 @@ export default function HomeRepairAssessment() {
 
             <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-8 md:p-10 relative">
               
-              {/* Top Section: Factor Header + Context Box */}
-              <div className="flex flex-col md:flex-row gap-8 mb-10 border-b border-gray-100 pb-8">
-                <div className="flex-1">
+              {/* Top Section: Sub-factor Header only */}
+              <div className="mb-8 border-b border-gray-100 pb-8">
                   <h2 className="text-3xl font-bold text-[#222] mb-3 leading-tight">
-                    FACTOR {Math.floor(step/3) + 1}: {currentSubFactor.factor}
+                    {currentSubFactor.name}
                   </h2>
                   <p className="text-gray-600 text-lg leading-relaxed">
-                    {FACTOR_DESCRIPTIONS[currentSubFactor.factor] || "Evaluate your affiliate's readiness in this specific area based on the HUD framework."}
+                    {currentSubFactor.context || "No context available."}
                   </p>
-                </div>
-                {/* Fixed Height Context Box */}
-                <div className="md:w-1/3 bg-gray-50 border border-gray-200 rounded-lg p-5 text-sm text-gray-700 leading-relaxed shadow-sm h-40 overflow-y-auto">
-                  <span className="block font-bold text-[#008996] mb-2 uppercase text-xs tracking-wider">About this Sub-factor</span>
-                  {currentSubFactor.context || "Select a level to view more details."}
-                </div>
               </div>
 
               {/* Question Section */}
               <div className="mb-6">
-                <h3 className="text-xl font-bold text-[#333] mb-3">Sub-factor: {currentSubFactor.name}</h3>
+                <h3 className="text-xl font-bold text-[#333] mb-3">Sub-factor Question:</h3>
                 <p className="text-gray-800 text-lg mb-4 font-medium">
                   {currentSubFactor.q}
                 </p>
@@ -888,34 +904,6 @@ export default function HomeRepairAssessment() {
               <div className="bg-white p-4 rounded-lg shadow-sm border-l-4 border-[#008996]">
                 <div className="text-sm text-gray-500 uppercase font-bold mb-1">Assessment Completion</div>
                 <div className="text-3xl font-bold text-[#008996]">{completionPercent}%</div>
-              </div>
-            </div>
-
-            {/* Summary Boxes (Based on Profile Summary Mockup) */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {/* Strengths */}
-              <div className="bg-white rounded-lg shadow-sm border border-blue-100 overflow-hidden">
-                <div className="bg-blue-50 px-4 py-3 border-b border-blue-100 flex items-center gap-2">
-                  <div className="bg-[#2C5697] text-white rounded-full p-1"><Check size={14} /></div>
-                  <h3 className="font-bold text-[#2C5697]">Top Strengths</h3>
-                </div>
-                <div className="p-4 space-y-2">
-                   {/* Mock logic for display */}
-                   <p className="text-sm text-gray-700">• <strong>Volunteer Engagement:</strong> Consistent high participation.</p>
-                   <p className="text-sm text-gray-700">• <strong>Program Capacity:</strong> Core team in place with experience.</p>
-                </div>
-              </div>
-
-              {/* Growth */}
-              <div className="bg-white rounded-lg shadow-sm border border-teal-100 overflow-hidden">
-                <div className="bg-teal-50 px-4 py-3 border-b border-teal-100 flex items-center gap-2">
-                  <div className="bg-[#008996] text-white rounded-full p-1"><ArrowRight size={14} /></div>
-                  <h3 className="font-bold text-[#008996]">Key Growth Areas</h3>
-                </div>
-                <div className="p-4 space-y-2">
-                   <p className="text-sm text-gray-700">• <strong>Financial Stability:</strong> Need to diversify funding sources.</p>
-                   <p className="text-sm text-gray-700">• <strong>Partnership Development:</strong> Expand local alliances.</p>
-                </div>
               </div>
             </div>
 
@@ -1135,17 +1123,23 @@ export default function HomeRepairAssessment() {
                       // Apply dynamic icon color based on score (or default gray for unscored)
                       const scoreIndex = answers[sf.id] ? answers[sf.id] - 1 : -1;
                       const iconColorClass = scoreIndex >= 0 ? SCORE_ICON_COLORS[scoreIndex] : 'bg-gray-100 text-gray-500';
+                      const FactorIcon = FACTOR_ICONS[sf.factor] || ClipboardCheck;
 
                       return (
                         <div key={sf.id} className="bg-white p-6 rounded-lg border border-gray-200 shadow-sm flex flex-col md:flex-row gap-6">
                           <div className="flex-shrink-0">
                              <div className={`w-10 h-10 rounded-full flex items-center justify-center ${iconColorClass}`}>
-                                {isScored ? <ClipboardCheck size={20}/> : <AlertCircle size={20}/>}
+                                <FactorIcon size={20}/>
                              </div>
                           </div>
                           <div className="flex-grow">
                             <div className="flex justify-between items-start mb-2">
                               <h3 className="font-bold text-gray-800 text-lg">{sf.name}</h3>
+                              {isScored && (
+                                <span className={`text-xs font-bold px-3 py-1 rounded-full border ${LEVEL_STYLES[scoreIndex].body} text-gray-700`}>
+                                   {answers[sf.id]} - {LEVELS[scoreIndex]}
+                                </span>
+                              )}
                               {!isScored && (
                                 <span className="text-xs font-bold bg-gray-100 text-gray-500 px-2 py-1 rounded">This sub-factor has not been rated.</span>
                               )}

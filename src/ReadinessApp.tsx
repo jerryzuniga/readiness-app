@@ -387,10 +387,31 @@ const SUB_FACTORS = [
 ];
 
 export default function HomeRepairAssessment() {
+  // Step 1: Define a Storage Key
+  const STORAGE_KEY = 'home_repair_readiness_data';
+
   const [view, setView] = useState('home'); // home, wizard, dashboard, plan
   const [step, setStep] = useState(0);
-  const [answers, setAnswers] = useState({});
+  
+  // Step 2: Modify State Initialization (Lazy Init)
+  const [answers, setAnswers] = useState(() => {
+    // Check if we are in a browser environment
+    if (typeof window !== 'undefined') {
+      const saved = localStorage.getItem(STORAGE_KEY);
+      // If data exists, parse it (turn string back into object); otherwise return empty object
+      return saved ? JSON.parse(saved) : {};
+    }
+    return {};
+  });
+
   const [isMenuOpen, setIsMenuOpen] = useState(false); // State for mobile menu
+
+  // Step 3: Create the Auto-Save Effect
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(answers));
+    }
+  }, [answers]); // Dependency array: Run this every time 'answers' changes
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -417,6 +438,17 @@ export default function HomeRepairAssessment() {
   const handleStart = () => {
     setStep(0);
     setView('wizard');
+  };
+
+  // Step 4: Add a "Clear Progress" Feature (Crucial)
+  const handleReset = () => {
+    if (window.confirm("Are you sure you want to clear all progress and start over? This cannot be undone.")) {
+      setAnswers({}); // Clear React State
+      localStorage.removeItem(STORAGE_KEY); // Clear Browser Storage
+      setView('home'); // Send them back to the start
+      setStep(0); // Reset step counter
+      window.scrollTo(0, 0);
+    }
   };
 
   const handleContinue = () => {
@@ -1248,6 +1280,12 @@ export default function HomeRepairAssessment() {
           <div className="text-sm">© 2025 PRO Tool. All rights reserved.</div>
           <div className="flex gap-6 text-sm font-medium">
             <a href="mailto:JeZuniga@habitat.org" className="hover:text-blue-200">Contact</a>
+            <button 
+              onClick={handleReset}
+              className="hover:text-red-200 flex items-center gap-1 transition-colors"
+            >
+              <Settings size={14} /> Reset Data
+            </button>
           </div>
         </div>
       </footer>

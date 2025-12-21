@@ -405,6 +405,8 @@ export default function HomeRepairAssessment() {
   });
 
   const [isMenuOpen, setIsMenuOpen] = useState(false); // State for mobile menu
+  
+  // Check if assessment has started based on answers state
   const hasStarted = Object.keys(answers).length > 0;
 
   // Step 3: Create the Auto-Save Effect
@@ -561,7 +563,7 @@ export default function HomeRepairAssessment() {
             </div>
             <div className="flex flex-col">
               <span className="font-bold text-black text-lg tracking-tight leading-none">Repair Readiness Assessment</span>
-              <span className="text-xs text-gray-500 font-medium mt-0.5">v2.1.5</span>
+              <span className="text-xs text-gray-500 font-medium mt-0.5">v2.1.6</span>
             </div>
           </div>
           
@@ -686,7 +688,6 @@ export default function HomeRepairAssessment() {
 
             {/* --- NEW "WHAT TO EXPECT" SECTION (4 Horizontal Boxes) --- */}
             <div className="w-full max-w-6xl mb-16">
-              {/* Removed "What to Expect" title */}
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                 
                 {/* Box 1 */}
@@ -746,16 +747,18 @@ export default function HomeRepairAssessment() {
              {/* --- VIDEO TUTORIAL SECTION --- */}
             <div className="w-full max-w-3xl bg-white rounded-xl shadow-sm border border-gray-200 p-8 text-left mb-12">
               <h3 className="text-2xl font-bold text-[#0099CC] mb-6">Readiness Tutorial</h3>
-              <div style={{padding:'56.25% 0 0 0', position:'relative'}}>
+              
+              {/* FIXED VIDEO CONTAINER: Uses padding-top hack with absolute positioning for robust responsive iframe */}
+              <div className="relative w-full overflow-hidden rounded-xl bg-black shadow-inner" style={{ paddingTop: '56.25%' }}>
                 <iframe 
-                  src="https://player.vimeo.com/video/1144624007?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" 
+                  className="absolute top-0 left-0 w-full h-full"
+                  src="https://player.vimeo.com/video/1144624007?badge=0&autopause=0&player_id=0&app_id=58479" 
                   frameBorder="0" 
                   allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" 
-                  referrerPolicy="strict-origin-when-cross-origin" 
-                  style={{position:'absolute', top:0, left:0, width:'100%', height:'100%'}} 
                   title="Readiness Assessment Overview"
-                ></iframe>
+                />
               </div>
+
               <p className="text-gray-600 text-lg mt-6">
                 Watch this overview video to determine if a Readiness Assessment can help your home repair launch efforts.
               </p>
@@ -894,7 +897,7 @@ export default function HomeRepairAssessment() {
         {/* --- VIEW: DASHBOARD --- */}
         {view === 'dashboard' && (
           !hasStarted ? (
-            <div className="flex flex-col items-center justify-center min-h-[60vh] text-center p-8 animate-in fade-in zoom-in duration-300">
+            <div className="flex flex-col items-center justify-center min-h-[60vh] text-center p-8 transition-opacity duration-300">
               <div className="bg-gray-100 p-8 rounded-full mb-6 shadow-inner">
                 <ClipboardCheck size={64} className="text-gray-400" />
               </div>
@@ -1057,7 +1060,7 @@ export default function HomeRepairAssessment() {
         {/* --- VIEW: PLAN --- */}
         {view === 'plan' && (
           !hasStarted ? (
-             <div className="flex flex-col items-center justify-center min-h-[60vh] text-center p-8 animate-in fade-in zoom-in duration-300">
+             <div className="flex flex-col items-center justify-center min-h-[60vh] text-center p-8 transition-opacity duration-300">
               <div className="bg-gray-100 p-8 rounded-full mb-6 shadow-inner">
                 <FileText size={64} className="text-gray-400" />
               </div>

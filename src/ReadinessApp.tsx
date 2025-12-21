@@ -405,6 +405,7 @@ export default function HomeRepairAssessment() {
   });
 
   const [isMenuOpen, setIsMenuOpen] = useState(false); // State for mobile menu
+  const hasStarted = Object.keys(answers).length > 0;
 
   // Step 3: Create the Auto-Save Effect
   useEffect(() => {
@@ -560,7 +561,7 @@ export default function HomeRepairAssessment() {
             </div>
             <div className="flex flex-col">
               <span className="font-bold text-black text-lg tracking-tight leading-none">Repair Readiness Assessment</span>
-              <span className="text-xs text-gray-500 font-medium mt-0.5">v2.1.4</span>
+              <span className="text-xs text-gray-500 font-medium mt-0.5">v2.1.5</span>
             </div>
           </div>
           
@@ -892,385 +893,421 @@ export default function HomeRepairAssessment() {
 
         {/* --- VIEW: DASHBOARD --- */}
         {view === 'dashboard' && (
-          <div className="flex flex-col gap-8 mt-8">
-            {/* Header */}
-            <div className="flex justify-between items-end border-b border-gray-200 pb-4">
-              <div>
-                <h2 className="text-3xl font-bold text-[#333]">Readiness Profile Summary</h2>
-                <p className="text-gray-500 mt-1">Review your scores and high-level insights.</p>
+          !hasStarted ? (
+            <div className="flex flex-col items-center justify-center min-h-[60vh] text-center p-8 animate-in fade-in zoom-in duration-300">
+              <div className="bg-gray-100 p-8 rounded-full mb-6 shadow-inner">
+                <ClipboardCheck size={64} className="text-gray-400" />
               </div>
-              <div className="flex gap-3">
-                 {/* DYNAMIC ACTION BUTTON */}
-                 {completionPercent < 100 && (
-                   <button 
-                     onClick={handleContinue}
-                     className="px-6 py-2 bg-[#0099CC] hover:bg-[#007399] text-white rounded-full font-bold shadow-sm flex items-center gap-2 transition-all"
-                   >
-                     {completionPercent === 0 ? "Start Assessment" : "Complete Assessment"}
-                     <ArrowRight size={16}/>
-                   </button>
-                 )}
-
-                 <button 
-                    onClick={() => window.print()}
-                    className="flex items-center gap-2 px-4 py-2 border border-gray-300 rounded-md text-sm font-medium hover:bg-gray-50 text-gray-700"
-                 >
-                    <Printer size={16}/> Print to PDF
-                 </button>
-              </div>
-            </div>
-
-            {/* Metrics Row (Based on Multi-Factor Dashboard Mockup) */}
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-              <div className="bg-white p-4 rounded-lg shadow-sm border-l-4 border-[#2C5697]">
-                <div className="text-sm text-gray-500 uppercase font-bold mb-1">Overall Score</div>
-                <div className="text-3xl font-bold text-[#2C5697]">{getOverallScore()} <span className="text-lg text-gray-400 font-normal">/ 6.0</span></div>
-              </div>
-              <div className="bg-white p-4 rounded-lg shadow-sm border-l-4 border-[#D9534F]">
-                <div className="text-sm text-gray-500 uppercase font-bold mb-1">Below Planning</div>
-                <div className="text-3xl font-bold text-[#D9534F]">{getCountByLevel(1, 3)}</div>
-              </div>
-              <div className="bg-white p-4 rounded-lg shadow-sm border-l-4 border-[#5CB85C]">
-                <div className="text-sm text-gray-500 uppercase font-bold mb-1">Preparing/Ready</div>
-                <div className="text-3xl font-bold text-[#5CB85C]">{getCountByLevel(5, 6)}</div>
-              </div>
-              <div className="bg-white p-4 rounded-lg shadow-sm border-l-4 border-[#0099CC]">
-                <div className="text-sm text-gray-500 uppercase font-bold mb-1">Assessment Completion</div>
-                <div className="text-3xl font-bold text-[#0099CC]">{completionPercent}%</div>
-              </div>
-            </div>
-
-            {/* Heatmap Matrix (Based on Multi-Factor Dashboard Mockup) */}
-            <div className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
-              <div className="px-6 py-4 border-b border-gray-200 bg-gray-50 flex justify-between items-center">
-                <h3 className="font-bold text-gray-700">Readiness Heatmap</h3>
-                <div className="flex gap-4 text-xs text-gray-500 italic">
-                  Select the ranked score in order to change it
-                </div>
-              </div>
-              <div className="overflow-x-auto">
-                <table className="w-full min-w-[800px] text-sm border-collapse">
-                  <thead>
-                    <tr className="bg-gray-100 text-gray-500 uppercase text-xs">
-                      <th className="text-left p-3 w-1/4 border-b border-gray-200">Sub-factors</th>
-                      {LEVELS.map(l => <th key={l} className="text-left p-3 w-[12%] border-b border-gray-200">{l}</th>)}
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {SUB_FACTORS.map((sf, idx) => {
-                      const score = answers[sf.id];
-                      // Check if this row starts a new factor group
-                      const isNewGroup = idx === 0 || sf.factor !== SUB_FACTORS[idx - 1].factor;
-                      
-                      return (
-                        <React.Fragment key={sf.id}>
-                          {/* Factor Header Row */}
-                          {isNewGroup && (
-                            <tr className="bg-gray-50 border-y border-gray-200">
-                              <td colSpan={7} className="px-4 py-2 text-xs font-bold text-[#2C5697] uppercase tracking-wider">
-                                {sf.factor}
-                              </td>
-                            </tr>
-                          )}
-                          {/* Sub-factor Row */}
-                          <tr className="border-b border-gray-100 hover:bg-gray-50">
-                            <td className="p-3 pl-6 font-medium text-gray-800 border-r border-gray-100">
-                              {sf.name}
-                            </td>
-                            {[1,2,3,4,5,6].map(lvl => (
-                              <td 
-                                key={lvl} 
-                                className="p-1 border-r border-gray-100 last:border-0 relative h-12"
-                              >
-                                {score === lvl ? (
-                                  <div 
-                                    onClick={() => {
-                                      setStep(idx);
-                                      setView('wizard');
-                                    }}
-                                    title="Click to edit answer"
-                                    className={`absolute inset-1 rounded flex items-center justify-center font-bold shadow-sm cursor-pointer hover:opacity-90 transition-opacity ${LEVEL_STYLES[lvl - 1].header}`}
-                                  >
-                                    {score}
-                                  </div>
-                                ) : (
-                                  <div className="absolute inset-1 bg-white"></div>
-                                )}
-                              </td>
-                            ))}
-                          </tr>
-                        </React.Fragment>
-                      );
-                    })}
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="flex justify-center gap-4 py-8">
-              {completionPercent < 100 ? (
-                <button 
-                  onClick={handleContinue}
-                  className="px-6 py-3 bg-[#0099CC] hover:bg-[#007399] text-white font-bold rounded-full hover:bg-blue-800 shadow-md flex items-center gap-2"
-                >
-                  {completionPercent === 0 ? "Start Assessment" : "Complete Assessment"}
-                  <ArrowRight size={16}/>
-                </button>
-              ) : (
-                <button 
-                  className="px-6 py-3 bg-gray-200 text-gray-500 font-bold rounded-full cursor-not-allowed flex items-center gap-2"
-                  disabled
-                >
-                  Assessment Complete <Check size={16}/>
-                </button>
-              )}
-
+              <h2 className="text-3xl font-bold text-gray-800 mb-4">Assessment Not Started</h2>
+              <p className="text-gray-600 text-lg max-w-lg mb-8 leading-relaxed">
+                You haven't started the assessment yet. Please answer the assessment questions to view your readiness profile and dashboard insights.
+              </p>
               <button 
-                onClick={() => setView('plan')}
-                className="px-6 py-3 border-2 border-[#0099CC] text-[#0099CC] font-bold rounded-full hover:bg-sky-50"
+                onClick={handleStart}
+                className="bg-[#0099CC] hover:bg-[#007399] text-white px-8 py-4 rounded-full text-xl font-bold transition-all shadow-lg hover:shadow-xl flex items-center gap-2 transform hover:-translate-y-1"
               >
-                Generate Next Steps Plan
+                Start Assessment <ArrowRight size={24} />
               </button>
             </div>
-          </div>
+          ) : (
+            <div className="flex flex-col gap-8 mt-8">
+              {/* Header */}
+              <div className="flex justify-between items-end border-b border-gray-200 pb-4">
+                <div>
+                  <h2 className="text-3xl font-bold text-[#333]">Readiness Profile Summary</h2>
+                  <p className="text-gray-500 mt-1">Review your scores and high-level insights.</p>
+                </div>
+                <div className="flex gap-3">
+                  {/* DYNAMIC ACTION BUTTON */}
+                  {completionPercent < 100 && (
+                    <button 
+                      onClick={handleContinue}
+                      className="px-6 py-2 bg-[#0099CC] hover:bg-[#007399] text-white rounded-full font-bold shadow-sm flex items-center gap-2 transition-all"
+                    >
+                      {completionPercent === 0 ? "Start Assessment" : "Complete Assessment"}
+                      <ArrowRight size={16}/>
+                    </button>
+                  )}
+
+                  <button 
+                      onClick={() => window.print()}
+                      className="flex items-center gap-2 px-4 py-2 border border-gray-300 rounded-md text-sm font-medium hover:bg-gray-50 text-gray-700"
+                  >
+                      <Printer size={16}/> Print to PDF
+                  </button>
+                </div>
+              </div>
+
+              {/* Metrics Row (Based on Multi-Factor Dashboard Mockup) */}
+              <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+                <div className="bg-white p-4 rounded-lg shadow-sm border-l-4 border-[#2C5697]">
+                  <div className="text-sm text-gray-500 uppercase font-bold mb-1">Overall Score</div>
+                  <div className="text-3xl font-bold text-[#2C5697]">{getOverallScore()} <span className="text-lg text-gray-400 font-normal">/ 6.0</span></div>
+                </div>
+                <div className="bg-white p-4 rounded-lg shadow-sm border-l-4 border-[#D9534F]">
+                  <div className="text-sm text-gray-500 uppercase font-bold mb-1">Below Planning</div>
+                  <div className="text-3xl font-bold text-[#D9534F]">{getCountByLevel(1, 3)}</div>
+                </div>
+                <div className="bg-white p-4 rounded-lg shadow-sm border-l-4 border-[#5CB85C]">
+                  <div className="text-sm text-gray-500 uppercase font-bold mb-1">Preparing/Ready</div>
+                  <div className="text-3xl font-bold text-[#5CB85C]">{getCountByLevel(5, 6)}</div>
+                </div>
+                <div className="bg-white p-4 rounded-lg shadow-sm border-l-4 border-[#0099CC]">
+                  <div className="text-sm text-gray-500 uppercase font-bold mb-1">Assessment Completion</div>
+                  <div className="text-3xl font-bold text-[#0099CC]">{completionPercent}%</div>
+                </div>
+              </div>
+
+              {/* Heatmap Matrix (Based on Multi-Factor Dashboard Mockup) */}
+              <div className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
+                <div className="px-6 py-4 border-b border-gray-200 bg-gray-50 flex justify-between items-center">
+                  <h3 className="font-bold text-gray-700">Readiness Heatmap</h3>
+                  <div className="flex gap-4 text-xs text-gray-500 italic">
+                    Select the ranked score in order to change it
+                  </div>
+                </div>
+                <div className="overflow-x-auto">
+                  <table className="w-full min-w-[800px] text-sm border-collapse">
+                    <thead>
+                      <tr className="bg-gray-100 text-gray-500 uppercase text-xs">
+                        <th className="text-left p-3 w-1/4 border-b border-gray-200">Sub-factors</th>
+                        {LEVELS.map(l => <th key={l} className="text-left p-3 w-[12%] border-b border-gray-200">{l}</th>)}
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {SUB_FACTORS.map((sf, idx) => {
+                        const score = answers[sf.id];
+                        // Check if this row starts a new factor group
+                        const isNewGroup = idx === 0 || sf.factor !== SUB_FACTORS[idx - 1].factor;
+                        
+                        return (
+                          <React.Fragment key={sf.id}>
+                            {/* Factor Header Row */}
+                            {isNewGroup && (
+                              <tr className="bg-gray-50 border-y border-gray-200">
+                                <td colSpan={7} className="px-4 py-2 text-xs font-bold text-[#2C5697] uppercase tracking-wider">
+                                  {sf.factor}
+                                </td>
+                              </tr>
+                            )}
+                            {/* Sub-factor Row */}
+                            <tr className="border-b border-gray-100 hover:bg-gray-50">
+                              <td className="p-3 pl-6 font-medium text-gray-800 border-r border-gray-100">
+                                {sf.name}
+                              </td>
+                              {[1,2,3,4,5,6].map(lvl => (
+                                <td 
+                                  key={lvl} 
+                                  className="p-1 border-r border-gray-100 last:border-0 relative h-12"
+                                >
+                                  {score === lvl ? (
+                                    <div 
+                                      onClick={() => {
+                                        setStep(idx);
+                                        setView('wizard');
+                                      }}
+                                      title="Click to edit answer"
+                                      className={`absolute inset-1 rounded flex items-center justify-center font-bold shadow-sm cursor-pointer hover:opacity-90 transition-opacity ${LEVEL_STYLES[lvl - 1].header}`}
+                                    >
+                                      {score}
+                                    </div>
+                                  ) : (
+                                    <div className="absolute inset-1 bg-white"></div>
+                                  )}
+                                </td>
+                              ))}
+                            </tr>
+                          </React.Fragment>
+                        );
+                      })}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+
+              <div className="flex justify-center gap-4 py-8">
+                {completionPercent < 100 ? (
+                  <button 
+                    onClick={handleContinue}
+                    className="px-6 py-3 bg-[#0099CC] hover:bg-[#007399] text-white font-bold rounded-full hover:bg-blue-800 shadow-md flex items-center gap-2"
+                  >
+                    {completionPercent === 0 ? "Start Assessment" : "Complete Assessment"}
+                    <ArrowRight size={16}/>
+                  </button>
+                ) : (
+                  <button 
+                    className="px-6 py-3 bg-gray-200 text-gray-500 font-bold rounded-full cursor-not-allowed flex items-center gap-2"
+                    disabled
+                  >
+                    Assessment Complete <Check size={16}/>
+                  </button>
+                )}
+
+                <button 
+                  onClick={() => setView('plan')}
+                  className="px-6 py-3 border-2 border-[#0099CC] text-[#0099CC] font-bold rounded-full hover:bg-sky-50"
+                >
+                  Generate Next Steps Plan
+                </button>
+              </div>
+            </div>
+          )
         )}
 
         {/* --- VIEW: PLAN --- */}
         {view === 'plan' && (
-          <div className="mt-8">
-            {/* --- NEW OVERVIEW SECTION --- */}
-            {/* Header */}
-            <div className="flex justify-between items-end border-b border-gray-200 pb-4 mb-4">
-              <div>
-                <h2 className="text-3xl font-bold text-[#333]">Personalized Next Steps Plan</h2>
-                <p className="text-gray-500 mt-1">Your prioritized roadmap based on the assessment.</p>
+          !hasStarted ? (
+             <div className="flex flex-col items-center justify-center min-h-[60vh] text-center p-8 animate-in fade-in zoom-in duration-300">
+              <div className="bg-gray-100 p-8 rounded-full mb-6 shadow-inner">
+                <FileText size={64} className="text-gray-400" />
               </div>
-              <div className="flex gap-3">
-                 <button 
-                    onClick={() => window.print()}
-                    className="flex items-center gap-2 px-4 py-2 border border-gray-300 rounded-md text-sm font-medium hover:bg-gray-50 text-gray-700"
-                 >
-                    <Printer size={16}/> Print to PDF
-                 </button>
-              </div>
+              <h2 className="text-3xl font-bold text-gray-800 mb-4">Next Steps Plan Unavailable</h2>
+              <p className="text-gray-600 text-lg max-w-lg mb-8 leading-relaxed">
+                Your personalized roadmap is generated based on your assessment scores. Please complete the assessment to unlock your custom plan.
+              </p>
+              <button 
+                onClick={handleStart}
+                className="bg-[#0099CC] hover:bg-[#007399] text-white px-8 py-4 rounded-full text-xl font-bold transition-all shadow-lg hover:shadow-xl flex items-center gap-2 transform hover:-translate-y-1"
+              >
+                Start Assessment <ArrowRight size={24} />
+              </button>
             </div>
-
-            <div className="bg-[#F8F9FA] rounded-xl p-8 mb-10 border border-gray-200">
-              <div className="flex flex-col md:flex-row justify-between items-start gap-8">
-                
-                {/* Score Circle & Stage - UPDATED DYNAMIC COLOR LOGIC */}
-                <div className="flex-shrink-0 flex flex-col items-center">
-                  <div 
-                    className="w-32 h-32 rounded-full border-[6px] flex flex-col items-center justify-center bg-white shadow-sm transition-colors duration-500"
-                    style={{ borderColor: LEVEL_STYLES[getStageIndex(getOverallScore())].hex }}
-                  >
-                    <span className="text-3xl font-extrabold text-[#333]">{getOverallScore()}</span>
-                    <span className="text-xs text-gray-500 font-medium uppercase mt-1">out of 6.0</span>
-                  </div>
-                  <div 
-                    className={`mt-4 px-4 py-1.5 text-sm font-bold rounded-full shadow-sm transition-colors duration-500 ${LEVEL_STYLES[getStageIndex(getOverallScore())].textClass}`}
-                    style={{ backgroundColor: LEVEL_STYLES[getStageIndex(getOverallScore())].hex }}
-                  >
-                    {getStageFromScore(getOverallScore())}
-                  </div>
+          ) : (
+            <div className="mt-8">
+              {/* --- NEW OVERVIEW SECTION --- */}
+              {/* Header */}
+              <div className="flex justify-between items-end border-b border-gray-200 pb-4 mb-4">
+                <div>
+                  <h2 className="text-3xl font-bold text-[#333]">Personalized Next Steps Plan</h2>
+                  <p className="text-gray-500 mt-1">Your prioritized roadmap based on the assessment.</p>
                 </div>
+                <div className="flex gap-3">
+                  <button 
+                      onClick={() => window.print()}
+                      className="flex items-center gap-2 px-4 py-2 border border-gray-300 rounded-md text-sm font-medium hover:bg-gray-50 text-gray-700"
+                  >
+                      <Printer size={16}/> Print to PDF
+                  </button>
+                </div>
+              </div>
 
-                {/* Narrative Text */}
-                <div className="flex-1">
-                  <h2 className="text-2xl font-bold text-[#333] mb-4">Overall Readiness Level</h2>
-                  <p className="text-gray-700 leading-relaxed mb-6">
-                    {STAGE_DEFINITIONS[getStageFromScore(getOverallScore())]}
-                  </p>
+              <div className="bg-[#F8F9FA] rounded-xl p-8 mb-10 border border-gray-200">
+                <div className="flex flex-col md:flex-row justify-between items-start gap-8">
                   
-                  {/* General Guidance */}
-                  <div className="bg-[#F0F7FF] p-6 rounded-lg border-l-4 border-[#2C5697] shadow-sm">
-                    <h3 className="text-xl font-bold text-[#333] mb-4 flex items-center gap-2">
-                      <TrendingUp size={24} className="text-[#333]" /> 
-                      General Guidance
-                    </h3>
-                    <ul className="space-y-3 text-gray-700 list-disc pl-5">
-                      <li>
-                        Review areas scoring below 
-                        <span className="inline-block bg-[#FFD54F] text-gray-800 text-xs font-bold px-2 py-0.5 rounded mx-1">Planning</span> 
-                        for immediate attention
-                      </li>
-                      <li>Create a 3-6 month action plan addressing your lowest-scoring factors</li>
-                      <li>Engage leadership and staff in discussing assessment results</li>
-                      <li>Connect with HFHI for technical assistance in priority areas</li>
-                      <li>Schedule a follow-up assessment in 6 months to track progress</li>
-                    </ul>
+                  {/* Score Circle & Stage - UPDATED DYNAMIC COLOR LOGIC */}
+                  <div className="flex-shrink-0 flex flex-col items-center">
+                    <div 
+                      className="w-32 h-32 rounded-full border-[6px] flex flex-col items-center justify-center bg-white shadow-sm transition-colors duration-500"
+                      style={{ borderColor: LEVEL_STYLES[getStageIndex(getOverallScore())].hex }}
+                    >
+                      <span className="text-3xl font-extrabold text-[#333]">{getOverallScore()}</span>
+                      <span className="text-xs text-gray-500 font-medium uppercase mt-1">out of 6.0</span>
+                    </div>
+                    <div 
+                      className={`mt-4 px-4 py-1.5 text-sm font-bold rounded-full shadow-sm transition-colors duration-500 ${LEVEL_STYLES[getStageIndex(getOverallScore())].textClass}`}
+                      style={{ backgroundColor: LEVEL_STYLES[getStageIndex(getOverallScore())].hex }}
+                    >
+                      {getStageFromScore(getOverallScore())}
+                    </div>
                   </div>
-                </div>
-              </div>
 
-              {/* Visual Spectrum Bar */}
-              <div className="mt-10 relative pt-6">
-                <div className="flex h-3 rounded-full overflow-hidden w-full">
-                  <div className="flex-1 bg-[#94A3B8]"></div> {/* Inactive */}
-                  <div className="flex-1 bg-[#EF5350]"></div> {/* Aware */}
-                  <div className="flex-1 bg-[#FFB74D]"></div> {/* Exploring */}
-                  <div className="flex-1 bg-[#FFD54F]"></div> {/* Planning */}
-                  <div className="flex-1 bg-[#AED581]"></div> {/* Preparing */}
-                  <div className="flex-1 bg-[#4CAF50]"></div> {/* Ready */}
-                </div>
-                {/* Pointer */}
-                <div 
-                  className="absolute top-0 flex flex-col items-center transform -translate-x-1/2 transition-all duration-500"
-                  style={{ left: `${(parseFloat(getOverallScore()) / 6) * 100}%` }}
-                >
-                  <div className="bg-[#333] text-white text-xs font-bold px-2 py-1 rounded shadow-lg mb-1">
-                    {getOverallScore()}
+                  {/* Narrative Text */}
+                  <div className="flex-1">
+                    <h2 className="text-2xl font-bold text-[#333] mb-4">Overall Readiness Level</h2>
+                    <p className="text-gray-700 leading-relaxed mb-6">
+                      {STAGE_DEFINITIONS[getStageFromScore(getOverallScore())]}
+                    </p>
+                    
+                    {/* General Guidance */}
+                    <div className="bg-[#F0F7FF] p-6 rounded-lg border-l-4 border-[#2C5697] shadow-sm">
+                      <h3 className="text-xl font-bold text-[#333] mb-4 flex items-center gap-2">
+                        <TrendingUp size={24} className="text-[#333]" /> 
+                        General Guidance
+                      </h3>
+                      <ul className="space-y-3 text-gray-700 list-disc pl-5">
+                        <li>
+                          Review areas scoring below 
+                          <span className="inline-block bg-[#FFD54F] text-gray-800 text-xs font-bold px-2 py-0.5 rounded mx-1">Planning</span> 
+                          for immediate attention
+                        </li>
+                        <li>Create a 3-6 month action plan addressing your lowest-scoring factors</li>
+                        <li>Engage leadership and staff in discussing assessment results</li>
+                        <li>Connect with HFHI for technical assistance in priority areas</li>
+                        <li>Schedule a follow-up assessment in 6 months to track progress</li>
+                      </ul>
+                    </div>
                   </div>
-                  <div className="w-0.5 h-8 bg-[#333]"></div>
                 </div>
-                <div className="flex justify-between text-[10px] text-gray-400 uppercase font-bold mt-2 px-1">
-                  <span>Inactive</span>
-                  <span>Aware</span>
-                  <span>Exploring</span>
-                  <span>Planning</span>
-                  <span>Preparing</span>
-                  <span>Ready</span>
+
+                {/* Visual Spectrum Bar */}
+                <div className="mt-10 relative pt-6">
+                  <div className="flex h-3 rounded-full overflow-hidden w-full">
+                    <div className="flex-1 bg-[#94A3B8]"></div> {/* Inactive */}
+                    <div className="flex-1 bg-[#EF5350]"></div> {/* Aware */}
+                    <div className="flex-1 bg-[#FFB74D]"></div> {/* Exploring */}
+                    <div className="flex-1 bg-[#FFD54F]"></div> {/* Planning */}
+                    <div className="flex-1 bg-[#AED581]"></div> {/* Preparing */}
+                    <div className="flex-1 bg-[#4CAF50]"></div> {/* Ready */}
+                  </div>
+                  {/* Pointer */}
+                  <div 
+                    className="absolute top-0 flex flex-col items-center transform -translate-x-1/2 transition-all duration-500"
+                    style={{ left: `${(parseFloat(getOverallScore()) / 6) * 100}%` }}
+                  >
+                    <div className="bg-[#333] text-white text-xs font-bold px-2 py-1 rounded shadow-lg mb-1">
+                      {getOverallScore()}
+                    </div>
+                    <div className="w-0.5 h-8 bg-[#333]"></div>
+                  </div>
+                  <div className="flex justify-between text-[10px] text-gray-400 uppercase font-bold mt-2 px-1">
+                    <span>Inactive</span>
+                    <span>Aware</span>
+                    <span>Exploring</span>
+                    <span>Planning</span>
+                    <span>Preparing</span>
+                    <span>Ready</span>
+                  </div>
                 </div>
               </div>
-            </div>
-            
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
               
-              {/* Left Column: Immediate Priorities (Red/Urgent) */}
-              <div className="lg:col-span-2 space-y-6">
-                <div className="bg-[#FFEBEE] p-6 rounded-t-lg border-b-4 border-[#EF5350]">
-                  <h2 className="text-xl font-bold text-[#C62828]">Immediate 3-month priorities.</h2>
-                  <p className="text-[#D32F2F] text-sm mt-1">Focus on these critical areas to build a strong foundation for your home repair program.</p>
-                </div>
+              <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
                 
-                <div className="space-y-4">
-                  {SUB_FACTORS
-                    .filter(sf => (answers[sf.id] || 1) <= 3)
-                    .sort((a, b) => {
-                      const scoreA = answers[a.id] === undefined ? 0 : answers[a.id];
-                      const scoreB = answers[b.id] === undefined ? 0 : answers[b.id];
-                      return scoreA - scoreB;
-                    })
-                    .map(sf => {
-                      const isScored = answers[sf.id] !== undefined;
-                      // Apply dynamic icon color based on score (or default gray for unscored)
-                      const scoreIndex = answers[sf.id] ? answers[sf.id] - 1 : -1;
-                      const iconColorClass = scoreIndex >= 0 ? SCORE_ICON_COLORS[scoreIndex] : 'bg-gray-100 text-gray-500';
-                      const FactorIcon = FACTOR_ICONS[sf.factor] || ClipboardCheck;
+                {/* Left Column: Immediate Priorities (Red/Urgent) */}
+                <div className="lg:col-span-2 space-y-6">
+                  <div className="bg-[#FFEBEE] p-6 rounded-t-lg border-b-4 border-[#EF5350]">
+                    <h2 className="text-xl font-bold text-[#C62828]">Immediate 3-month priorities.</h2>
+                    <p className="text-[#D32F2F] text-sm mt-1">Focus on these critical areas to build a strong foundation for your home repair program.</p>
+                  </div>
+                  
+                  <div className="space-y-4">
+                    {SUB_FACTORS
+                      .filter(sf => (answers[sf.id] || 1) <= 3)
+                      .sort((a, b) => {
+                        const scoreA = answers[a.id] === undefined ? 0 : answers[a.id];
+                        const scoreB = answers[b.id] === undefined ? 0 : answers[b.id];
+                        return scoreA - scoreB;
+                      })
+                      .map(sf => {
+                        const isScored = answers[sf.id] !== undefined;
+                        // Apply dynamic icon color based on score (or default gray for unscored)
+                        const scoreIndex = answers[sf.id] ? answers[sf.id] - 1 : -1;
+                        const iconColorClass = scoreIndex >= 0 ? SCORE_ICON_COLORS[scoreIndex] : 'bg-gray-100 text-gray-500';
+                        const FactorIcon = FACTOR_ICONS[sf.factor] || ClipboardCheck;
 
-                      return (
-                        <div key={sf.id} className="bg-white p-6 rounded-lg border border-gray-200 shadow-sm flex flex-col md:flex-row gap-6">
-                          <div className="flex-shrink-0">
-                             <div className={`w-10 h-10 rounded-full flex items-center justify-center ${iconColorClass}`}>
-                                <FactorIcon size={20}/>
-                             </div>
-                          </div>
-                          <div className="flex-grow">
-                            <div className="flex justify-between items-start mb-2">
-                              <h3 className="font-bold text-gray-800 text-lg">{sf.name}</h3>
-                              {isScored && (
-                                <span className={`text-xs font-bold px-3 py-1 rounded-full border ${LEVEL_STYLES[scoreIndex].body} text-gray-700`}>
-                                   {answers[sf.id]} - {LEVELS[scoreIndex]}
-                                </span>
-                              )}
-                              {!isScored && (
-                                <span className="text-xs font-bold bg-gray-100 text-gray-500 px-2 py-1 rounded">This sub-factor has not been rated.</span>
+                        return (
+                          <div key={sf.id} className="bg-white p-6 rounded-lg border border-gray-200 shadow-sm flex flex-col md:flex-row gap-6">
+                            <div className="flex-shrink-0">
+                              <div className={`w-10 h-10 rounded-full flex items-center justify-center ${iconColorClass}`}>
+                                  <FactorIcon size={20}/>
+                              </div>
+                            </div>
+                            <div className="flex-grow">
+                              <div className="flex justify-between items-start mb-2">
+                                <h3 className="font-bold text-gray-800 text-lg">{sf.name}</h3>
+                                {isScored && (
+                                  <span className={`text-xs font-bold px-3 py-1 rounded-full border ${LEVEL_STYLES[scoreIndex].body} text-gray-700`}>
+                                    {answers[sf.id]} - {LEVELS[scoreIndex]}
+                                  </span>
+                                )}
+                                {!isScored && (
+                                  <span className="text-xs font-bold bg-gray-100 text-gray-500 px-2 py-1 rounded">This sub-factor has not been rated.</span>
+                                )}
+                              </div>
+                              
+                              {isScored ? (
+                                <>
+                                  <p className="text-sm font-semibold text-gray-500 mb-2">Practical steps:</p>
+                                  <ul className="list-disc pl-5 text-sm text-gray-700 space-y-1">
+                                    <li>{sf.tips[answers[sf.id] || 1]}</li>
+                                    <li>Schedule review meeting with relevant staff.</li>
+                                  </ul>
+                                </>
+                              ) : (
+                                <div className="flex flex-col gap-2 mt-2">
+                                  <p className="text-sm text-gray-500 italic">This factor was skipped during the assessment.</p>
+                                  <button 
+                                    onClick={() => handleGoToQuestion(SUB_FACTORS.indexOf(sf))}
+                                    className="text-sm text-[#0099CC] font-semibold flex items-center gap-1 hover:underline self-start"
+                                  >
+                                    Complete Assessment <ArrowRight size={14}/>
+                                  </button>
+                                </div>
                               )}
                             </div>
-                            
-                            {isScored ? (
-                              <>
-                                <p className="text-sm font-semibold text-gray-500 mb-2">Practical steps:</p>
-                                <ul className="list-disc pl-5 text-sm text-gray-700 space-y-1">
-                                  <li>{sf.tips[answers[sf.id] || 1]}</li>
-                                  <li>Schedule review meeting with relevant staff.</li>
-                                </ul>
-                              </>
-                            ) : (
-                              <div className="flex flex-col gap-2 mt-2">
-                                <p className="text-sm text-gray-500 italic">This factor was skipped during the assessment.</p>
-                                <button 
-                                  onClick={() => handleGoToQuestion(SUB_FACTORS.indexOf(sf))}
-                                  className="text-sm text-[#0099CC] font-semibold flex items-center gap-1 hover:underline self-start"
-                                >
-                                  Complete Assessment <ArrowRight size={14}/>
-                                </button>
-                              </div>
-                            )}
+                          </div>
+                        );
+                      })
+                    }
+                    
+                    {SUB_FACTORS.filter(sf => (answers[sf.id] || 1) <= 3).length === 0 && (
+                      <div className="p-8 text-center text-gray-500 italic bg-gray-50 rounded-lg">No immediate priorities found. Great job!</div>
+                    )}
+                  </div>
+                </div>
+
+                {/* Right Column */}
+                <div className="space-y-8">
+                  
+                  {/* Growth Opportunities (Yellow/Planning) */}
+                  <div>
+                    <div className="bg-[#FFF8E1] p-5 rounded-t-lg border-b-4 border-[#FFD54F]">
+                      <h2 className="text-lg font-bold text-[#F57F17]">6 to 12 month growth opportunities.</h2>
+                      <p className="text-[#F9A825] text-xs mt-1">Plan ahead to expand your program's reach and impact.</p>
+                    </div>
+                    <div className="bg-white border-x border-b border-gray-200 p-4 space-y-4 rounded-b-lg">
+                      {SUB_FACTORS.filter(sf => (answers[sf.id] || 1) > 3 && (answers[sf.id] || 1) < 6).map(sf => (
+                        <div key={sf.id} className="flex gap-3 pb-4 border-b border-gray-100 last:border-0 last:pb-0">
+                          <div className="mt-1 text-[#F9A825]"><ArrowRight size={16}/></div>
+                          <div>
+                            <h4 className="font-bold text-gray-800 text-sm">{sf.name}</h4>
+                            <p className="text-xs text-gray-600 mt-1">{sf.tips[answers[sf.id] || 1]}</p>
                           </div>
                         </div>
-                      );
-                    })
-                  }
-                  
-                  {SUB_FACTORS.filter(sf => (answers[sf.id] || 1) <= 3).length === 0 && (
-                    <div className="p-8 text-center text-gray-500 italic bg-gray-50 rounded-lg">No immediate priorities found. Great job!</div>
-                  )}
+                      ))}
+                      {SUB_FACTORS.filter(sf => (answers[sf.id] || 1) > 3 && (answers[sf.id] || 1) < 6).length === 0 && (
+                        <div className="text-center text-xs text-gray-400 py-4">No mid-term items.</div>
+                      )}
+                    </div>
+                  </div>
+
+                  {/* Maintaining Strengths (Green) */}
+                  <div>
+                    <div className="bg-[#E8F5E9] p-5 rounded-t-lg border-b-4 border-[#4CAF50]">
+                      <h2 className="text-lg font-bold text-[#1B5E20]">Maintaining strengths.</h2>
+                      <p className="text-[#2E7D32] text-xs mt-1">Continue to leverage these areas where your affiliate excels.</p>
+                    </div>
+                    <div className="bg-white border-x border-b border-gray-200 p-4 space-y-4 rounded-b-lg">
+                      {SUB_FACTORS.filter(sf => (answers[sf.id] || 1) === 6).map(sf => (
+                        <div key={sf.id} className="flex items-center gap-3">
+                          <div className="bg-green-100 p-1.5 rounded text-green-700"><Check size={14}/></div>
+                          <div className="flex-1">
+                            <h4 className="font-bold text-gray-800 text-sm">{sf.name}</h4>
+                          </div>
+                          <div className="bg-green-500 text-white text-[10px] font-bold px-2 py-1 rounded flex items-center gap-1">
+                            <Check size={10}/> Ready
+                          </div>
+                        </div>
+                      ))}
+                      {SUB_FACTORS.filter(sf => (answers[sf.id] || 1) === 6).length === 0 && (
+                        <div className="text-center text-xs text-gray-400 py-4">Keep working to reach "Ready" status!</div>
+                      )}
+                    </div>
+                  </div>
+
                 </div>
               </div>
-
-              {/* Right Column */}
-              <div className="space-y-8">
-                
-                {/* Growth Opportunities (Yellow/Planning) */}
-                <div>
-                  <div className="bg-[#FFF8E1] p-5 rounded-t-lg border-b-4 border-[#FFD54F]">
-                    <h2 className="text-lg font-bold text-[#F57F17]">6 to 12 month growth opportunities.</h2>
-                    <p className="text-[#F9A825] text-xs mt-1">Plan ahead to expand your program's reach and impact.</p>
-                  </div>
-                  <div className="bg-white border-x border-b border-gray-200 p-4 space-y-4 rounded-b-lg">
-                    {SUB_FACTORS.filter(sf => (answers[sf.id] || 1) > 3 && (answers[sf.id] || 1) < 6).map(sf => (
-                      <div key={sf.id} className="flex gap-3 pb-4 border-b border-gray-100 last:border-0 last:pb-0">
-                        <div className="mt-1 text-[#F9A825]"><ArrowRight size={16}/></div>
-                        <div>
-                          <h4 className="font-bold text-gray-800 text-sm">{sf.name}</h4>
-                          <p className="text-xs text-gray-600 mt-1">{sf.tips[answers[sf.id] || 1]}</p>
-                        </div>
-                      </div>
-                    ))}
-                    {SUB_FACTORS.filter(sf => (answers[sf.id] || 1) > 3 && (answers[sf.id] || 1) < 6).length === 0 && (
-                      <div className="text-center text-xs text-gray-400 py-4">No mid-term items.</div>
-                    )}
-                  </div>
-                </div>
-
-                {/* Maintaining Strengths (Green) */}
-                <div>
-                  <div className="bg-[#E8F5E9] p-5 rounded-t-lg border-b-4 border-[#4CAF50]">
-                    <h2 className="text-lg font-bold text-[#1B5E20]">Maintaining strengths.</h2>
-                    <p className="text-[#2E7D32] text-xs mt-1">Continue to leverage these areas where your affiliate excels.</p>
-                  </div>
-                  <div className="bg-white border-x border-b border-gray-200 p-4 space-y-4 rounded-b-lg">
-                     {SUB_FACTORS.filter(sf => (answers[sf.id] || 1) === 6).map(sf => (
-                      <div key={sf.id} className="flex items-center gap-3">
-                        <div className="bg-green-100 p-1.5 rounded text-green-700"><Check size={14}/></div>
-                        <div className="flex-1">
-                          <h4 className="font-bold text-gray-800 text-sm">{sf.name}</h4>
-                        </div>
-                        <div className="bg-green-500 text-white text-[10px] font-bold px-2 py-1 rounded flex items-center gap-1">
-                           <Check size={10}/> Ready
-                        </div>
-                      </div>
-                    ))}
-                     {SUB_FACTORS.filter(sf => (answers[sf.id] || 1) === 6).length === 0 && (
-                      <div className="text-center text-xs text-gray-400 py-4">Keep working to reach "Ready" status!</div>
-                    )}
-                  </div>
-                </div>
-
+              
+              <div className="flex justify-center py-10">
+                <button 
+                    onClick={() => setView('dashboard')}
+                    className="px-6 py-2 border border-gray-300 rounded bg-white hover:bg-gray-50 font-medium text-gray-700"
+                >
+                    Return to Dashboard
+                </button>
               </div>
-            </div>
-            
-            <div className="flex justify-center py-10">
-               <button 
-                  onClick={() => setView('dashboard')}
-                  className="px-6 py-2 border border-gray-300 rounded bg-white hover:bg-gray-50 font-medium text-gray-700"
-               >
-                  Return to Dashboard
-               </button>
-            </div>
 
-          </div>
+            </div>
+          )
         )}
       </main>
 

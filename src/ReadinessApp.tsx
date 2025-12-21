@@ -560,7 +560,7 @@ export default function HomeRepairAssessment() {
             </div>
             <div className="flex flex-col">
               <span className="font-bold text-black text-lg tracking-tight leading-none">Repair Readiness Assessment</span>
-              <span className="text-xs text-gray-500 font-medium mt-0.5">v2.1.3</span>
+              <span className="text-xs text-gray-500 font-medium mt-0.5">v2.1.4</span>
             </div>
           </div>
           

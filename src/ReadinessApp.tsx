@@ -193,7 +193,7 @@ const SUB_FACTORS = [
   // --- FACTOR 3: APPROACH ---
   {
     id: "f3s1", factor: "Soundness of Approach", name: "Clarity of Capacity-Building Goals",
-    q: "How clearly defined and realistic are your goals for this capacity-building grant?",
+    q: "How clearly defined and realistic are your goals for this capacity-building launch?",
     context: "This sub-factor looks at how clearly you have defined the purpose of a repair program. It evaluates whether goals are specific, measurable, and tied to outcomes for households, properties, and the wider community.",
     desc: [
       "No clear goals exist for how capacity building would support a future home repair program.",
@@ -299,16 +299,16 @@ const SUB_FACTORS = [
     }
   },
   {
-    id: "f4s3", factor: "Leverage and Partnerships", name: "Potential for Leveraging Beyond the Grant Term",
-    q: "How well positioned are you to sustain outcomes beyond the grant?",
+    id: "f4s3", factor: "Leverage and Partnerships", name: "Potential for Leveraging Beyond the Launch Term",
+    q: "How well positioned are you to sustain outcomes beyond the launch?",
     context: "This sub-factor looks at how well a repair program can unlock new opportunities. It evaluates potential for future funding, policy influence, shared infrastructure, and deepened relationships that strengthen housing preservation over time.",
     desc: [
-      "The grant is viewed as a one time opportunity, with no planning for continuation after it ends.",
+      "The launch is viewed as a one time opportunity, with no planning for continuation after it ends.",
       "Some ideas for sustaining efforts exist, but there is no clear path or structure to use them.",
       "Possible sustainability strategies are named, yet they stay informal, incomplete, or untested in practice.",
-      "A short term vision links grant activities to one or two years of continued outcomes.",
+      "A short term vision links launch activities to one or two years of continued outcomes.",
       "A longer range vision connects sustainability strategies to organizational plans and future repair growth.",
-      "A detailed sustainability plan, with roles and next steps, positions your affiliate to extend impact beyond the grant."
+      "A detailed sustainability plan, with roles and next steps, positions your affiliate to extend impact beyond the launch."
     ],
     tips: {
       1: "Shift to long-term thinking.",
@@ -343,24 +343,24 @@ const SUB_FACTORS = [
     }
   },
   {
-    id: "f5s2", factor: "Impact & Sustainability", name: "Plan for Applying Capacity Post-Grant",
+    id: "f5s2", factor: "Impact & Sustainability", name: "Plan for Applying Capacity Post-Launch",
     q: "How effectively have you planned to apply systems after funding ends?",
     context: "This sub-factor looks at how repairs connect to your other programs and operations. It considers referral pathways, shared staffing, and aligned policies so that repairs are embedded in the organization, not an isolated side project.",
     desc: [
-      "There is no plan for how tools, skills, or systems from the grant will be used afterward.",
-      "High level ideas for post grant use exist, but they lack concrete actions or ownership.",
+      "There is no plan for how tools, skills, or systems from the launch will be used afterward.",
+      "High level ideas for post launch use exist, but they lack concrete actions or ownership.",
       "A general plan is drafted, yet feasibility around staffing, funding, or operations is still uncertain.",
-      "A practical plan outlines how key grant supported elements will continue after funding ends.",
-      "A clear implementation plan assigns responsibilities and timelines for integrating grant learning into regular practice.",
-      "Capacity gains are embedded in roles, policies, and budgets, supporting ongoing repair work beyond the grant period."
+      "A practical plan outlines how key launch supported elements will continue after funding ends.",
+      "A clear implementation plan assigns responsibilities and timelines for integrating launch learning into regular practice.",
+      "Capacity gains are embedded in roles, policies, and budgets, supporting ongoing repair work beyond the launch period."
     ],
     tips: {
       1: "Identify key takeaways to keep using.",
-      2: "Draft a post-grant checklist.",
+      2: "Draft a post-launch checklist.",
       3: "Stress-test your plan against obstacles.",
       4: "Clarify timing and roles for implementation.",
       5: "Build internal accountability.",
-      6: "Share post-grant strategy with funders."
+      6: "Share post-launch strategy with funders."
     }
   },
   {

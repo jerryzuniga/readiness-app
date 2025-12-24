@@ -707,7 +707,7 @@ export default function HomeRepairAssessment() {
            <div className="flex items-center gap-6 text-sm font-medium text-slate-600">
               <span className="text-slate-400 font-bold uppercase text-xs tracking-wider hidden sm:block">Quick Links:</span>
               <button onClick={scrollToResources} className="hover:text-[#0099CC] flex items-center gap-1 transition-colors">
-                 <Download size={16}/> Resources
+                 <Download size={16}/> Readiness Resources
               </button>
            </div>
 
@@ -716,7 +716,7 @@ export default function HomeRepairAssessment() {
               onClick={Object.keys(answers).length > 0 ? handleContinue : handleStart}
               className="bg-[#0099CC] hover:bg-[#007399] text-white px-5 py-2 rounded-full text-sm font-bold transition-all shadow-md flex items-center gap-2"
             >
-              {Object.keys(answers).length > 0 ? "Continue Evaluation" : "Start Evaluation"} 
+              {Object.keys(answers).length > 0 ? "Continue Assessment" : "Start Assessment"} 
               <ArrowRight size={16} />
             </button>
         </div>
@@ -764,10 +764,10 @@ export default function HomeRepairAssessment() {
                   <AlertCircle size={20} /> The Challenge
                 </div>
                 <h2 className="text-5xl font-bold mb-8 leading-tight text-white">
-                  Are good intentions enough?
+                  How do we move from intention to action?
                 </h2>
                 <p className="text-xl md:text-2xl text-slate-300 leading-relaxed">
-                  Bridge the <span className="text-white font-bold">Readiness Gap</span>: The space where efforts stall because the foundation—systems, capacity, and strategy—hasn't been built yet.
+                  By bridging the <span className="text-white font-bold">Readiness Gap</span>: The space where efforts stall because the foundation—systems, capacity, and strategy—hasn't been built yet.
                 </p>
               </div>
               <div className="flex-1 h-full p-12 flex items-center justify-center relative overflow-hidden">

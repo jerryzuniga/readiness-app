@@ -730,7 +730,7 @@ export default function HomeRepairAssessment() {
             
             {/* SECTION 1: HERO - Are We Ready? */}
             <section 
-              className="min-h-[60vh] flex flex-col items-center justify-center text-center p-8 relative bg-cover bg-center bg-no-repeat transition-all duration-1000"
+              className="min-h-[50vh] flex flex-col items-center justify-center text-center p-8 relative bg-cover bg-center bg-no-repeat transition-all duration-1000"
               style={{
                 backgroundImage: `url('${heroBg || HERO_IMAGES[0]}')`, // Use random state or fallback
                 backgroundPosition: "center 40%" // Adjust focus if needed
@@ -757,8 +757,33 @@ export default function HomeRepairAssessment() {
               </div>
             </section>
 
-             {/* SECTION 1.5: VIDEO OVERVIEW - REDESIGNED */}
-             <section id="video-section" className="bg-white pb-24 px-8 scroll-mt-32 pt-16">
+            {/* SECTION 2: THE PROBLEM - The Readiness Gap (SWAPPED WITH VIDEO) */}
+            <section className="bg-slate-900 text-white py-16 px-8 flex flex-col md:flex-row items-center justify-center">
+              <div className="flex-1 max-w-xl p-12 flex flex-col justify-center h-full">
+                <div className="inline-flex items-center gap-3 text-[#EF5350] mb-6 font-bold tracking-widest uppercase text-sm">
+                  <AlertCircle size={20} /> The Challenge
+                </div>
+                <h2 className="text-5xl font-bold mb-8 leading-tight text-white">
+                  Are good intentions enough?
+                </h2>
+                <p className="text-xl md:text-2xl text-slate-300 leading-relaxed">
+                  Bridge the <span className="text-white font-bold">Readiness Gap</span>: The space where efforts stall because the foundation—systems, capacity, and strategy—hasn't been built yet.
+                </p>
+              </div>
+              <div className="flex-1 h-full p-12 flex items-center justify-center relative overflow-hidden">
+                 {/* Abstract visual for 'gap' - Color adjusted for light background */}
+                 <div className="relative w-full max-w-md aspect-square">
+                    <div className="absolute top-0 left-0 w-32 h-32 border-t-4 border-l-4 border-[#EF5350] opacity-50"></div>
+                    <div className="absolute bottom-0 right-0 w-32 h-32 border-b-4 border-r-4 border-[#EF5350] opacity-50"></div>
+                    <div className="absolute inset-0 flex items-center justify-center">
+                       <span className="text-9xl font-black text-slate-700 select-none">?</span>
+                    </div>
+                 </div>
+              </div>
+            </section>
+
+             {/* SECTION 3: VIDEO OVERVIEW - REDESIGNED (SWAPPED WITH CHALLENGE) */}
+             <section id="video-section" className="flex flex-col items-center justify-center bg-slate-50 py-16 px-8 scroll-mt-32">
                <div className="max-w-6xl mx-auto w-full flex flex-col md:flex-row items-center gap-12">
                   
                   {/* Left Column: Title Text (Was description) */}
@@ -790,33 +815,8 @@ export default function HomeRepairAssessment() {
                </div>
             </section>
 
-            {/* SECTION 2: THE PROBLEM - The Readiness Gap */}
-            <section className="min-h-screen flex flex-col md:flex-row items-center bg-slate-900 text-white">
-              <div className="flex-1 p-12 md:p-24 flex flex-col justify-center h-full">
-                <div className="inline-flex items-center gap-3 text-[#EF5350] mb-6 font-bold tracking-widest uppercase text-sm">
-                  <AlertCircle size={20} /> The Challenge
-                </div>
-                <h2 className="text-5xl md:text-7xl font-bold mb-8 leading-tight">
-                  Are good intentions enough?
-                </h2>
-                <p className="text-xl md:text-2xl text-slate-300 leading-relaxed max-w-xl">
-                  Bridge the <span className="text-white font-bold">Readiness Gap</span>: The space where efforts stall because the foundation—systems, capacity, and strategy—hasn't been built yet.
-                </p>
-              </div>
-              <div className="flex-1 h-full bg-slate-800 p-12 md:p-24 flex items-center justify-center relative overflow-hidden">
-                 {/* Abstract visual for 'gap' */}
-                 <div className="relative w-full max-w-md aspect-square">
-                    <div className="absolute top-0 left-0 w-32 h-32 border-t-4 border-l-4 border-[#EF5350] opacity-50"></div>
-                    <div className="absolute bottom-0 right-0 w-32 h-32 border-b-4 border-r-4 border-[#EF5350] opacity-50"></div>
-                    <div className="absolute inset-0 flex items-center justify-center">
-                       <span className="text-9xl font-black text-slate-700 select-none">?</span>
-                    </div>
-                 </div>
-              </div>
-            </section>
-
-            {/* SECTION 3: THE FOUR-STEP READINESS JOURNEY (Replaces "Capacity Building is the bridge") */}
-            <section className="min-h-screen flex flex-col items-center justify-center bg-[#F0F9FF] p-12 md:p-24 text-center">
+            {/* SECTION 4: THE FOUR-STEP READINESS JOURNEY */}
+            <section className="flex flex-col items-center justify-center bg-[#F0F9FF] py-16 px-12 md:px-24 text-center">
               <div className="max-w-6xl w-full">
                 <h2 className="text-sm font-bold text-slate-500 mb-12 uppercase tracking-widest">
                   THE FOUR-STEP READINESS JOURNEY
@@ -881,8 +881,8 @@ export default function HomeRepairAssessment() {
               </div>
             </section>
 
-            {/* SECTION 4: THE FRAMEWORK - 5 Essential Questions */}
-            <section className="min-h-screen flex flex-col justify-center bg-white p-8 md:p-24">
+            {/* SECTION 5: THE FRAMEWORK - 5 Essential Questions */}
+            <section className="flex flex-col justify-center bg-white py-16 px-8 md:px-24">
               <div className="max-w-6xl mx-auto w-full">
                 <h2 className="text-4xl md:text-6xl font-black text-slate-900 mb-16 text-center md:text-left">
                   5 Essential Questions.
@@ -911,7 +911,7 @@ export default function HomeRepairAssessment() {
             </section>
 
              {/* --- NEW RESOURCES SECTION (SCROLL TARGET) --- */}
-            <section id="resources" className="bg-slate-50 py-24 px-8 scroll-mt-32">
+            <section id="resources" className="bg-slate-50 py-16 px-8 scroll-mt-32">
                 <div className="max-w-4xl mx-auto">
                     <h2 className="text-4xl font-black text-slate-900 mb-4">Readiness Guide</h2>
                     <p className="text-xl text-slate-500 mb-12">Essential documents and guides to support your readiness journey.</p>
@@ -956,8 +956,8 @@ export default function HomeRepairAssessment() {
                 </div>
             </section>
 
-            {/* SECTION 5: CALL TO ACTION */}
-            <section className="min-h-[60vh] flex flex-col items-center justify-center bg-[#0099CC] text-white text-center p-8">
+            {/* SECTION 6: CALL TO ACTION */}
+            <section className="min-h-[40vh] flex flex-col items-center justify-center bg-[#0099CC] text-white text-center p-8">
               <h2 className="text-5xl md:text-7xl font-black mb-8">
                 Build Your Roadmap.
               </h2>

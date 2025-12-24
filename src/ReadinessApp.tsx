@@ -403,7 +403,6 @@ export default function HomeRepairAssessment() {
 
   const [view, setView] = useState('home'); // home, wizard, dashboard, plan
   const [step, setStep] = useState(0);
-  const [showSubNav, setShowSubNav] = useState(false); // New state for scroll behavior
   
   // Step 2: Modify State Initialization (Lazy Init)
   const [answers, setAnswers] = useState(() => {
@@ -475,6 +474,8 @@ export default function HomeRepairAssessment() {
     handleScroll(); // Check initial state
     return () => window.removeEventListener('scroll', handleScroll);
   }, [view]);
+
+  const [showSubNav, setShowSubNav] = useState(false); // New state for scroll behavior
 
   const handleStart = () => {
     setStep(0);
@@ -619,7 +620,7 @@ export default function HomeRepairAssessment() {
             </div>
           </div>
           
-          {/* Desktop Nav - Restored to Original Clean State */}
+          {/* Desktop Nav */}
           <nav className="hidden md:flex items-center gap-8 text-sm font-medium text-gray-600">
             <button 
               onClick={() => setView('home')} 
@@ -728,7 +729,6 @@ export default function HomeRepairAssessment() {
           <div className="flex flex-col w-full">
             
             {/* SECTION 1: HERO - Are We Ready? */}
-            {/* UPDATED: Added randomized background image and overlay */}
             <section 
               className="min-h-[60vh] flex flex-col items-center justify-center text-center p-8 relative bg-cover bg-center bg-no-repeat transition-all duration-1000"
               style={{
@@ -764,7 +764,7 @@ export default function HomeRepairAssessment() {
                   {/* Left Column: Title Text (Was description) */}
                   <div className="flex-1 md:pr-8">
                      <h2 className="text-4xl md:text-5xl font-black text-slate-800 leading-tight mb-6">
-                        Why a readiness assessment is the first step to long-term sustainability.
+                        Learn why a readiness assessment builds long-term sustainability.
                      </h2>
                      <p className="text-lg text-slate-600 leading-relaxed">
                         Watch this 11-minute overview to understand the purpose and goals of the readiness assessment before you begin.
@@ -797,10 +797,10 @@ export default function HomeRepairAssessment() {
                   <AlertCircle size={20} /> The Challenge
                 </div>
                 <h2 className="text-5xl md:text-7xl font-bold mb-8 leading-tight">
-                  Good intentions aren't enough.
+                  Are good intentions enough?
                 </h2>
                 <p className="text-xl md:text-2xl text-slate-300 leading-relaxed max-w-xl">
-                  This is the <span className="text-white font-bold">Readiness Gap</span>: The space where efforts stall because the foundation—systems, capacity, and strategy—hasn't been built yet.
+                  Bridge the <span className="text-white font-bold">Readiness Gap</span>: The space where efforts stall because the foundation—systems, capacity, and strategy—hasn't been built yet.
                 </p>
               </div>
               <div className="flex-1 h-full bg-slate-800 p-12 md:p-24 flex items-center justify-center relative overflow-hidden">
@@ -815,32 +815,66 @@ export default function HomeRepairAssessment() {
               </div>
             </section>
 
-            {/* SECTION 3: THE SOLUTION - Capacity Building */}
+            {/* SECTION 3: THE FOUR-STEP READINESS JOURNEY (Replaces "Capacity Building is the bridge") */}
             <section className="min-h-screen flex flex-col items-center justify-center bg-[#F0F9FF] p-12 md:p-24 text-center">
-              <div className="max-w-5xl">
-                <h2 className="text-4xl md:text-6xl font-bold text-slate-900 mb-12">
-                  Capacity Building is the bridge.
+              <div className="max-w-6xl w-full">
+                <h2 className="text-sm font-bold text-slate-500 mb-12 uppercase tracking-widest">
+                  THE FOUR-STEP READINESS JOURNEY
                 </h2>
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-left">
-                  <div className="bg-white p-8 rounded-2xl shadow-lg border-t-8 border-[#0099CC]">
-                    <Layers size={48} className="text-[#0099CC] mb-6" />
-                    <h3 className="text-2xl font-bold text-slate-800 mb-4">Systems, not just tools.</h3>
-                    <p className="text-slate-600 leading-relaxed">
-                      Strengthening everything behind the repairs: the skills, the data, and the workflows.
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 text-left">
+                  {/* Card 1: The Tutorial */}
+                  <div 
+                    onClick={() => document.getElementById('video-section').scrollIntoView({behavior:'smooth'})}
+                    className="bg-white p-8 rounded-2xl shadow-lg hover:shadow-xl transition-all cursor-pointer border border-transparent hover:border-[#0099CC] group h-full flex flex-col"
+                  >
+                    <div className="mb-6 p-4 bg-blue-50 text-[#0099CC] rounded-full w-16 h-16 flex items-center justify-center group-hover:bg-[#0099CC] group-hover:text-white transition-colors">
+                      <Play size={32} fill="currentColor" className="ml-1"/>
+                    </div>
+                    <h3 className="text-2xl font-bold text-slate-800 mb-4">1. Watch The Tutorial</h3>
+                    <p className="text-slate-600 leading-relaxed text-sm">
+                      Watch the 11-minute overview video to set the context.
                     </p>
                   </div>
-                  <div className="bg-white p-8 rounded-2xl shadow-lg border-t-8 border-[#0099CC]">
-                    <Target size={48} className="text-[#0099CC] mb-6" />
-                    <h3 className="text-2xl font-bold text-slate-800 mb-4">Data, not just stories.</h3>
-                    <p className="text-slate-600 leading-relaxed">
-                      Moving from anecdotal evidence to clear, measurable indicators of community need.
+
+                  {/* Card 2: The Guide */}
+                  <div 
+                    onClick={() => window.open('https://readiness-app.vercel.app/Readiness_Manual.pdf', '_blank')}
+                    className="bg-white p-8 rounded-2xl shadow-lg hover:shadow-xl transition-all cursor-pointer border border-transparent hover:border-[#0099CC] group h-full flex flex-col"
+                  >
+                    <div className="mb-6 p-4 bg-blue-50 text-[#0099CC] rounded-full w-16 h-16 flex items-center justify-center group-hover:bg-[#0099CC] group-hover:text-white transition-colors">
+                      <BookOpen size={32} />
+                    </div>
+                    <h3 className="text-2xl font-bold text-slate-800 mb-4">2. Study The Guide</h3>
+                    <p className="text-slate-600 leading-relaxed text-sm">
+                      Review the Readiness Guide to gain deeper understanding of the Readiness framework.
                     </p>
                   </div>
-                  <div className="bg-white p-8 rounded-2xl shadow-lg border-t-8 border-[#0099CC]">
-                    <TrendingUp size={48} className="text-[#0099CC] mb-6" />
-                    <h3 className="text-2xl font-bold text-slate-800 mb-4">Impact, not just output.</h3>
-                    <p className="text-slate-600 leading-relaxed">
-                      Designing a program that leaves a legacy of sustainable housing preservation.
+
+                  {/* Card 3: Assessment */}
+                  <div 
+                    onClick={Object.keys(answers).length > 0 ? handleContinue : handleStart}
+                    className="bg-white p-8 rounded-2xl shadow-lg hover:shadow-xl transition-all cursor-pointer border border-transparent hover:border-[#0099CC] group h-full flex flex-col"
+                  >
+                    <div className="mb-6 p-4 bg-blue-50 text-[#0099CC] rounded-full w-16 h-16 flex items-center justify-center group-hover:bg-[#0099CC] group-hover:text-white transition-colors">
+                      <ClipboardCheck size={32} />
+                    </div>
+                    <h3 className="text-2xl font-bold text-slate-800 mb-4">3. Take the Assessment</h3>
+                    <p className="text-slate-600 leading-relaxed text-sm">
+                      Evaluate your affiliate individually using this tool.
+                    </p>
+                  </div>
+
+                  {/* Card 4: Team Planning */}
+                  <div 
+                    onClick={() => setView('plan')}
+                    className="bg-white p-8 rounded-2xl shadow-lg hover:shadow-xl transition-all cursor-pointer border border-transparent hover:border-[#0099CC] group h-full flex flex-col"
+                  >
+                    <div className="mb-6 p-4 bg-blue-50 text-[#0099CC] rounded-full w-16 h-16 flex items-center justify-center group-hover:bg-[#0099CC] group-hover:text-white transition-colors">
+                      <Target size={32} />
+                    </div>
+                    <h3 className="text-2xl font-bold text-slate-800 mb-4">4. Begin Planning</h3>
+                    <p className="text-slate-600 leading-relaxed text-sm">
+                      Consolidate results into a 90-day Action Plan.
                     </p>
                   </div>
                 </div>
@@ -879,7 +913,7 @@ export default function HomeRepairAssessment() {
              {/* --- NEW RESOURCES SECTION (SCROLL TARGET) --- */}
             <section id="resources" className="bg-slate-50 py-24 px-8 scroll-mt-32">
                 <div className="max-w-4xl mx-auto">
-                    <h2 className="text-4xl font-black text-slate-900 mb-4">Readiness Resources</h2>
+                    <h2 className="text-4xl font-black text-slate-900 mb-4">Readiness Guide</h2>
                     <p className="text-xl text-slate-500 mb-12">Essential documents and guides to support your readiness journey.</p>
                     
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -890,7 +924,7 @@ export default function HomeRepairAssessment() {
                                 <FileText size={32} />
                                 </div>
                                 <div>
-                                <h4 className="text-xl font-bold text-slate-900 group-hover:text-[#0099CC] transition-colors mb-2">Readiness Manual</h4>
+                                <h4 className="text-xl font-bold text-slate-900 group-hover:text-[#0099CC] transition-colors mb-2">Readiness Guide</h4>
                                 <p className="text-slate-600 leading-relaxed mb-4">
                                     A comprehensive guide explaining the 5 HUD factors, 15 sub-factors, and scoring criteria in detail.
                                 </p>
@@ -910,7 +944,7 @@ export default function HomeRepairAssessment() {
                                 <div>
                                 <h4 className="text-xl font-bold text-slate-900 group-hover:text-purple-600 transition-colors mb-2">Overview Video</h4>
                                 <p className="text-slate-600 leading-relaxed mb-4">
-                                    Re-watch the instructional video covering the purpose and goals of the readiness assessment.
+                                    Watch the instructional video covering the purpose and goals of the readiness assessment.
                                 </p>
                                 <span className="inline-flex items-center gap-2 text-purple-600 font-bold text-sm group-hover:underline">
                                     Watch Video <ArrowRight size={16}/>

@@ -1,11 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { 
   ChevronRight, ChevronLeft, Check, Printer, ArrowRight, 
   BarChart3, ClipboardCheck, Home, Info, User, Menu, X,
   Handshake, Wrench, Users, FileText, Download, Share2,
   AlertCircle, BookOpen, Clock, Save, TrendingUp,
   Play, Volume2, Settings, Maximize, Search, 
-  Briefcase, Building2 
+  Briefcase, Building2, ChevronDown, Layers, Target,
+  Video, File
 } from 'lucide-react';
 
 // --- DATA MODEL (Strictly aligned with Readiness Manual v1.2) ---
@@ -392,6 +393,7 @@ export default function HomeRepairAssessment() {
 
   const [view, setView] = useState('home'); // home, wizard, dashboard, plan
   const [step, setStep] = useState(0);
+  const [showSubNav, setShowSubNav] = useState(false); // New state for scroll behavior
   
   // Step 2: Modify State Initialization (Lazy Init)
   const [answers, setAnswers] = useState(() => {
@@ -405,8 +407,6 @@ export default function HomeRepairAssessment() {
   });
 
   const [isMenuOpen, setIsMenuOpen] = useState(false); // State for mobile menu
-  
-  // Check if assessment has started based on answers state
   const hasStarted = Object.keys(answers).length > 0;
 
   // Step 3: Create the Auto-Save Effect
@@ -437,6 +437,26 @@ export default function HomeRepairAssessment() {
     document.getElementsByTagName('head')[0].appendChild(link);
 
   }, [view, step]);
+
+  // NEW: Scroll Listener for Sub-Nav Visibility
+  useEffect(() => {
+    const handleScroll = () => {
+      if (view === 'home') {
+        // Show sub-nav only after scrolling past 500px (approx past Hero)
+        setShowSubNav(window.scrollY > 500);
+      } else {
+        // Always show on other views if needed, or keep hidden? 
+        // Logic: On wizard/dashboard, the sub-nav is useful as a consistent tool.
+        // Or we can keep it strictly for the scroll behavior on Home. 
+        // Let's keep it consistent with the "when scrolling" request for the home page.
+        setShowSubNav(true); 
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    handleScroll(); // Check initial state
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [view]);
 
   const handleStart = () => {
     setStep(0);
@@ -494,6 +514,20 @@ export default function HomeRepairAssessment() {
   const handleMobileNav = (targetView) => {
     setView(targetView);
     setIsMenuOpen(false);
+  };
+
+  // Scroll handler for Resources link
+  const scrollToResources = () => {
+    const resourcesSection = document.getElementById('resources');
+    if (resourcesSection) {
+      resourcesSection.scrollIntoView({ behavior: 'smooth' });
+    } else if (view !== 'home') {
+      setView('home');
+      setTimeout(() => {
+        const section = document.getElementById('resources');
+        if(section) section.scrollIntoView({ behavior: 'smooth' });
+      }, 100);
+    }
   };
 
   const getOverallScore = () => {
@@ -563,11 +597,11 @@ export default function HomeRepairAssessment() {
             </div>
             <div className="flex flex-col">
               <span className="font-bold text-black text-lg tracking-tight leading-none">Repair Readiness Assessment</span>
-              <span className="text-xs text-gray-500 font-medium mt-0.5">v2.1.6</span>
+              <span className="text-xs text-gray-500 font-medium mt-0.5">v2.1.5</span>
             </div>
           </div>
           
-          {/* Desktop Nav */}
+          {/* Desktop Nav - Restored to Original Clean State */}
           <nav className="hidden md:flex items-center gap-8 text-sm font-medium text-gray-600">
             <button 
               onClick={() => setView('home')} 
@@ -609,7 +643,7 @@ export default function HomeRepairAssessment() {
 
         {/* Mobile Dropdown Menu */}
         {isMenuOpen && (
-          <div className="md:hidden bg-white border-t border-gray-200 absolute w-full shadow-lg">
+          <div className="md:hidden bg-white border-t border-gray-200 absolute w-full shadow-lg z-50">
             <div className="flex flex-col px-6 py-4 gap-4">
               <button 
                 onClick={() => handleMobileNav('home')}
@@ -643,133 +677,256 @@ export default function HomeRepairAssessment() {
         )}
       </header>
 
-      <main className="flex-1 w-full max-w-6xl mx-auto p-4 md:p-8">
-
-        {/* --- VIEW: HOME --- */}
-        {view === 'home' && (
-          <div className="mt-8 text-center flex flex-col items-center">
-            <h1 className="text-4xl md:text-5xl font-bold text-[#333] mb-6">Home Repair Readiness Assessment</h1>
-            <p className="text-[#555] text-lg max-w-2xl mx-auto mb-12 leading-relaxed">
-              Evaluate your affiliate’s readiness to launch a sustainable, scalable home repair program across five HUD-based factors: Capacity, Need, Approach, Leverage, and Impact. This data-centered assessment helps create a tailored roadmap that strengthens organizational capacity and long-term programming impact.
-            </p>
-            
-            <div className="flex justify-center gap-8 mb-12 flex-wrap">
-              {[
-                { icon: Briefcase, label: "Capacity" }, // Briefcase for Capacity
-                { icon: Search, label: "Need" },        // Search for Need
-                { icon: FileText, label: "Approach" },
-                { icon: Handshake, label: "Leverage" },
-                { icon: Users, label: "Impact" }
-              ].map((item, idx) => (
-                  <div key={idx} className="flex flex-col items-center gap-3">
-                    <item.icon size={40} strokeWidth={1.5} className="text-[#0099CC]" />
-                    <span className="text-sm font-medium text-gray-600">{item.label}</span>
-                  </div>
-              ))}
-            </div>
-
-            <div className="flex justify-center gap-4 mb-16">
-              <button 
-                onClick={Object.keys(answers).length > 0 ? handleContinue : handleStart}
-                className="bg-[#0099CC] hover:bg-[#007399] text-white px-8 py-3 rounded-full text-lg font-semibold transition-colors shadow-md"
-              >
-                {Object.keys(answers).length > 0 ? "Complete Assessment" : "Start Assessment"}
+      {/* --- SECONDARY STATIONARY SUB-NAV --- */}
+      {/* Visible primarily on Home view or generally available for quick access */}
+      <div className={`
+        sticky top-[73px] z-40 bg-white/95 backdrop-blur-md border-b border-slate-200 shadow-sm transition-all duration-500 ease-in-out transform
+        ${showSubNav ? 'translate-y-0 opacity-100' : '-translate-y-full opacity-0 pointer-events-none'}
+      `}>
+        <div className="max-w-6xl mx-auto px-6 py-3 flex justify-between items-center">
+           {/* Left Side: Resources Sub-menu */}
+           <div className="flex items-center gap-6 text-sm font-medium text-slate-600">
+              <span className="text-slate-400 font-bold uppercase text-xs tracking-wider hidden sm:block">Quick Links:</span>
+              <button onClick={scrollToResources} className="hover:text-[#0099CC] flex items-center gap-1 transition-colors">
+                 <Download size={16}/> Resources
               </button>
-              
-              {Object.keys(answers).length > 0 && (
-                <button 
-                  onClick={() => setView('dashboard')}
-                  className="border-2 border-[#0099CC] text-[#0099CC] hover:bg-sky-50 px-8 py-3 rounded-full text-lg font-semibold transition-colors"
-                >
-                  View Previous Results
-                </button>
-              )}
-            </div>
+           </div>
 
-            {/* --- NEW "WHAT TO EXPECT" SECTION (4 Horizontal Boxes) --- */}
-            <div className="w-full max-w-6xl mb-16">
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                
-                {/* Box 1 */}
-                <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-200 flex flex-col items-center text-center gap-4 h-full">
-                  <div className="w-12 h-12 rounded-full bg-sky-50 flex items-center justify-center text-[#0099CC] font-bold text-lg shrink-0">
-                    15
-                  </div>
-                  <div>
-                    <h4 className="text-lg font-bold text-[#333]">15 Questions</h4>
-                    <p className="text-sm text-gray-600 mt-2 leading-relaxed">
-                      Across 5 Key Factors: Capacity, Need, Approach, Leverage and Impact
-                    </p>
-                  </div>
-                </div>
-                
-                {/* Box 2 */}
-                <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-200 flex flex-col items-center text-center gap-4 h-full">
-                  <div className="w-12 h-12 rounded-full bg-sky-50 flex items-center justify-center text-[#0099CC] shrink-0">
-                    <Clock size={24} />
-                  </div>
-                  <div>
-                    <h4 className="text-lg font-bold text-[#333]">15-20 Minutes</h4>
-                    <p className="text-sm text-gray-600 mt-2 leading-relaxed">
-                      Take your time to thoughtfully assess each area
-                    </p>
-                  </div>
-                </div>
-
-                {/* Box 3 */}
-                <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-200 flex flex-col items-center text-center gap-4 h-full">
-                  <div className="w-12 h-12 rounded-full bg-sky-50 flex items-center justify-center text-[#0099CC] shrink-0">
-                    <BarChart3 size={24} />
-                  </div>
-                  <div>
-                    <h4 className="text-lg font-bold text-[#333]">Instant Results</h4>
-                    <p className="text-sm text-gray-600 mt-2 leading-relaxed">
-                      Get a comprehensive dashboard with prioritized action items
-                    </p>
-                  </div>
-                </div>
-
-                {/* Box 4 */}
-                <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-200 flex flex-col items-center text-center gap-4 h-full">
-                  <div className="w-12 h-12 rounded-full bg-sky-50 flex items-center justify-center text-[#0099CC] shrink-0">
-                    <Save size={24} />
-                  </div>
-                  <div>
-                    <h4 className="text-lg font-bold text-[#333]">Saving Your Results</h4>
-                    <p className="text-sm text-gray-600 mt-2 leading-relaxed">
-                      Your inputs are not saved - Use the Print to PDF button to save your assessment results
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-             {/* --- VIDEO TUTORIAL SECTION --- */}
-            <div className="w-full max-w-3xl bg-white rounded-xl shadow-sm border border-gray-200 p-8 text-left mb-12">
-              <h3 className="text-2xl font-bold text-[#0099CC] mb-6">Readiness Tutorial</h3>
-              
-              {/* FIXED VIDEO CONTAINER: Uses padding-top hack with absolute positioning for robust responsive iframe */}
-              <div className="relative w-full overflow-hidden rounded-xl bg-black shadow-inner" style={{ paddingTop: '56.25%' }}>
-                <iframe 
-                  className="absolute top-0 left-0 w-full h-full"
-                  src="https://player.vimeo.com/video/1144624007?badge=0&autopause=0&player_id=0&app_id=58479" 
-                  frameBorder="0" 
-                  allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" 
-                  title="Readiness Assessment Overview"
-                />
-              </div>
-
-              <p className="text-gray-600 text-lg mt-6">
-                Watch this overview video to determine if a Readiness Assessment can help your home repair launch efforts.
-              </p>
-            </div>
-            
-            <button 
-              onClick={() => window.open('https://readiness-app.vercel.app/Readiness_Manual.pdf', '_blank')}
-              className="text-[#0099CC] underline text-sm hover:text-blue-800 mb-8"
+           {/* Right Side: CTA Button */}
+           <button 
+              onClick={Object.keys(answers).length > 0 ? handleContinue : handleStart}
+              className="bg-[#0099CC] hover:bg-[#007399] text-white px-5 py-2 rounded-full text-sm font-bold transition-all shadow-md flex items-center gap-2"
             >
-              Learn about the 6 readiness levels
+              {Object.keys(answers).length > 0 ? "Continue Evaluation" : "Start Evaluation"} 
+              <ArrowRight size={16} />
             </button>
+        </div>
+      </div>
+
+      <main className={`flex-1 w-full ${view === 'home' ? '' : 'max-w-6xl mx-auto p-4 md:p-8'}`}>
+
+        {/* --- VIEW: HOME (SCROLLYTELLING) --- */}
+        {view === 'home' && (
+          <div className="flex flex-col w-full">
+            
+            {/* SECTION 1: HERO - Are We Ready? */}
+            <section className="min-h-[90vh] flex flex-col items-center justify-center text-center p-8 bg-white relative">
+              <div className="max-w-4xl animate-in fade-in slide-in-from-bottom-8 duration-1000">
+                <div className="inline-block mb-6 p-4 bg-[#E0F7FA] rounded-full text-[#0099CC]">
+                  <Home size={64} strokeWidth={1.5} />
+                </div>
+                <h1 className="text-6xl md:text-8xl font-black text-slate-900 mb-6 tracking-tight leading-[0.9]">
+                  Are We <span className="text-[#0099CC]">Ready?</span>
+                </h1>
+                <p className="text-xl md:text-3xl text-slate-600 font-light max-w-2xl mx-auto leading-relaxed">
+                  Moving from subjective intentions to measurable impact in home repair.
+                </p>
+              </div>
+              <div className="absolute bottom-10 animate-bounce text-slate-400">
+                <ChevronDown size={48} strokeWidth={1} />
+              </div>
+            </section>
+
+             {/* SECTION 1.5: VIDEO OVERVIEW - REDESIGNED */}
+             <section id="video-section" className="bg-white pb-24 px-8 scroll-mt-32">
+               <div className="max-w-6xl mx-auto w-full flex flex-col md:flex-row items-center gap-12">
+                  
+                  {/* Left Column: Title Text (Was description) */}
+                  <div className="flex-1 md:pr-8">
+                     <h2 className="text-4xl md:text-5xl font-black text-slate-800 leading-tight mb-6">
+                        Why readiness is the first step to sustainability.
+                     </h2>
+                     <p className="text-lg text-slate-600 leading-relaxed">
+                        Watch this 11-minute overview to understand the purpose and goals of the readiness assessment before you begin.
+                     </p>
+                  </div>
+
+                  {/* Right Column: Video (Half Width) */}
+                  <div className="flex-1 w-full">
+                     <div className="shadow-2xl rounded-2xl overflow-hidden border-4 border-white ring-1 ring-slate-200">
+                        <div style={{padding:'56.25% 0 0 0', position:'relative'}}>
+                           <iframe 
+                              src="https://player.vimeo.com/video/1144624007?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" 
+                              frameBorder="0" 
+                              allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" 
+                              referrerPolicy="strict-origin-when-cross-origin" 
+                              style={{position:'absolute', top:0, left:0, width:'100%', height:'100%'}} 
+                              title="Readiness Assessment Overview"
+                           ></iframe>
+                        </div>
+                     </div>
+                  </div>
+                  
+               </div>
+            </section>
+
+            {/* SECTION 2: THE PROBLEM - The Readiness Gap */}
+            <section className="min-h-screen flex flex-col md:flex-row items-center bg-slate-900 text-white">
+              <div className="flex-1 p-12 md:p-24 flex flex-col justify-center h-full">
+                <div className="inline-flex items-center gap-3 text-[#EF5350] mb-6 font-bold tracking-widest uppercase text-sm">
+                  <AlertCircle size={20} /> The Challenge
+                </div>
+                <h2 className="text-5xl md:text-7xl font-bold mb-8 leading-tight">
+                  Good intentions aren't enough.
+                </h2>
+                <p className="text-xl md:text-2xl text-slate-300 leading-relaxed max-w-xl">
+                  This is the <span className="text-white font-bold">Readiness Gap</span>: The space where efforts stall because the foundation—systems, capacity, and strategy—hasn't been built yet.
+                </p>
+              </div>
+              <div className="flex-1 h-full bg-slate-800 p-12 md:p-24 flex items-center justify-center relative overflow-hidden">
+                 {/* Abstract visual for 'gap' */}
+                 <div className="relative w-full max-w-md aspect-square">
+                    <div className="absolute top-0 left-0 w-32 h-32 border-t-4 border-l-4 border-[#EF5350] opacity-50"></div>
+                    <div className="absolute bottom-0 right-0 w-32 h-32 border-b-4 border-r-4 border-[#EF5350] opacity-50"></div>
+                    <div className="absolute inset-0 flex items-center justify-center">
+                       <span className="text-9xl font-black text-slate-700 select-none">?</span>
+                    </div>
+                 </div>
+              </div>
+            </section>
+
+            {/* SECTION 3: THE SOLUTION - Capacity Building */}
+            <section className="min-h-screen flex flex-col items-center justify-center bg-[#F0F9FF] p-12 md:p-24 text-center">
+              <div className="max-w-5xl">
+                <h2 className="text-4xl md:text-6xl font-bold text-slate-900 mb-12">
+                  Capacity Building is the bridge.
+                </h2>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-left">
+                  <div className="bg-white p-8 rounded-2xl shadow-lg border-t-8 border-[#0099CC]">
+                    <Layers size={48} className="text-[#0099CC] mb-6" />
+                    <h3 className="text-2xl font-bold text-slate-800 mb-4">Systems, not just tools.</h3>
+                    <p className="text-slate-600 leading-relaxed">
+                      Strengthening everything behind the repairs: the skills, the data, and the workflows.
+                    </p>
+                  </div>
+                  <div className="bg-white p-8 rounded-2xl shadow-lg border-t-8 border-[#0099CC]">
+                    <Target size={48} className="text-[#0099CC] mb-6" />
+                    <h3 className="text-2xl font-bold text-slate-800 mb-4">Data, not just stories.</h3>
+                    <p className="text-slate-600 leading-relaxed">
+                      Moving from anecdotal evidence to clear, measurable indicators of community need.
+                    </p>
+                  </div>
+                  <div className="bg-white p-8 rounded-2xl shadow-lg border-t-8 border-[#0099CC]">
+                    <TrendingUp size={48} className="text-[#0099CC] mb-6" />
+                    <h3 className="text-2xl font-bold text-slate-800 mb-4">Impact, not just output.</h3>
+                    <p className="text-slate-600 leading-relaxed">
+                      Designing a program that leaves a legacy of sustainable housing preservation.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </section>
+
+            {/* SECTION 4: THE FRAMEWORK - 5 Essential Questions */}
+            <section className="min-h-screen flex flex-col justify-center bg-white p-8 md:p-24">
+              <div className="max-w-6xl mx-auto w-full">
+                <h2 className="text-4xl md:text-6xl font-black text-slate-900 mb-16 text-center md:text-left">
+                  5 Essential Questions.
+                </h2>
+                
+                <div className="space-y-4">
+                  {[
+                    { title: "Capacity", text: "Do we have the people, skills, and equipment?", color: "bg-slate-100 border-slate-300", icon: FACTOR_ICONS["Capacity of Affiliate"] },
+                    { title: "Need", text: "Do we factually understand the community gap?", color: "bg-blue-50 border-blue-200", icon: FACTOR_ICONS["Repair Program Need"] },
+                    { title: "Approach", text: "Is our plan realistic and mission-aligned?", color: "bg-indigo-50 border-indigo-200", icon: FACTOR_ICONS["Soundness of Approach"] },
+                    { title: "Leverage", text: "Can we integrate this into our network?", color: "bg-teal-50 border-teal-200", icon: FACTOR_ICONS["Leverage and Partnerships"] },
+                    { title: "Impact", text: "What is the long-term vision we aim to realize?", color: "bg-green-50 border-green-200", icon: FACTOR_ICONS["Impact & Sustainability"] }
+                  ].map((item, i) => (
+                    <div key={i} className={`p-8 rounded-xl border-l-8 flex flex-col md:flex-row items-baseline gap-6 transition-transform hover:scale-[1.01] ${item.color.replace('bg-', 'border-').replace('50', '500')} ${item.color}`}>
+                      <div className="flex-shrink-0 bg-white/50 p-4 rounded-full">
+                        {React.createElement(item.icon, { size: 32, strokeWidth: 1.5, className: "text-slate-700" })}
+                      </div>
+                      <div>
+                        <h3 className="text-2xl font-bold text-slate-800 mb-2">{item.title}</h3>
+                        <p className="text-lg text-slate-600">{item.text}</p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </section>
+
+             {/* --- NEW RESOURCES SECTION (SCROLL TARGET) --- */}
+            <section id="resources" className="bg-slate-50 py-24 px-8 scroll-mt-32">
+                <div className="max-w-4xl mx-auto">
+                    <h2 className="text-4xl font-black text-slate-900 mb-4">Program Resources</h2>
+                    <p className="text-xl text-slate-500 mb-12">Essential documents and guides to support your readiness journey.</p>
+                    
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        {/* Card 1: Manual */}
+                        <div className="bg-white p-8 rounded-2xl shadow-sm border border-slate-200 hover:border-[#0099CC] transition-all group cursor-pointer" onClick={() => window.open('https://readiness-app.vercel.app/Readiness_Manual.pdf', '_blank')}>
+                            <div className="flex items-start gap-6">
+                                <div className="p-4 bg-blue-50 text-[#0099CC] rounded-xl group-hover:bg-[#0099CC] group-hover:text-white transition-colors">
+                                <FileText size={32} />
+                                </div>
+                                <div>
+                                <h4 className="text-xl font-bold text-slate-900 group-hover:text-[#0099CC] transition-colors mb-2">Readiness Manual</h4>
+                                <p className="text-slate-600 leading-relaxed mb-4">
+                                    A comprehensive guide explaining the 5 HUD factors, 15 sub-factors, and scoring criteria in detail.
+                                </p>
+                                <span className="inline-flex items-center gap-2 text-[#0099CC] font-bold text-sm group-hover:underline">
+                                    Download PDF <Download size={16}/>
+                                </span>
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* Card 2: Overview Video Link (Scrolls up to video) */}
+                        <div className="bg-white p-8 rounded-2xl shadow-sm border border-slate-200 hover:border-[#0099CC] transition-all group cursor-pointer" onClick={() => document.getElementById('video-section').scrollIntoView({behavior:'smooth'})}>
+                            <div className="flex items-start gap-6">
+                                <div className="p-4 bg-purple-50 text-purple-600 rounded-xl group-hover:bg-purple-600 group-hover:text-white transition-colors">
+                                <Play size={32} />
+                                </div>
+                                <div>
+                                <h4 className="text-xl font-bold text-slate-900 group-hover:text-purple-600 transition-colors mb-2">Overview Video</h4>
+                                <p className="text-slate-600 leading-relaxed mb-4">
+                                    Re-watch the instructional video covering the purpose and goals of the readiness assessment.
+                                </p>
+                                <span className="inline-flex items-center gap-2 text-purple-600 font-bold text-sm group-hover:underline">
+                                    Watch Video <ArrowRight size={16}/>
+                                </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            {/* SECTION 5: CALL TO ACTION */}
+            <section className="min-h-[60vh] flex flex-col items-center justify-center bg-[#0099CC] text-white text-center p-8">
+              <h2 className="text-5xl md:text-7xl font-black mb-8">
+                Build Your Roadmap.
+              </h2>
+              <p className="text-xl md:text-2xl max-w-2xl mb-12 font-light">
+                Take 15 minutes to assess your organization and get a prioritized action plan for launch.
+              </p>
+              
+              <div className="flex flex-col md:flex-row gap-6">
+                <button 
+                  onClick={Object.keys(answers).length > 0 ? handleContinue : handleStart}
+                  className="bg-white text-[#0099CC] px-10 py-5 rounded-full text-xl font-bold hover:bg-slate-100 transition-all shadow-2xl flex items-center gap-3"
+                >
+                  {Object.keys(answers).length > 0 ? "Continue Assessment" : "Start Assessment"} 
+                  <ArrowRight size={24} />
+                </button>
+                
+                {Object.keys(answers).length > 0 && (
+                  <button 
+                    onClick={() => setView('dashboard')}
+                    className="border-2 border-white text-white px-10 py-5 rounded-full text-xl font-bold hover:bg-white/10 transition-all"
+                  >
+                    View Previous Results
+                  </button>
+                )}
+              </div>
+              
+              <div className="mt-16 flex items-center gap-2 text-blue-200 text-sm">
+                <Clock size={16} /> <span>Takes ~15 minutes</span>
+                <span className="mx-2">•</span>
+                <Save size={16} /> <span>Auto-saves progress</span>
+              </div>
+            </section>
+
           </div>
         )}
 
@@ -897,7 +1054,7 @@ export default function HomeRepairAssessment() {
         {/* --- VIEW: DASHBOARD --- */}
         {view === 'dashboard' && (
           !hasStarted ? (
-            <div className="flex flex-col items-center justify-center min-h-[60vh] text-center p-8 transition-opacity duration-300">
+            <div className="flex flex-col items-center justify-center min-h-[60vh] text-center p-8 animate-in fade-in zoom-in duration-300">
               <div className="bg-gray-100 p-8 rounded-full mb-6 shadow-inner">
                 <ClipboardCheck size={64} className="text-gray-400" />
               </div>
@@ -1060,7 +1217,7 @@ export default function HomeRepairAssessment() {
         {/* --- VIEW: PLAN --- */}
         {view === 'plan' && (
           !hasStarted ? (
-             <div className="flex flex-col items-center justify-center min-h-[60vh] text-center p-8 transition-opacity duration-300">
+             <div className="flex flex-col items-center justify-center min-h-[60vh] text-center p-8 animate-in fade-in zoom-in duration-300">
               <div className="bg-gray-100 p-8 rounded-full mb-6 shadow-inner">
                 <FileText size={64} className="text-gray-400" />
               </div>

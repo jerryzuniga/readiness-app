@@ -9,6 +9,16 @@ import {
   Video, File
 } from 'lucide-react';
 
+// --- HERO IMAGES (Randomized) ---
+const HERO_IMAGES = [
+  "https://raw.githubusercontent.com/jerryzuniga/readiness-app/6fbd3af5bcf8a7a27e8d7fb7067221f23d9df97d/public/fence.jpg",
+  "https://raw.githubusercontent.com/jerryzuniga/readiness-app/6fbd3af5bcf8a7a27e8d7fb7067221f23d9df97d/public/lanscape.jpg",
+  "https://raw.githubusercontent.com/jerryzuniga/readiness-app/6fbd3af5bcf8a7a27e8d7fb7067221f23d9df97d/public/paint.jpg",
+  "https://raw.githubusercontent.com/jerryzuniga/readiness-app/6fbd3af5bcf8a7a27e8d7fb7067221f23d9df97d/public/ramp.jpg",
+  "https://raw.githubusercontent.com/jerryzuniga/readiness-app/6fbd3af5bcf8a7a27e8d7fb7067221f23d9df97d/public/roof.jpg",
+  "https://raw.githubusercontent.com/jerryzuniga/readiness-app/6fbd3af5bcf8a7a27e8d7fb7067221f23d9df97d/public/tshirt.jpg"
+];
+
 // --- DATA MODEL (Strictly aligned with Readiness Manual v1.2) ---
 const LEVELS = ["Inactive", "Aware", "Exploring", "Planning", "Preparing", "Ready"];
 
@@ -408,9 +418,17 @@ export default function HomeRepairAssessment() {
 
   const [isMenuOpen, setIsMenuOpen] = useState(false); // State for mobile menu
   const hasStarted = Object.keys(answers).length > 0;
+  
+  // --- RANDOM HERO IMAGE STATE ---
+  const [heroBg, setHeroBg] = useState("");
 
-  // Step 3: Create the Auto-Save Effect
+  // Step 3: Create the Auto-Save Effect & Random Image Init
   useEffect(() => {
+    // 1. Random Image Logic
+    const randomIndex = Math.floor(Math.random() * HERO_IMAGES.length);
+    setHeroBg(HERO_IMAGES[randomIndex]);
+
+    // 2. Storage Logic
     if (typeof window !== 'undefined') {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(answers));
     }
@@ -710,25 +728,37 @@ export default function HomeRepairAssessment() {
           <div className="flex flex-col w-full">
             
             {/* SECTION 1: HERO - Are We Ready? */}
-            <section className="min-h-[90vh] flex flex-col items-center justify-center text-center p-8 bg-white relative">
-              <div className="max-w-4xl animate-in fade-in slide-in-from-bottom-8 duration-1000">
+            {/* UPDATED: Added randomized background image and overlay */}
+            <section 
+              className="min-h-[60vh] flex flex-col items-center justify-center text-center p-8 relative bg-cover bg-center bg-no-repeat transition-all duration-1000"
+              style={{
+                backgroundImage: `url('${heroBg || HERO_IMAGES[0]}')`, // Use random state or fallback
+                backgroundPosition: "center 40%" // Adjust focus if needed
+              }}
+            >
+              {/* Overlay for readability */}
+              <div className="absolute inset-0 bg-white/85"></div>
+
+              {/* Content (z-10 to sit on top of overlay) */}
+              <div className="max-w-4xl relative z-10 animate-in fade-in slide-in-from-bottom-8 duration-1000">
                 <div className="inline-block mb-6 p-4 bg-[#E0F7FA] rounded-full text-[#0099CC]">
                   <Home size={64} strokeWidth={1.5} />
                 </div>
                 <h1 className="text-6xl md:text-8xl font-black text-slate-900 mb-6 tracking-tight leading-[0.9]">
                   Are We <span className="text-[#0099CC]">Ready?</span>
                 </h1>
-                <p className="text-xl md:text-3xl text-slate-600 font-light max-w-2xl mx-auto leading-relaxed">
+                <p className="text-xl md:text-3xl text-slate-700 font-light max-w-2xl mx-auto leading-relaxed">
                   Moving from subjective intentions to measurable planning for home repair launch.
                 </p>
               </div>
-              <div className="absolute bottom-10 animate-bounce text-slate-400">
+              
+              <div className="absolute bottom-10 animate-bounce text-slate-500 z-10">
                 <ChevronDown size={48} strokeWidth={1} />
               </div>
             </section>
 
              {/* SECTION 1.5: VIDEO OVERVIEW - REDESIGNED */}
-             <section id="video-section" className="bg-white pb-24 px-8 scroll-mt-32">
+             <section id="video-section" className="bg-white pb-24 px-8 scroll-mt-32 pt-16">
                <div className="max-w-6xl mx-auto w-full flex flex-col md:flex-row items-center gap-12">
                   
                   {/* Left Column: Title Text (Was description) */}
@@ -832,11 +862,11 @@ export default function HomeRepairAssessment() {
                     { title: "Leverage", text: "Can we integrate this into our network?", color: "bg-teal-50 border-teal-200", icon: FACTOR_ICONS["Leverage and Partnerships"] },
                     { title: "Impact", text: "What is the long-term vision we aim to realize?", color: "bg-green-50 border-green-200", icon: FACTOR_ICONS["Impact & Sustainability"] }
                   ].map((item, i) => (
-                    <div key={i} className={`p-8 rounded-xl border-l-8 flex flex-col md:flex-row items-baseline gap-6 transition-transform hover:scale-[1.01] ${item.color.replace('bg-', 'border-').replace('50', '500')} ${item.color}`}>
+                    <div key={i} className={`p-8 rounded-xl border-l-8 flex flex-col md:flex-row-reverse items-center md:items-baseline gap-6 transition-transform hover:scale-[1.01] ${item.color.replace('bg-', 'border-').replace('50', '500')} ${item.color}`}>
                       <div className="flex-shrink-0 bg-white/50 p-4 rounded-full">
                         {React.createElement(item.icon, { size: 32, strokeWidth: 1.5, className: "text-slate-700" })}
                       </div>
-                      <div>
+                      <div className="text-center md:text-right flex-grow">
                         <h3 className="text-2xl font-bold text-slate-800 mb-2">{item.title}</h3>
                         <p className="text-lg text-slate-600">{item.text}</p>
                       </div>

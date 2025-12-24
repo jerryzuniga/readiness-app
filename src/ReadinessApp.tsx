@@ -719,7 +719,7 @@ export default function HomeRepairAssessment() {
                   Are We <span className="text-[#0099CC]">Ready?</span>
                 </h1>
                 <p className="text-xl md:text-3xl text-slate-600 font-light max-w-2xl mx-auto leading-relaxed">
-                  Moving from subjective intentions to measurable impact in home repair.
+                  Moving from subjective intentions to measurable planning for home repair launch.
                 </p>
               </div>
               <div className="absolute bottom-10 animate-bounce text-slate-400">
@@ -734,7 +734,7 @@ export default function HomeRepairAssessment() {
                   {/* Left Column: Title Text (Was description) */}
                   <div className="flex-1 md:pr-8">
                      <h2 className="text-4xl md:text-5xl font-black text-slate-800 leading-tight mb-6">
-                        Why readiness is the first step to sustainability.
+                        Why a readiness assessment is the first step to long-term sustainability.
                      </h2>
                      <p className="text-lg text-slate-600 leading-relaxed">
                         Watch this 11-minute overview to understand the purpose and goals of the readiness assessment before you begin.
@@ -849,7 +849,7 @@ export default function HomeRepairAssessment() {
              {/* --- NEW RESOURCES SECTION (SCROLL TARGET) --- */}
             <section id="resources" className="bg-slate-50 py-24 px-8 scroll-mt-32">
                 <div className="max-w-4xl mx-auto">
-                    <h2 className="text-4xl font-black text-slate-900 mb-4">Program Resources</h2>
+                    <h2 className="text-4xl font-black text-slate-900 mb-4">Readiness Resources</h2>
                     <p className="text-xl text-slate-500 mb-12">Essential documents and guides to support your readiness journey.</p>
                     
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -898,7 +898,7 @@ export default function HomeRepairAssessment() {
                 Build Your Roadmap.
               </h2>
               <p className="text-xl md:text-2xl max-w-2xl mb-12 font-light">
-                Take 15 minutes to assess your organization and get a prioritized action plan for launch.
+                Take less than 30 minutes to assess your organization's readiness and gain insights to where you can strengthen your organization for home repair program launch.
               </p>
               
               <div className="flex flex-col md:flex-row gap-6">
@@ -921,7 +921,7 @@ export default function HomeRepairAssessment() {
               </div>
               
               <div className="mt-16 flex items-center gap-2 text-blue-200 text-sm">
-                <Clock size={16} /> <span>Takes ~15 minutes</span>
+                <Clock size={16} /> <span>Takes ~30 minutes</span>
                 <span className="mx-2">•</span>
                 <Save size={16} /> <span>Auto-saves progress</span>
               </div>

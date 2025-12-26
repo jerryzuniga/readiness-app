@@ -892,7 +892,7 @@ export default function HomeRepairAssessment() {
             <section className="flex flex-col justify-center bg-white py-20 px-8 md:px-24">
               <div className="max-w-6xl mx-auto w-full">
                 <h2 className="text-4xl md:text-6xl font-black text-slate-900 mb-16 text-center md:text-left">
-                  5 Essential Questions.
+                  5 Essential Factors.
                 </h2>
                 
                 <div className="flex flex-col gap-4">

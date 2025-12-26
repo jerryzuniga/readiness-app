@@ -767,10 +767,10 @@ export default function HomeRepairAssessment() {
                     <AlertCircle size={20} /> The Challenge
                   </div>
                   <h2 className="text-5xl font-bold mb-8 leading-tight text-white">
-                    Are good intentions enough?
+                    Bridging the readiness gap.
                   </h2>
                   <p className="text-xl md:text-2xl text-slate-300 leading-relaxed">
-                    Bridge the <span className="text-white font-bold">Readiness Gap</span>: The space where efforts stall because the foundation—systems, capacity, and strategy—hasn't been built yet.
+                    The space where efforts stall because the foundation—systems, capacity, and strategy—hasn't been built yet.
                   </p>
                 </div>
                 <div className="flex-1 flex items-center justify-center relative overflow-hidden">

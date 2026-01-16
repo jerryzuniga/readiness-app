@@ -535,19 +535,8 @@ export default function HomeRepairAssessment() {
     setIsMenuOpen(false);
   };
 
-  // Scroll handler for Resources link
-  const scrollToResources = () => {
-    const resourcesSection = document.getElementById('resources');
-    if (resourcesSection) {
-      resourcesSection.scrollIntoView({ behavior: 'smooth' });
-    } else if (view !== 'home') {
-      setView('home');
-      setTimeout(() => {
-        const section = document.getElementById('resources');
-        if(section) section.scrollIntoView({ behavior: 'smooth' });
-      }, 100);
-    }
-  };
+  // Scroll handler for Resources link - DISABLED (No resources section)
+  // const scrollToResources = () => { ... };
 
   const getOverallScore = () => {
     const total = Object.values(answers).reduce((a, b) => a + b, 0);
@@ -616,7 +605,7 @@ export default function HomeRepairAssessment() {
             </div>
             <div className="flex flex-col">
               <span className="font-bold text-black text-lg tracking-tight leading-none">Repair Readiness Assessment</span>
-              <span className="text-xs text-gray-500 font-medium mt-0.5">v2.2.1</span>
+              <span className="text-xs text-gray-500 font-medium mt-0.5">v2.3.1</span>
             </div>
           </div>
           
@@ -702,15 +691,8 @@ export default function HomeRepairAssessment() {
         sticky top-[73px] z-40 bg-white/95 backdrop-blur-md border-b border-slate-200 shadow-sm transition-all duration-500 ease-in-out transform
         ${showSubNav ? 'translate-y-0 opacity-100' : '-translate-y-full opacity-0 pointer-events-none'}
       `}>
-        <div className="max-w-6xl mx-auto px-6 py-3 flex justify-between items-center">
-           {/* Left Side: Resources Sub-menu */}
-           <div className="flex items-center gap-6 text-sm font-medium text-slate-600">
-              <span className="text-slate-400 font-bold uppercase text-xs tracking-wider hidden sm:block">Quick Links:</span>
-              <button onClick={scrollToResources} className="hover:text-[#0099CC] flex items-center gap-1 transition-colors">
-                 <Download size={16}/> Readiness Resources
-              </button>
-           </div>
-
+        <div className="max-w-6xl mx-auto px-6 py-3 flex justify-end items-center">
+           
            {/* Right Side: CTA Button */}
            <button 
               onClick={Object.keys(answers).length > 0 ? handleContinue : handleStart}
@@ -749,7 +731,7 @@ export default function HomeRepairAssessment() {
                   Are We <span className="text-[#0099CC]">Ready?</span>
                 </h1>
                 <p className="text-xl md:text-3xl text-slate-700 font-light max-w-2xl mx-auto leading-relaxed">
-                  Moving from intentions to measurable planning for home repair program launch.
+                  Moving from subjective intentions to measurable planning for home repair launch.
                 </p>
               </div>
               
@@ -758,52 +740,24 @@ export default function HomeRepairAssessment() {
               </div>
             </section>
 
-            {/* SECTION 2: THE PROBLEM - The Readiness Gap (SWAPPED WITH VIDEO) */}
-            {/* Restored dark blue theme and reduced padding to py-16 */}
-            <section className="bg-slate-900 text-white py-16 px-8">
-              <div className="max-w-6xl mx-auto w-full flex flex-col md:flex-row items-center justify-center gap-12">
-                <div className="flex-1 flex flex-col justify-center">
-                  <div className="inline-flex items-center gap-3 text-[#EF5350] mb-6 font-bold tracking-widest uppercase text-sm">
-                    <AlertCircle size={20} /> The Challenge
-                  </div>
-                  <h2 className="text-5xl font-bold mb-8 leading-tight text-white">
-                    Bridging the readiness gap.
-                  </h2>
-                  <p className="text-xl md:text-2xl text-slate-300 leading-relaxed">
-                    The space where efforts stall because the foundation—systems, capacity, and strategy—hasn't been built yet.
-                  </p>
-                </div>
-                <div className="flex-1 flex items-center justify-center relative overflow-hidden">
-                   {/* Abstract visual for 'gap' - Color adjusted for light background */}
-                   <div className="relative w-full max-w-md aspect-square">
-                      <div className="absolute top-0 left-0 w-32 h-32 border-t-4 border-l-4 border-[#EF5350] opacity-50"></div>
-                      <div className="absolute bottom-0 right-0 w-32 h-32 border-b-4 border-r-4 border-[#EF5350] opacity-50"></div>
-                      <div className="absolute inset-0 flex items-center justify-center">
-                         <span className="text-9xl font-black text-slate-700 select-none">?</span>
-                      </div>
-                   </div>
-                </div>
-              </div>
-            </section>
-
              {/* SECTION 3: VIDEO OVERVIEW - REDESIGNED (SWAPPED WITH CHALLENGE) */}
-             {/* Reduced padding to py-16 */}
-             <section id="video-section" className="flex flex-col items-center justify-center bg-slate-50 py-16 px-8 scroll-mt-32">
+             {/* Reduced padding to py-16. Added dark gradient background. */}
+             <section id="video-section" className="flex flex-col items-center justify-center bg-gradient-to-br from-slate-900 to-slate-800 py-16 px-8 scroll-mt-32">
                <div className="max-w-6xl mx-auto w-full flex flex-col md:flex-row items-center gap-12">
                   
                   {/* Left Column: Title Text (Was description) */}
                   <div className="flex-1 md:pr-8">
-                     <h2 className="text-4xl md:text-5xl font-black text-slate-800 leading-tight mb-6">
+                     <h2 className="text-4xl md:text-5xl font-black text-white leading-tight mb-6">
                         Learn why a readiness assessment builds long-term sustainability.
                      </h2>
-                     <p className="text-lg text-slate-600 leading-relaxed">
+                     <p className="text-lg text-slate-300 leading-relaxed">
                         Watch this 11-minute overview to understand the purpose and goals of the readiness assessment before you begin.
                      </p>
                   </div>
 
                   {/* Right Column: Video (Half Width) */}
                   <div className="flex-1 w-full">
-                     <div className="shadow-2xl rounded-2xl overflow-hidden border-4 border-white ring-1 ring-slate-200">
+                     <div className="shadow-2xl rounded-2xl overflow-hidden border-4 border-slate-700 ring-1 ring-slate-800">
                         <div style={{padding:'56.25% 0 0 0', position:'relative'}}>
                            <iframe 
                               src="https://player.vimeo.com/video/1144624007?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" 
@@ -885,90 +839,6 @@ export default function HomeRepairAssessment() {
                   </div>
                 </div>
               </div>
-            </section>
-
-            {/* SECTION 5: THE FRAMEWORK - 5 Essential Questions */}
-            {/* Reduced padding to py-20 */}
-            <section className="flex flex-col justify-center bg-white py-20 px-8 md:px-24">
-              <div className="max-w-6xl mx-auto w-full">
-                <h2 className="text-4xl md:text-6xl font-black text-slate-900 mb-16 text-center md:text-left">
-                  5 Essential Factors.
-                </h2>
-                
-                <div className="flex flex-col gap-4">
-                  {[
-                    { title: "Capacity", text: "Do we have the people, skills, and equipment?", color: "bg-slate-100 border-slate-300", icon: FACTOR_ICONS["Capacity of Affiliate"] },
-                    { title: "Need", text: "Do we factually understand the community gap?", color: "bg-blue-50 border-blue-200", icon: FACTOR_ICONS["Repair Program Need"] },
-                    { title: "Approach", text: "Is our plan realistic and mission-aligned?", color: "bg-indigo-50 border-indigo-200", icon: FACTOR_ICONS["Soundness of Approach"] },
-                    { title: "Leverage", text: "Can we integrate this into our network?", color: "bg-teal-50 border-teal-200", icon: FACTOR_ICONS["Leverage and Partnerships"] },
-                    { title: "Impact", text: "What is the long-term vision we aim to realize?", color: "bg-green-50 border-green-200", icon: FACTOR_ICONS["Impact & Sustainability"] }
-                  ].map((item, i) => (
-                    <div key={i} className={`p-6 rounded-xl border-l-8 flex flex-col md:flex-row md:items-center gap-6 transition-transform hover:scale-[1.01] ${item.color.replace('bg-', 'border-').replace('50', '500')} ${item.color}`}>
-                      {/* Icon Column - Approx 10% */}
-                      <div className="flex-shrink-0 bg-white/60 p-3 rounded-full flex items-center justify-center w-16 h-16 md:w-auto md:h-auto md:p-4">
-                        {React.createElement(item.icon, { size: 32, strokeWidth: 1.5, className: "text-slate-700" })}
-                      </div>
-                      
-                      {/* Title Column - Approx 30% */}
-                      <div className="md:w-[30%]">
-                        <h3 className="text-2xl font-bold text-slate-800">{item.title}</h3>
-                      </div>
-
-                      {/* Description Column - Approx 60% */}
-                      <div className="md:flex-1">
-                        <p className="text-lg text-slate-600">{item.text}</p>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </section>
-
-             {/* --- NEW RESOURCES SECTION (SCROLL TARGET) --- */}
-             {/* Reduced padding to py-16 */}
-            <section id="resources" className="bg-slate-50 py-16 px-8 scroll-mt-32">
-                <div className="max-w-4xl mx-auto">
-                    <h2 className="text-4xl font-black text-slate-900 mb-4">Readiness Resources</h2>
-                    <p className="text-xl text-slate-500 mb-12">Essential documents and guides to support your readiness journey.</p>
-                    
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                        {/* Card 1: Manual */}
-                        <div className="bg-white p-8 rounded-2xl shadow-sm border border-slate-200 hover:border-[#0099CC] transition-all group cursor-pointer" onClick={() => window.open('https://readiness-app.vercel.app/Readiness_Manual.pdf', '_blank')}>
-                            <div className="flex items-start gap-6">
-                                <div className="p-4 bg-blue-50 text-[#0099CC] rounded-xl group-hover:bg-[#0099CC] group-hover:text-white transition-colors">
-                                <FileText size={32} />
-                                </div>
-                                <div>
-                                <h4 className="text-xl font-bold text-slate-900 group-hover:text-[#0099CC] transition-colors mb-2">Readiness Guide</h4>
-                                <p className="text-slate-600 leading-relaxed mb-4">
-                                    A comprehensive guide explaining the 5 HUD factors, 15 sub-factors, and scoring criteria in detail.
-                                </p>
-                                <span className="inline-flex items-center gap-2 text-[#0099CC] font-bold text-sm group-hover:underline">
-                                    Download PDF <Download size={16}/>
-                                </span>
-                                </div>
-                            </div>
-                        </div>
-
-                        {/* Card 2: Overview Video Link (Scrolls up to video) */}
-                        <div className="bg-white p-8 rounded-2xl shadow-sm border border-slate-200 hover:border-[#0099CC] transition-all group cursor-pointer" onClick={() => document.getElementById('video-section').scrollIntoView({behavior:'smooth'})}>
-                            <div className="flex items-start gap-6">
-                                <div className="p-4 bg-purple-50 text-purple-600 rounded-xl group-hover:bg-purple-600 group-hover:text-white transition-colors">
-                                <Play size={32} />
-                                </div>
-                                <div>
-                                <h4 className="text-xl font-bold text-slate-900 group-hover:text-purple-600 transition-colors mb-2">Overview Video</h4>
-                                <p className="text-slate-600 leading-relaxed mb-4">
-                                    Watch the instructional video covering the purpose and goals of the readiness assessment.
-                                </p>
-                                <span className="inline-flex items-center gap-2 text-purple-600 font-bold text-sm group-hover:underline">
-                                    Watch Video <ArrowRight size={16}/>
-                                </span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
             </section>
 
             {/* SECTION 6: CALL TO ACTION */}

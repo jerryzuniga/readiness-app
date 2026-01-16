@@ -19,6 +19,9 @@ const HERO_IMAGES = [
   "https://raw.githubusercontent.com/jerryzuniga/readiness-app/6fbd3af5bcf8a7a27e8d7fb7067221f23d9df97d/public/tshirt.jpg"
 ];
 
+// --- APP LOGO & FAVICON ---
+const APP_LOGO_URL = "https://raw.githubusercontent.com/jerryzuniga/readiness-app/5ee3c51402b4772d218957c9091500eaebf8a46a/public/readiness.png";
+
 // --- DATA MODEL (Strictly aligned with Readiness Manual v1.2) ---
 const LEVELS = ["Inactive", "Aware", "Exploring", "Planning", "Preparing", "Ready"];
 
@@ -438,19 +441,9 @@ export default function HomeRepairAssessment() {
     
     // Set favicon dynamically to house icon on Habitat blue
     const link = document.querySelector("link[rel*='icon']") || document.createElement('link');
-    link.type = 'image/svg+xml';
+    link.type = 'image/png';
     link.rel = 'icon';
-    
-    // Create SVG data URI for the favicon: White house on Bright Blue (#0099CC) rounded square
-    const svgString = `
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
-        <rect width="32" height="32" rx="6" fill="#0099CC"/>
-        <path d="M7 13 L16 6 L25 13 V24 A2 2 0 0 1 23 26 H9 A2 2 0 0 1 7 24 Z" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-        <path d="M13 26 V16 H19 V26" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-      </svg>
-    `.trim().replace(/\s+/g, ' ');
-    
-    link.href = `data:image/svg+xml,${encodeURIComponent(svgString)}`;
+    link.href = APP_LOGO_URL;
     document.getElementsByTagName('head')[0].appendChild(link);
 
   }, [view, step]);
@@ -600,12 +593,10 @@ export default function HomeRepairAssessment() {
       <header className="bg-white border-b border-gray-200 sticky top-0 z-50">
         <div className="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 bg-[#0099CC] rounded-md flex items-center justify-center text-white shadow-sm">
-               <Home size={24} />
-            </div>
+            <img src={APP_LOGO_URL} alt="App Logo" className="w-10 h-10 object-contain" />
             <div className="flex flex-col">
               <span className="font-bold text-black text-lg tracking-tight leading-none">Repair Readiness Assessment</span>
-              <span className="text-xs text-gray-500 font-medium mt-0.5">v2.3.1</span>
+              <span className="text-xs text-gray-500 font-medium mt-0.5">v2.2.2</span>
             </div>
           </div>
           
@@ -724,8 +715,9 @@ export default function HomeRepairAssessment() {
 
               {/* Content (z-10 to sit on top of overlay) */}
               <div className="max-w-4xl relative z-10 animate-in fade-in slide-in-from-bottom-8 duration-1000">
-                <div className="inline-block mb-6 p-4 bg-[#E0F7FA] rounded-full text-[#0099CC]">
-                  <Home size={64} strokeWidth={1.5} />
+                {/* Replaced Icon with New Logo */}
+                <div className="inline-block mb-6 p-4 bg-[#E0F7FA] rounded-full">
+                  <img src={APP_LOGO_URL} alt="Readiness Logo" className="w-16 h-16 object-contain" />
                 </div>
                 <h1 className="text-6xl md:text-8xl font-black text-slate-900 mb-6 tracking-tight leading-[0.9]">
                   Are We <span className="text-[#0099CC]">Ready?</span>

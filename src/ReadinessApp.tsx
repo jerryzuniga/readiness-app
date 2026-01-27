@@ -771,7 +771,7 @@ export default function HomeRepairAssessment() {
             <section className="flex flex-col items-center justify-center bg-[#F0F9FF] py-20 px-12 md:px-24 text-center">
               <div className="max-w-6xl w-full">
                 <h2 className="text-sm font-bold text-slate-500 mb-12 uppercase tracking-widest">
-                  THE FOUR-STEP READINESS JOURNEY TOOLKIT
+                  THE READINESS JOURNEY TOOLKIT
                 </h2>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 text-left">
                   {/* Card 1: The Tutorial */}

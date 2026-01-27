@@ -723,7 +723,7 @@ export default function HomeRepairAssessment() {
                   Are We <span className="text-[#0099CC]">Ready?</span>
                 </h1>
                 <p className="text-xl md:text-3xl text-slate-700 font-light max-w-2xl mx-auto leading-relaxed">
-                  Moving from early exploration to intentional action for home repair launch.
+                  Moving from early exploration to intentional action for home repair program launch.
                 </p>
               </div>
               

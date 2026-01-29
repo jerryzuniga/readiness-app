@@ -826,7 +826,7 @@ export default function HomeRepairAssessment() {
                     </div>
                     <h3 className="text-2xl font-bold text-slate-800 mb-4">4. Begin Planning</h3>
                     <p className="text-slate-600 leading-relaxed text-sm">
-                      Consolidate results into a 90-day Action Plan.
+                      Leverage template deck to get team concensus. Consolidate results into a 90-day Action Plan.
                     </p>
                   </div>
                 </div>
